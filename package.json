@@ -1,0 +1,24 @@
+{
+  "name": "cluedoserver",
+  "version": "1.0.0",
+  "description": "Backend Service for the Cluedo App SE2 SS21",
+  "engines": {
+    "node": "14.x"
+  },
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "uuid": "^8.3.2"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
