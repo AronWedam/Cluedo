@@ -9,7 +9,7 @@ app.use('/games', games);
 
 //For testing the API
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello World from the SE2 Cluedo App!');
 });
 
 app.listen(port, () => {
