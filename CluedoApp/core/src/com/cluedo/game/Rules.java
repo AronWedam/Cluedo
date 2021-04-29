@@ -10,18 +10,18 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.awt.Label;
 
-public class Spielregeln implements Screen {
+public class Rules implements Screen {
 
     Stage stage;
     OrthographicCamera camera;
     GameClass game;
 
 
-    public Spielregeln(GameClass gameClass) {
+    public Rules(GameClass gameClass) {
         game=gameClass;
         stage=new Stage(new ScreenViewport());
 
-        Label title = new Label("Spielregeln");
+        Label title = new Label("Rules");
         title.setAlignment(Align.center);
 
     }
