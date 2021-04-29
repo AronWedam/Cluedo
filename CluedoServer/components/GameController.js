@@ -24,22 +24,16 @@ router.post('/register', function (req, res) {
     stopwatchRunning = true;
   }
 
-  waitingForPlayers = true;
-
   res.status(200).send();
 });
 
+//Route for the players to check if the game
 router.get('/checkGameState', function (req, res) {
   if (
     players.length >= 2 &&
     players.length <= 6 &&
-    stopwatch.read() / 1000 >= 10 &&
-    waitingForPlayers
+    stopwatch.read() / 1000 <= 10
   ) {
-    stopwatch.stop();
-    stopwatchRunning = false;
-
-    waitingForPlayers = false;
     let newGame = { gameId: uuidv4(), players: players };
     currentGames.push(newGame);
     res.status(200).json(newGame);
