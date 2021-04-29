@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -9,7 +9,7 @@ app.use('/games', games);
 
 //For testing the API
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello World from the SE2 Cluedo App!');
 });
 
 app.listen(port, () => {
