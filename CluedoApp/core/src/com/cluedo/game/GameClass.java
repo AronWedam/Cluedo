@@ -2,6 +2,7 @@ package com.cluedo.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -11,12 +12,22 @@ public class GameClass extends Game {
 	SpriteBatch batch;
 	Texture img;
 
+	private StartScreen startScreen;
+
+
 	//when we start the game, this is the first screen that shows
 	//Source: https://gamedev.stackexchange.com/questions/75324/android-libgdx-game-choosing-starting-activity
 	@Override
 	public void create () {
-		setScreen(new StartScreen());
+		this.setStartScreen();
 	}
+
+	//Method for setting the Startscreen
+	public void setStartScreen(){
+		startScreen = new StartScreen();
+		setScreen(startScreen);
+	}
+
 
 	@Override
 	public void render () {

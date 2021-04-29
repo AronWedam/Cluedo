@@ -3,6 +3,7 @@ package com.cluedo.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -20,6 +21,8 @@ import javax.xml.soap.Text;
 
 import sun.security.pkcs11.wrapper.Constants;
 
+//Source: https://stackoverflow.com/questions/32451921/how-to-create-libgdx-main-menu-screen
+// How to set up the classes and screens: https://mfg.fhstp.ac.at/development/erste-schritte-mit-libgdx-android/
 public class StartScreen implements Screen{
 
 
@@ -39,7 +42,9 @@ public class StartScreen implements Screen{
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        viewport = new FitViewport(800,800, camera);
+
+        //TODO Set the view of the Screen, not sure how much
+        viewport = new FitViewport(800,480, camera);
         viewport.apply();
 
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
@@ -99,12 +104,18 @@ public class StartScreen implements Screen{
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        stage.act();
+        stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        camera.update();
     }
 
     @Override
