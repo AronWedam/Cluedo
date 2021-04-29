@@ -2,7 +2,7 @@ package com.cluedo.game;
 
 import com.badlogic.gdx.Screen;
 
-public class MenuScreen implements Screen {
+public class OptionsScreen implements Screen {
 
 
     @Override

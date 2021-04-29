@@ -1,19 +1,20 @@
 package com.cluedo.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 //Test Nejc Branch
-public class GameClass extends ApplicationAdapter {
+public class GameClass extends Game {
 	SpriteBatch batch;
 	Texture img;
-	
+
+	//when we start the game, this is the first screen that shows
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		setScreen(new StartScreen());
 	}
 
 	@Override
