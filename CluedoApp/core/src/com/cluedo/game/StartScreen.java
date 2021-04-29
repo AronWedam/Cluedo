@@ -22,6 +22,7 @@ import sun.security.pkcs11.wrapper.Constants;
 
 public class StartScreen implements Screen{
 
+
     private SpriteBatch batch;
     protected Stage stage;
     private Viewport viewport;
@@ -32,12 +33,17 @@ public class StartScreen implements Screen{
 
     public StartScreen(){
 
+
         atlas = new TextureAtlas("skin.atlas");
-        skin = new Skin(Gdx.files.internal("skin.json"),atlas);
+        skin = new Skin(Gdx.files.internal("skin.json"), atlas);
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        viewport = new FitViewport(800,800,camera);
+        viewport = new FitViewport(800,800, camera);
+        viewport.apply();
+
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        camera.update();
 
         stage = new Stage(viewport, batch);
     }
@@ -47,6 +53,7 @@ public class StartScreen implements Screen{
     @Override
     public void show() {
 
+        //Stage controls the input
         Gdx.input.setInputProcessor(stage);
 
         //Create Table
@@ -85,6 +92,9 @@ public class StartScreen implements Screen{
         mainTable.add(optionsBtn);
         mainTable.add(exitBtn);
 
+        //Add table to stage
+        stage.addActor(mainTable);
+
     }
 
     @Override
@@ -114,6 +124,7 @@ public class StartScreen implements Screen{
 
     @Override
     public void dispose() {
-
+        skin.dispose();
+        atlas.dispose();
     }
 }

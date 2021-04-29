@@ -12,6 +12,7 @@ public class GameClass extends Game {
 	Texture img;
 
 	//when we start the game, this is the first screen that shows
+	//Source: https://gamedev.stackexchange.com/questions/75324/android-libgdx-game-choosing-starting-activity
 	@Override
 	public void create () {
 		setScreen(new StartScreen());
