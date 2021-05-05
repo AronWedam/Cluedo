@@ -95,11 +95,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         player.render(camera, game.batch, player.getX(), player.getY(), piece.width, piece.height);
 
 
-        if(Gdx.input.isTouched(0)) {
+        if(Gdx.input.justTouched()) {
             if(Gdx.input.getX(0) >= player.getX()-1 || Gdx.input.getX(0) <= player.getX()+1 && Gdx.input.getY(0) >= player.getY()-1 || Gdx.input.getY(0) <= player.getY()+1) {
-                if(Gdx.input.isTouched(1)) {
+                if(Gdx.input.justTouched()) {
                     Vector3 touchPos = new Vector3();
-                    touchPos.set(Gdx.input.getX(1), Gdx.input.getY(1), 0);
+                    touchPos.set(Gdx.input.getX(0), Gdx.input.getY(0), 0);
                     camera.unproject(touchPos);
 
 
