@@ -19,6 +19,7 @@ public class Player {
         this.texture = texture;
     }
 
+    // Display Player
     public void render(OrthographicCamera camera, SpriteBatch batch, float x, float y, float width, float height){
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -27,10 +28,12 @@ public class Player {
     }
 
 
+    //Set Player position
     public void setPos(int x, int y){
         this.x = x;
         this.y = y;
 
+        //Make Sure it keeps inside Gameboard
         if(this.x < 0) this.x = 0;
         if(this.y < 0) this.y = 0;
 
