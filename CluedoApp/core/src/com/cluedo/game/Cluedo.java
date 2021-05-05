@@ -20,7 +20,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     private GameClass game;
 
-    Vector2 firstStartPos = new Vector2(320,1);
+    Vector2 firstStartPos = new Vector2(0,0);
 
     private Player player;
     Rectangle piece;
@@ -32,6 +32,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     private OrthographicCamera camera;
 
     private TiledMap map;
+    public CluedoMap cluedoMap = new CluedoMap();
 
     float currentZoom;
 
@@ -60,13 +61,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         //create a Rectangle to logically represent one player
         piece = new Rectangle();
-        piece.x = 321;
-        piece.y = 1;
+        piece.x = 0;
+        piece.y = 0;
         piece.width = 30;
         piece.height = 30;
 
         //create the player
-        player = new Player(gamepieceBlue);
+        player = new Player(gamepieceBlue, cluedoMap);
         player.setPos((int)firstStartPos.x, (int)firstStartPos.y);
     }
 

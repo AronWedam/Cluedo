@@ -4,10 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public class CluedoMap {
 
-    private Vector2[][] mapconstants = new Vector2[29][29];
+    public Vector2[][] mapconstants = new Vector2[29][29];
 
     public CluedoMap(){
-
+        setup();
     }
 
     public void setup() {
@@ -25,13 +25,15 @@ public class CluedoMap {
 
         for(int i = 0; i < mapconstants.length; i++){
             for(int j = 0; j < mapconstants[i].length; j++){
-                mapconstants[i][j].x = t;
-                mapconstants[i][j].y = u;
+                mapconstants[i][j].y = t;
+                mapconstants[i][j].x = u;
                 t += 32;
             }
             t = 0;
             u = u + 32;
         }
+
     }
+
 
 }
