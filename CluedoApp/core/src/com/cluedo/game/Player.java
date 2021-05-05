@@ -13,21 +13,10 @@ public class Player {
 
     Texture texture;
 
-    public int x,y;
-    public int dx, dy;
-    public int width, height;
-    public double area;
+    private int x,y;
 
     public Player(Texture texture){
         this.texture = texture;
-        width = 1150;
-        height = 500;
-        area = width*height;
-        x = Gdx.graphics.getWidth()/2;
-        y = Gdx.graphics.getHeight()/2;
-        dx = 5;
-        dy = 5;
-
     }
 
     public void render(OrthographicCamera camera, SpriteBatch batch, float x, float y, float width, float height){
@@ -41,6 +30,13 @@ public class Player {
     public void setPos(int x, int y){
         this.x = x;
         this.y = y;
+
+        if(this.x < 0) this.x = 0;
+        if(this.y < 0) this.y = 0;
+
+        if(this.x > 32*28) this.x = 32*28;
+        if(this.y > 32*28) this.y = 32*28;
+
     }
 
     public void update(){
@@ -51,5 +47,18 @@ public class Player {
     }
     public int getY(){
         return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+        if(this.x < 0) this.x = 0;
+        if(this.x > 32*28) this.x = 32*28;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+        if(this.y < 0) this.y = 0;
+        if(this.y > 32*28) this.y = 32*28;
+
     }
 }

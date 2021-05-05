@@ -13,6 +13,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
 
@@ -77,6 +79,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     @Override
     public void render (float delta) {
 
+
         //clear the screen
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -86,9 +89,44 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         renderer.render();
         camera.update();
 
-        //
-        player.render(camera, game.batch,piece.x, piece.y, piece.width, piece.height);
+        game.batch.setProjectionMatrix(camera.combined);
 
+        //
+        player.render(camera, game.batch, player.getX(), player.getY(), piece.width, piece.height);
+
+
+        if(Gdx.input.isTouched(0)) {
+            if(Gdx.input.getX(0) >= player.getX()-1 || Gdx.input.getX(0) <= player.getX()+1 && Gdx.input.getY(0) >= player.getY()-1 || Gdx.input.getY(0) <= player.getY()+1) {
+                if(Gdx.input.isTouched(1)) {
+                    Vector3 touchPos = new Vector3();
+                    touchPos.set(Gdx.input.getX(1), Gdx.input.getY(1), 0);
+                    camera.unproject(touchPos);
+
+
+                    if(touchPos.x > player.getX() || touchPos.y > player.getY()) {
+                        if(touchPos.x > player.getX()) {
+                            player.setPos((int) player.getX() + 32, player.getY());
+                            if(touchPos.y > player.getY()){
+                                player.setPos((int) player.getX(), player.getY()+32);
+                            }
+                        } else
+                            if(touchPos.y > player.getY()){
+                                player.setPos((int) player.getX(), player.getY()+32);
+                        }
+                        if(touchPos.x < player.getX() || touchPos.y < player.getY()) {
+                            if (touchPos.x < player.getX()) {
+                                player.setPos((int) player.getX() - 32, player.getY());
+                                if (touchPos.y < player.getY()) {
+                                    player.setPos((int) player.getX(), player.getY() - 32);
+                                }
+                            } else if (touchPos.y < player.getY()) {
+                                player.setPos((int) player.getX(), player.getY() - 32);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -131,7 +169,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     @Override
     public boolean longPress(float x, float y) {
-        return false;
+        return true;
     }
 
     @Override
@@ -143,7 +181,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         camera.translate(-deltaX/2, deltaY/2);
         camera.update();
-        return true;
+        return false;
     }
 
     @Override
@@ -157,7 +195,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     public boolean zoom(float initialDistance, float distance) {
         camera.zoom = (initialDistance / distance) * currentZoom;
         camera.update();
-        return true;
+        return false;
     }
 
     @Override
