@@ -42,6 +42,7 @@ public class Player {
         int a = (int) cluedoMap.mapconstants[8][0].x;
 
         //first wall collision detection
+        //TODO set for every wall on the Gameboard
         if(x == (int) cluedoMap.mapconstants[8][0].x && y == (int) cluedoMap.mapconstants[8][0].y) return;
         if(x == (int) cluedoMap.mapconstants[8][1].x && y == (int) cluedoMap.mapconstants[8][1].y) return;
         if(x == (int) cluedoMap.mapconstants[8][2].x && y == (int) cluedoMap.mapconstants[8][2].y) return;
