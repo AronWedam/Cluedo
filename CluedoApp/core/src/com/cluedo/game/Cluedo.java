@@ -105,8 +105,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     touchPos.set(Gdx.input.getX(0), Gdx.input.getY(0), 0);
                     camera.unproject(touchPos);
 
-                    //Make move in touched direction#
-                    // TODO can't go left-down - don't know why
+                    //Make move in touched direction
+                    // TODO can't go left-down - don't know why - needs general improvement
                     if(touchPos.x > player.getX() || touchPos.y > player.getY()) {
                         if(touchPos.x > player.getX()) {
                             player.setPos((int) player.getX() + 32, player.getY());
@@ -123,8 +123,9 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                                 if (touchPos.y < player.getY()) {
                                     player.setPos((int) player.getX(), player.getY() - 32);
                                 }
-                            } else if (touchPos.y < player.getY()) {
-                                player.setPos((int) player.getX(), player.getY() - 32);
+                            } else
+                                if (touchPos.y < player.getY()) {
+                                    player.setPos((int) player.getX(), player.getY() - 32);
                             }
                         }
                     }
