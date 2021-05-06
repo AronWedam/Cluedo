@@ -20,7 +20,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 
-=======
+
 public class GameClass extends ApplicationAdapter implements GestureDetector.GestureListener{
 
 	GestureDetector gestureDetector;
