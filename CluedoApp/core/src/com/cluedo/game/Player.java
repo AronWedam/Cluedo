@@ -32,26 +32,11 @@ public class Player {
 
     //Set Player position
     public void setPos(int x, int y){
-        //Make Sure it keeps inside Gameboard
-        if(x < 0) return;
-        if(y < 0) return;
 
-        if(x > 32*28) return;
-        if(y > 32*28) return;
-
-        int a = (int) cluedoMap.mapconstants[8][0].x;
-
-        //first wall collision detection
-        //TODO set for every wall on the Gameboard
-        if(x == (int) cluedoMap.mapconstants[8][0].x && y == (int) cluedoMap.mapconstants[8][0].y) return;
-        if(x == (int) cluedoMap.mapconstants[8][1].x && y == (int) cluedoMap.mapconstants[8][1].y) return;
-        if(x == (int) cluedoMap.mapconstants[8][2].x && y == (int) cluedoMap.mapconstants[8][2].y) return;
-        if(x == (int) cluedoMap.mapconstants[8][3].x && y == (int) cluedoMap.mapconstants[8][3].y) return;
-        if(x == (int) cluedoMap.mapconstants[8][4].x && y == (int) cluedoMap.mapconstants[8][4].y) return;
-        if(x == (int) cluedoMap.mapconstants[8][5].x && y == (int) cluedoMap.mapconstants[8][5].y) return;
-
-        this.x = x;
-        this.y = y;
+        if(valid(x,y)){
+            this.x = x;
+            this.y = y;
+        }
     }
 
     public void update(){
@@ -75,5 +60,28 @@ public class Player {
         if(this.y < 0) this.y = 0;
         if(this.y > 32*28) this.y = 32*28;
 
+    }
+
+    /**
+     * checks if desired move is valid
+     * @param x
+     * @param y
+     * @return true if move to desired tile is possile
+     */
+
+    public boolean valid(int x, int y){
+
+        //Make Sure it keeps inside Gameboard
+        if(x < 0) return false;
+        if(y < 0) return false;
+
+        if(x > 32*28) return false;
+        if(y > 32*28) return false;
+
+        //check if tile is blocked
+        for(int i = 0; i < cluedoMap.invalidtiles.length-1; i++){
+            if(cluedoMap.invalidtiles[i].x == x && cluedoMap.invalidtiles[i].y == y) return false;
+        }
+       return true;
     }
 }

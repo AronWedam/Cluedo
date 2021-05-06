@@ -109,15 +109,15 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     //Make move in touched direction
                     // TODO can't go left-down - don't know why - needs general improvement
                     if(touchPos.x > player.getX() || touchPos.y > player.getY()) {
-                        if(touchPos.x > player.getX()) {
+                        if (touchPos.x > player.getX()) {
                             player.setPos((int) player.getX() + 32, player.getY());
-                            if(touchPos.y > player.getY()){
-                                player.setPos((int) player.getX(), player.getY()+32);
+                            if (touchPos.y > player.getY()) {
+                                player.setPos((int) player.getX(), player.getY() + 32);
                             }
-                        } else
-                            if(touchPos.y > player.getY()){
-                                player.setPos((int) player.getX(), player.getY()+32);
+                        } else if (touchPos.y > player.getY()) {
+                            player.setPos((int) player.getX(), player.getY() + 32);
                         }
+                    }
                         if(touchPos.x < player.getX() || touchPos.y < player.getY()) {
                             if (touchPos.x < player.getX()) {
                                 player.setPos((int) player.getX() - 32, player.getY());
@@ -133,7 +133,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
             }
         }
-    }
 
     @Override
     public void resize(int width, int height) {
