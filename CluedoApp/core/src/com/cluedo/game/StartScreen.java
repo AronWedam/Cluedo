@@ -46,7 +46,7 @@ public class StartScreen implements Screen {
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
-            game.setScreen(new MenuScreen(game));
+            game.setScreen(new MenuScreen());
             dispose();
         }
     }
