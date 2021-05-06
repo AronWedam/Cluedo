@@ -1,121 +1,59 @@
 package com.cluedo.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.ScreenUtils;
 
-import javax.xml.soap.Text;
+public class StartScreen implements Screen {
 
-import sun.security.pkcs11.wrapper.Constants;
+    final GameClass game;
+    OrthographicCamera camera;
 
-//Source: https://stackoverflow.com/questions/32451921/how-to-create-libgdx-main-menu-screen
-// How to set up the classes and screens: https://mfg.fhstp.ac.at/development/erste-schritte-mit-libgdx-android/
-public class StartScreen implements Screen{
+    private Texture Logo1;
 
 
-    private SpriteBatch batch;
-    protected Stage stage;
-    private Viewport viewport;
-    private OrthographicCamera camera;
-
-    private TextureAtlas atlas;
-    protected Skin skin;
-
-    public StartScreen(){
-
-
-        atlas = new TextureAtlas("skin.atlas");
-        skin = new Skin(Gdx.files.internal("skin.json"), atlas);
-
-        batch = new SpriteBatch();
+    public StartScreen(final GameClass game){
+        this.game = game;
         camera = new OrthographicCamera();
+        camera.setToOrtho(false, 400, 800);
+        camera.rotate(0);
 
-        //TODO Set the view of the Screen, not sure how much
-        viewport = new FitViewport(800,480, camera);
-        viewport.apply();
-
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-        camera.update();
-
-        stage = new Stage(viewport, batch);
+        Logo1 = new Texture(Gdx.files.internal("CLUEDO.png"));
     }
-
 
 
     @Override
     public void show() {
 
-        //Stage controls the input
-        Gdx.input.setInputProcessor(stage);
-
-        //Create Table
-        Table mainTable = new Table();
-        mainTable.setFillParent(true);
-        mainTable.top();
-
-        //Create Buttons
-        TextButton startBtn = new TextButton("Start Game",skin);
-        TextButton optionsBtn = new TextButton("Options",skin);
-        TextButton exitBtn = new TextButton("Exit Game",skin);
-
-        //Add listeners to buttons
-        startBtn.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                //TODO add path to game
-            }
-        });
-        //If clicked exit the game
-        exitBtn.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
-        //If clicked go to Options menu
-        optionsBtn.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsScreen());}
-        });
-
-        //Add Buttons to the table
-        mainTable.add(startBtn);
-        mainTable.add(optionsBtn);
-        mainTable.add(exitBtn);
-
-        //Add table to stage
-        stage.addActor(mainTable);
-
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.act();
-        stage.draw();
+        camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
+
+        game.batch.begin();
+        game.batch.draw(Logo1,-50,320);
+        game.font.draw(game.batch, "Welcome to CLUEDO!!! ", 130, 450);
+        game.font.draw(game.batch, "Tap anywhere to begin!", 130, 400);
+        game.batch.end();
+
+        if (Gdx.input.isTouched()) {
+            game.setScreen(new MenuScreen(game));
+            dispose();
+        }
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-        camera.update();
+
     }
 
     @Override
@@ -135,7 +73,7 @@ public class StartScreen implements Screen{
 
     @Override
     public void dispose() {
-        skin.dispose();
-        atlas.dispose();
+
     }
 }
+
