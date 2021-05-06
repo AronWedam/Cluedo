@@ -1,5 +1,6 @@
 package com.cluedo.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -7,9 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -49,20 +54,42 @@ public class RulesScreen implements Screen {
         title.setY(780);
         title.setWidth(200);
         stage.addActor(title);
-        String text= "Go from room to room with your detective colleagues and interpret the clues correctly " +
+        String text = "Go from room to room with your detective colleagues and interpret the clues correctly " +
                 "until one of you manages to solve the murder case. In each room, you suspect all players again, " +
                 "until the circle of suspects shrink" +
                 "You can use the dice to determine who is allowed to start. " +
-                "Whoever rolls the highest value with both dice may start." +'\n'+
-                "Whoever’s turn has to complete three phases one after the other:" +'\n' +
-                "1. Roll the dice. Move and enter a Room when possible" +"\n" +
-                "2. Question your teammates and collect clues"+"\n" +
+                "Whoever rolls the highest value with both dice starts." + '\n' +
+                "Whoever’s turn has to complete three phases one after the other:" + '\n' +
+                "1. Roll the dice. Move and enter a Room when possible" + "\n" +
+                "2. Question your teammates and collect clues" + "\n" +
                 "3. Cross the clues you received off on the notepad and end your turn";
 
         batch.begin();
-        font.draw(batch, text, 20,600);
+        font.draw(batch, text, 20, 600);
         batch.end();
 
+        Button playGame = new TextButton("Play Game", skin);
+        Button backToMenu = new TextButton("Back to Menu", skin);
+
+        playGame.setSize(100, 50);
+        playGame.setPosition(20, 20);
+
+        backToMenu.setSize(100, 50);
+        backToMenu.setPosition(150, 20);
+
+        playGame.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //TODO add path to game
+            }
+        });
+
+        backToMenu.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+            }
+        });
     }
 
     @Override
