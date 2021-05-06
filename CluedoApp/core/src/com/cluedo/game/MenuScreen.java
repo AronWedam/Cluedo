@@ -83,6 +83,14 @@ import sun.security.pkcs11.wrapper.Constants;
                     //TODO add path to game
                 }
             });
+
+            rulesBtn.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    ((Game)Gdx.app.getApplicationListener()).setScreen(new RulesScreen());
+                }
+            });
+
             //If clicked exit the game
             exitBtn.addListener(new ClickListener(){
                 @Override
@@ -90,6 +98,7 @@ import sun.security.pkcs11.wrapper.Constants;
                     Gdx.app.exit();
                 }
             });
+
             //If clicked go to Options menu
             optionsBtn.addListener(new ClickListener(){
                 @Override
@@ -99,6 +108,7 @@ import sun.security.pkcs11.wrapper.Constants;
 
             //Add Buttons to the table
             mainTable.add(startBtn);
+            mainTable.add(rulesBtn);
             mainTable.add(optionsBtn);
             mainTable.add(exitBtn);
 

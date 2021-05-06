@@ -76,6 +76,7 @@ public class RulesScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        skin.dispose();
+        atlas.dispose();
     }
 }
