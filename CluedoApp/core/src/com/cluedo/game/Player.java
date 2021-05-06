@@ -1,13 +1,17 @@
 package com.cluedo.game;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import java.lang.reflect.Array;
 
 public class Player {
+  
+     private static CardHandOut cardHandOut;
 
     SpriteBatch batch;
 
@@ -83,5 +87,12 @@ public class Player {
             if(cluedoMap.invalidtiles[i].x == x && cluedoMap.invalidtiles[i].y == y) return false;
         }
        return true;
+    }
+
+
+    public static void myCards() {
+        int mySuspectCard = cardHandOut.handOutSuspect();
+        int myWeaponCard = cardHandOut.handOutWeapon();
+        int myRoomCard = cardHandOut.handOutRoom();
     }
 }
