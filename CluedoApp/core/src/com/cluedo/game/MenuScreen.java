@@ -72,6 +72,7 @@ import sun.security.pkcs11.wrapper.Constants;
 
             //Create Buttons
             TextButton startBtn = new TextButton("Start Game",skin);
+            TextButton rulesBtn= new TextButton("Rules", skin);
             TextButton optionsBtn = new TextButton("Options",skin);
             TextButton exitBtn = new TextButton("Exit Game",skin);
 
