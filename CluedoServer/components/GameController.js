@@ -43,7 +43,7 @@ router.get('/checkGameState', function (req, res) {
   }
 });
 
-//Posting the new position
+//Posting the new position and updating the player
 router.post('/playerMoved', function (req, res) {
   let x = req.body.x;
   let y = req.body.y;

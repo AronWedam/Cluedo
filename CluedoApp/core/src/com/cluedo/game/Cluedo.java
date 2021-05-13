@@ -31,6 +31,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     private GameClass game;
+    private ConnectionService connectionService;
 
     Vector2 firstStartPos = new Vector2(0,0);
 
@@ -74,6 +75,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     public Cluedo(final GameClass game){
         this.game = game;
+        connectionService = new ConnectionService();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
 
