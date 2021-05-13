@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 public class CardHandOut {
-
-
+    
     public int handOutSuspect(){
         List<Integer> list = Cards.getSuspectCards();
         Random rand = new Random();
@@ -32,6 +31,5 @@ public class CardHandOut {
 
         return myRoomCard;
     }
-
 
 }
