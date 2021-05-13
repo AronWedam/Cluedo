@@ -33,7 +33,6 @@ public class StartScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
@@ -43,6 +42,7 @@ public class StartScreen implements Screen {
         game.batch.draw(Logo1,-50,320);
         game.font.draw(game.batch, "Welcome to CLUEDO!!! ", 130, 450);
         game.font.draw(game.batch, "Tap anywhere to begin!", 130, 400);
+        Gdx.gl.glClearColor(53/255f, 28/255f, 67/255f, 1);
         game.batch.end();
 
         if (Gdx.input.isTouched()) {

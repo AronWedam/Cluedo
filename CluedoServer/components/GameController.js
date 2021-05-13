@@ -17,14 +17,15 @@ router.get('/', function (req, res) {
 
 //Route for the players to register to a game
 router.post('/register', function (req, res) {
-  players.push({ id: uuidv4(), userName: req.body.Username });
+  let playerId = uuidv4();
+  players.push({ id: playerId, userName: req.body.Username, x: 0, y: 0 });
 
   if (!stopwatchRunning) {
     stopwatch.start();
     stopwatchRunning = true;
   }
 
-  res.status(200).send();
+  res.status(200).send(playerId);
 });
 
 //Route for the players to check if the game
@@ -40,6 +41,28 @@ router.get('/checkGameState', function (req, res) {
   } else {
     res.status(212).json({ Info: 'Still waiting for other players.' });
   }
+});
+
+//Posting the new position
+router.post('/playerMoved', function (req, res) {
+  let x = req.body.x;
+  let y = req.body.y;
+
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].id === req.body.playerId) {
+      players[i].x = x;
+      players[i].y = y;
+      currentPlayer = players[i];
+    }
+  }
+
+  console.log(currentPlayer);
+  res.status(200).send();
+});
+
+//Getting the new Gamestate
+router.get('/gameChanged', function (req, res) {
+  res.status(200).send(players);
 });
 
 module.exports = router;
