@@ -1,7 +1,13 @@
 package com.cluedo.game;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.Random;
 
@@ -44,7 +50,21 @@ public class Dice implements Screen {
     public void show() {
         batch=new SpriteBatch();
         img=new Texture("dice_transparent.png");
-        
+
+
+        Button RollDice = new TextButton("Roll Dice", skin);
+
+
+        RollDice.setSize(100, 50);
+        RollDice.setPosition(20, 20);
+
+
+        RollDice.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //TODO add path to game
+            }
+        });
     }
 
     @Override
