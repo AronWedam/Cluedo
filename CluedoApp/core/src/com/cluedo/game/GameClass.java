@@ -14,7 +14,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameClass extends ApplicationAdapter implements GestureDetector.GestureListener{
 
@@ -27,8 +31,11 @@ public class GameClass extends ApplicationAdapter implements GestureDetector.Ges
 
 	private TiledMap map;
 
+
 	float currentZoom;
-	
+	//Viewport viewport;
+
+
 	@Override
 	public void create () {
 
@@ -44,6 +51,11 @@ public class GameClass extends ApplicationAdapter implements GestureDetector.Ges
 		camera.rotate(180);
 
 		Gdx.input.setInputProcessor(gestureDetector);
+
+		//is not working
+		//float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
+		//viewport = new FitViewport(w + aspectRatio, h/2, camera);
+		//viewport.apply();
 
 	}
 
