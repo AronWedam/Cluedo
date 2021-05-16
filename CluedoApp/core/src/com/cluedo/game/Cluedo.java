@@ -37,6 +37,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     float currentZoom;
 
     Texture gamepieceBlue;
+    Texture colMustard;
+    Texture mr_green;
+    Texture mrs_peacock;
+    Texture mrs_scarlet;
+    Texture mrs_white;
+    Texture prof_plum;
 
 
     public Cluedo(final GameClass game){
@@ -58,6 +64,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         //load images
         gamepieceBlue = new Texture("Gamepiece_blue.png");
+
+        colMustard = new Texture("Col_Mustard.png");
+        mr_green = new Texture("Mr_Green.png");
+        mrs_peacock = new Texture("Mrs_Peacock.png");
+        mrs_scarlet = new Texture("Mrs_Scarlet.png");
+        mrs_white = new Texture("Mrs_White.png");
+        prof_plum = new Texture("Prof_Plum.png");
 
         //create a Rectangle to logically represent one player
         piece = new Rectangle();
@@ -107,7 +120,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     camera.unproject(touchPos);
 
                     //Make move in touched direction
-                    // TODO can't go left-down - don't know why - needs general improvement
                     if(touchPos.x > player.getX() || touchPos.y > player.getY()) {
                         if (touchPos.x > player.getX()) {
                             player.setPos((int) player.getX() + 32, player.getY());

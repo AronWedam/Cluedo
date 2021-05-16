@@ -8,6 +8,8 @@ public class CluedoMap {
 
     public Vector2[] invalidtiles = new Vector2[200];
 
+    public Vector2[] roomTiles = new Vector2[15];
+
     public CluedoMap(){
         setup();
     }
@@ -38,6 +40,26 @@ public class CluedoMap {
         for(int i = 0; i < invalidtiles.length; i++){
             invalidtiles[i] = new Vector2();
         }
+
+        for(int i = 0; i < roomTiles.length; i++){
+            roomTiles[i] = new Vector2();
+        }
+
+        //room entrances
+        roomTiles[0] = mapconstants[7][6];
+        roomTiles[1] = mapconstants[6][13];
+        roomTiles[2] = mapconstants[8][16];
+        roomTiles[3] = mapconstants[6][23];
+        roomTiles[4] = mapconstants[12][22];
+        roomTiles[5] = mapconstants[13][22];
+        roomTiles[6] = mapconstants[14][22];
+        roomTiles[7] = mapconstants[15][22];
+        roomTiles[8] = mapconstants[16][22];
+        roomTiles[9] = mapconstants[17][22];
+        roomTiles[10] = mapconstants[22][17];
+        roomTiles[11] = mapconstants[26][15];
+        roomTiles[12] = mapconstants[22][11];
+        roomTiles[13] = mapconstants[23][5];
 
         //left corner lower room
         invalidtiles[0] = mapconstants[8][0];
