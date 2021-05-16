@@ -5,9 +5,15 @@ const stopwatch = new Stopwatch();
 var router = express.Router();
 
 //Array that holds up to 5 users which will play together
-let players = [];
+let players = [
+  { id: '1234', username: 'Alex' },
+  { id: '2346', username: 'Mira' },
+  { id: '1246', username: 'Sarah' },
+  { id: '5232', username: 'Aron' },
+];
+
 //Array of all current Games running
-let currentGames = [];
+let currentGames = [{ id: '5431', players: players }];
 let stopwatchRunning = false;
 
 // define the home page route
@@ -61,8 +67,12 @@ router.post('/playerMoved', function (req, res) {
 });
 
 //Getting the new Gamestate
-router.get('/gameChanged', function (req, res) {
-  res.status(200).send(players);
+router.get('/:id', function (req, res) {
+  let id = req.params.id;
+  let retGame = currentGames.filter((x) => x.id === id);
+
+  if (retGame.length > 0) res.status(200).send(retGame[0]);
+  else res.send(404).send();
 });
 
 module.exports = router;

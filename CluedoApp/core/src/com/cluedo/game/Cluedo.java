@@ -17,6 +17,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.cluedo.game.network.NetworkPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -31,13 +35,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     private GameClass game;
-    private ConnectionService connectionService;
-
+    private com.cluedo.game.network.ConnectionService connectionService;
     Vector2 firstStartPos = new Vector2(0,0);
-
     private Player player;
     Rectangle piece;
 
+    private List<Player> players;
+    private List<Rectangle> pieces;
 
     GestureDetector gestureDetector;
 
@@ -57,7 +61,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     Texture mrs_white;
     Texture prof_plum;
 
-    //
     private final Viewport viewport = new ScreenViewport();
     Table innerTable;
     Table outerTable;
@@ -71,11 +74,20 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     private TextureAtlas atlas;
     protected Skin skin;
 
-//
-
-    public Cluedo(final GameClass game){
+    public Cluedo(final GameClass game) throws InterruptedException {
         this.game = game;
-        connectionService = new ConnectionService();
+        players = new ArrayList<>();
+        pieces = new ArrayList<>();
+        //Get the Players of the Current Game
+        connectionService = com.cluedo.game.network.ConnectionService.GetInstance();
+        Thread GetGameThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                connectionService.GetGame("5431");
+            }
+        });
+        GetGameThread.start();
+        GetGameThread.join();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
 
@@ -95,7 +107,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         //load images
         gamepieceBlue = new Texture("Gamepiece_blue.png");
-
         colMustard = new Texture("Col_Mustard.png");
         mr_green = new Texture("Mr_Green.png");
         mrs_peacock = new Texture("Mrs_Peacock.png");
@@ -103,22 +114,37 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         mrs_white = new Texture("Mrs_White.png");
         prof_plum = new Texture("Prof_Plum.png");
 
-        //create a Rectangle to logically represent one player
-        piece = new Rectangle();
-        piece.x = 0;
-        piece.y = 0;
-        piece.width = 30;
-        piece.height = 30;
+        for(int i=0; i<connectionService.getPlayers().size(); i++) {
+            if (i == 0) {
+                piece = new Rectangle();
+                piece.x = 0;
+                piece.y = 0;
+                piece.width = 30;
+                piece.height = 30;
 
-        //create the player
-        player = new Player(gamepieceBlue, cluedoMap);
-        player.setPos((int)firstStartPos.x, (int)firstStartPos.y);
+                //create the player
+                player = new Player(gamepieceBlue, cluedoMap, (int) piece.x, (int) piece.y);
+                players.add(player);
+                pieces.add(piece);
+            } else {
+                //create a Rectangle to logically represent one player
+                Rectangle rect = new Rectangle();
+                rect.x = 30 * i;
+                rect.y = 0;
+                rect.width = 30;
+                rect.height = 30;
+
+                //create the player
+                Player otherPlayer = new Player(gamepieceBlue, cluedoMap, (int) rect.x, (int) rect.y);
+                players.add(otherPlayer);
+                pieces.add(rect);
+            }
+        }
 
         //batch for the viewportNotebook method
         Notebookbatch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.RED);
-
     }
 
 
@@ -129,6 +155,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     @Override
     public void render (float delta) {
+
 
         //clear the screen
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -144,10 +171,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         game.batch.setProjectionMatrix(camera.combined);
 
-        player.render(camera, game.batch, player.getX(), player.getY(), piece.width, piece.height);
-
-
-
+        for (int i=0; i<players.size(); i++) {
+            Player currentPlayer = players.get(i);
+            Rectangle currentPiece = pieces.get(i);
+            currentPlayer.render(camera, game.batch, currentPlayer.getX(), currentPlayer.getY(), currentPiece.width, currentPiece.height);
+        }
 
         //Single Touch enables player Movement for 1 Tile
         if(Gdx.input.justTouched()) {

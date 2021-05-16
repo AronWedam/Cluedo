@@ -9,13 +9,18 @@ public class GameClass extends Game {
 	public BitmapFont font;
 
 	public GameClass () {
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-        this.setScreen(new Cluedo(this));
+
     }
 
 	@Override
 	public void create () {
+		batch = new SpriteBatch();
+		font = new BitmapFont();
+		try {
+			this.setScreen(new Cluedo(this));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

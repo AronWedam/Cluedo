@@ -25,6 +25,13 @@ public class Player {
         this.texture = texture; this. cluedoMap = cluedoMap;
     }
 
+    public Player(Texture texture, CluedoMap cluedoMap, int x, int y){
+        this.texture = texture;
+        this.cluedoMap = cluedoMap;
+        this.x = x;
+        this.y = y;
+    }
+
     // Display Player
     public void render(OrthographicCamera camera, SpriteBatch batch, float x, float y, float width, float height){
         batch.setProjectionMatrix(camera.combined);

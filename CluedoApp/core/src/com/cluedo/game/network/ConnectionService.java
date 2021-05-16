@@ -1,6 +1,12 @@
-package com.cluedo.game;
+package com.cluedo.game.network;
 import com.badlogic.gdx.Gdx;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -8,25 +14,41 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-class ConnectionService {
+public class ConnectionService {
 
     private OkHttpClient client;
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-    private static final String Url = "https://se2ss21cluedo.herokuapp.com/";
+    private static final String Url = "http://10.0.0.4:3000/";
     //"Free" Error Code. Signals that something in the Method for calling the server failed
     private final int ServerErrorCode = 512;
     private String GameId;
+    private List<NetworkPlayer> players;
+    private static ConnectionService instance;
 
-    public ConnectionService() {
+    private ConnectionService() {
         client = new OkHttpClient();
+        players = new ArrayList<>();
+    }
+
+    public static ConnectionService GetInstance() {
+        if (instance == null)
+            instance = new ConnectionService();
+
+        return instance;
+    }
+
+    public String GetGameId() {return GameId;}
+
+    public List<NetworkPlayer> getPlayers() {
+        return players;
     }
 
     /*
-        Method to register for a game with a username.
-        Takes in the username.
-        Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
-    */
+            Method to register for a game with a username.
+            Takes in the username.
+            Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
+        */
     public int RegisterForGame(String username)
     {
         try {
@@ -61,6 +83,7 @@ class ConnectionService {
             Response response = client.newCall(request).execute();
             JSONObject jsonObject = new JSONObject(response.body());
             GameId = jsonObject.getString("gameId");
+            JSONArray playerArray = jsonObject.getJSONArray("players");
             return response.code();
         } catch (Exception ex) {
             Gdx.app.log("Check Registration Error", ex.getMessage());
@@ -90,6 +113,32 @@ class ConnectionService {
             return response.code();
         } catch (Exception ex) {
             Gdx.app.log("Posting New Position Error", ex.getMessage());
+        }
+
+        return ServerErrorCode;
+    }
+
+    public int GetGame(String id) {
+        try {
+            Request request = new Request.Builder()
+                    .url(Url + "games/" + id)
+                    .get()
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            if (response.code() == 200) {
+                JSONObject jsonObject = new JSONObject(response.body().string());
+                JSONArray playerArray = jsonObject.getJSONArray("players");
+
+                for (int i=0; i<playerArray.length(); i++) {
+                    JSONObject playerObject = playerArray.getJSONObject(i);
+                    players.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username")));
+                }
+            }
+
+            return response.code();
+        } catch (Exception ex) {
+            Gdx.app.log("Get Game Error", ex.getMessage());
         }
 
         return ServerErrorCode;
