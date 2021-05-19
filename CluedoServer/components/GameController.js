@@ -10,6 +10,7 @@ let players = [];
 //Array of all current Games running
 let currentGames = [];
 let stopwatchRunning = false;
+let positionCounter = 0;
 
 // define the home page route
 router.get('/', function (req, res) {
@@ -19,13 +20,19 @@ router.get('/', function (req, res) {
 //Route for the players to register to a game
 router.post('/register', function (req, res) {
   let playerId = uuidv4();
-  players.push({ id: playerId, username: req.body.Username, x: 0, y: 0 });
+  players.push({
+    id: playerId,
+    username: req.body.Username,
+    x: positionCounter * 30,
+    y: 0,
+  });
 
   if (!stopwatchRunning) {
     stopwatch.start();
     stopwatchRunning = true;
   }
 
+  positionCounter++;
   res.status(200).send({ playerId: playerId });
 });
 
@@ -64,6 +71,7 @@ router.post('/playerMoved', function (req, res) {
 router.get('/reset', function (req, res) {
   players = [];
   currentGames = [];
+  positionCounter = 0;
   stopwatch.stop();
   res.send(200).send();
 });

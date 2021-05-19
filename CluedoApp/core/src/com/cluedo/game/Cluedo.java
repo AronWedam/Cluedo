@@ -112,11 +112,18 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         mrs_white = new Texture("Mrs_White.png");
         prof_plum = new Texture("Prof_Plum.png");
 
+        SyncNetworkPlayersWithGamePlayers();
+    }
+
+    private void SyncNetworkPlayersWithGamePlayers() {
+        players = new ArrayList<>();
+        pieces = new ArrayList<>();
+
         for(int i=0; i<connectionService.getPlayers().size(); i++) {
-            if (i == 0) {
+            if (connectionService.getPlayers().get(i).getId().equals(connectionService.GetPlayerId())) {
                 piece = new Rectangle();
-                piece.x = 0;
-                piece.y = 0;
+                piece.x = connectionService.getPlayers().get(i).getX();
+                piece.y = connectionService.getPlayers().get(i).getY();
                 piece.width = 30;
                 piece.height = 30;
 
@@ -127,8 +134,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
             } else {
                 //create a Rectangle to logically represent one player
                 Rectangle rect = new Rectangle();
-                rect.x = 30 * i;
-                rect.y = 0;
+                rect.x = connectionService.getPlayers().get(i).getX();
+                rect.y = connectionService.getPlayers().get(i).getY();
                 rect.width = 30;
                 rect.height = 30;
 
@@ -145,7 +152,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         font.setColor(Color.RED);
     }
 
-
     @Override
     public void show() {
 
@@ -153,13 +159,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     @Override
     public void render (float delta) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.GetGame(connectionService.GetGameId());
-            }
-        }).start();
-
         //clear the screen
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -173,12 +172,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         mapNotebook();
 
         game.batch.setProjectionMatrix(camera.combined);
-
-        for (int i=0; i<players.size(); i++) {
-            Player currentPlayer = players.get(i);
-            Rectangle currentPiece = pieces.get(i);
-            currentPlayer.render(camera, game.batch, currentPlayer.getX(), currentPlayer.getY(), currentPiece.width, currentPiece.height);
-        }
 
         //Single Touch enables player Movement for 1 Tile
         if(Gdx.input.justTouched()) {
@@ -225,6 +218,22 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                         connectionService.PostNewPosition(player.getX(), player.getY());
                     }
                 }).start();
+
+                if (!Gdx.input.justTouched()) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            connectionService.GetGame(connectionService.GetGameId());
+                            SyncNetworkPlayersWithGamePlayers();
+                        }
+                    }).start();
+                }
+
+            for (int i=0; i<players.size(); i++) {
+                Player currentPlayer = players.get(i);
+                Rectangle currentPiece = pieces.get(i);
+                currentPlayer.render(camera, game.batch, currentPlayer.getX(), currentPlayer.getY(), currentPiece.width, currentPiece.height);
+            }
             }
         }
 

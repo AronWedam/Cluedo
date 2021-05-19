@@ -17,7 +17,7 @@ public class ConnectionService {
     private OkHttpClient client;
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-    private static final String Url = "https://se2ss21cluedo.herokuapp.com/";
+    private static final String Url = "http://10.0.0.4:3000/";
     //"Free" Error Code. Signals that something in the Method for calling the server failed
     private final int ServerErrorCode = 512;
     private String GameId;
@@ -38,6 +38,8 @@ public class ConnectionService {
     }
 
     public String GetGameId() {return GameId;}
+
+    public String GetPlayerId() {return PlayerId;}
 
     public List<NetworkPlayer> getPlayers() {
         return players;
@@ -146,7 +148,7 @@ public class ConnectionService {
 
         for (int i=0; i<playerArray.length(); i++) {
             JSONObject playerObject = playerArray.getJSONObject(i);
-            players.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username")));
+            players.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username"), playerObject.getInt("x"), playerObject.getInt("y")));
         }
     }
 }
