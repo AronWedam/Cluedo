@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -15,10 +16,19 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.awt.Component;
+
+import javax.swing.Renderer;
+import javax.xml.soap.Text;
 
 public class GameClass extends ApplicationAdapter implements GestureDetector.GestureListener{
 
@@ -27,20 +37,18 @@ public class GameClass extends ApplicationAdapter implements GestureDetector.Ges
 	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
 
+	Notebook notebook;
+
 	private float unitScale = 1/32f;
 
 	private TiledMap map;
 
 
 	float currentZoom;
-	//Viewport viewport;
 
 
 	@Override
 	public void create () {
-
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
 		map = new TmxMapLoader().load("maps/map1.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map);
 
@@ -52,11 +60,6 @@ public class GameClass extends ApplicationAdapter implements GestureDetector.Ges
 
 		Gdx.input.setInputProcessor(gestureDetector);
 
-		//is not working
-		//float aspectRatio = (float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth();
-		//viewport = new FitViewport(w + aspectRatio, h/2, camera);
-		//viewport.apply();
-
 	}
 
 	@Override
@@ -66,19 +69,31 @@ public class GameClass extends ApplicationAdapter implements GestureDetector.Ges
 
 	@Override
 	public void render () {
-
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		renderer.setView(camera);
 		renderer.render();
 		camera.update();
+
+
+		mapViewport();
+		notebookViewport();
+	}
+
+	private void mapViewport(){
+		Gdx.gl.glViewport( 0,0, (int) (Gdx.graphics.getWidth()/1.5),Gdx.graphics.getHeight());
+	}
+
+	private void notebookViewport(){
+		Gdx.gl.glViewport( Gdx.graphics.getWidth()/3,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		Container<TextButton> container = new Container<TextButton>();
+
 	}
 
 	@Override
 	public void dispose () {
 		map.dispose();
-
 	}
 
 	@Override
