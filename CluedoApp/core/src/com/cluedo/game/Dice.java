@@ -4,15 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.net.Socket;
 import java.util.Random;
+
+import javax.xml.soap.Text;
 
 
 public class Dice implements Screen {
@@ -21,12 +28,19 @@ public class Dice implements Screen {
     int numberDice=1;
     int sideDice=6;
     Random random=new Random();
-    SpriteBatch batch;
+
     Texture img;
     TextureAtlas atlas;
     Skin skin;
-    Animation animation;
+
+
     int diceOneValue, diceTwoValue;
+
+
+    public static final String DICE_IMG_PATH="dice_1.png";
+    SpriteBatch batch = new SpriteBatch();
+    Texture texture;
+    Sprite sprite;
 
 
 
@@ -72,9 +86,9 @@ public class Dice implements Screen {
     @Override
     public void show() {
         batch=new SpriteBatch();
-        atlas = new TextureAtlas("skin.atlas");
-        skin = new Skin(Gdx.files.internal("skin.json"), atlas);
-        img=new Texture(Gdx.files.internal("dice_transparent.png"));
+        texture = new Texture(Gdx.files.internal("dice_1.png"));
+        sprite=new Sprite(texture);
+
 
 
         Button RollDice = new TextButton("Roll Dice", skin);
@@ -93,10 +107,12 @@ public class Dice implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
 
         batch.begin();
-        batch.draw(img, 0,0);
+        sprite.draw(batch);
         batch.end();
+
 
     }
 
@@ -124,5 +140,6 @@ public class Dice implements Screen {
     public void dispose() {
         batch.dispose();
         img.dispose();
+        texture.dispose();
     }
 }
