@@ -3,6 +3,8 @@ package com.cluedo.game.network;
 import com.badlogic.gdx.Gdx;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import okhttp3.MediaType;
@@ -19,6 +21,7 @@ public class ConnectionService {
     //"Free" Error Code. Signals that something in the Method for calling the server failed
     private final int ServerErrorCode = 512;
     private String GameId;
+    private String PlayerId;
     private List<NetworkPlayer> players;
     private static ConnectionService instance;
 
@@ -49,7 +52,7 @@ public class ConnectionService {
     {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("username", username);
+            jsonObject.put("Username", username);
             RequestBody body = RequestBody.create(JSON, jsonObject.toString());
             Request request = new Request.Builder()
                     .url(Url + "games/register")
@@ -57,6 +60,8 @@ public class ConnectionService {
                     .build();
 
             Response response = client.newCall(request).execute();
+            JSONObject jsonRes = new JSONObject(response.body().string());
+            PlayerId = jsonRes.getString("playerId");
             return response.code();
         } catch (Exception ex) {
             Gdx.app.log("Register Error", ex.getMessage());
@@ -77,9 +82,10 @@ public class ConnectionService {
                     .build();
 
             Response response = client.newCall(request).execute();
-            JSONObject jsonObject = new JSONObject(response.body());
-            GameId = jsonObject.getString("gameId");
-            JSONArray playerArray = jsonObject.getJSONArray("players");
+            if (response.code() == 200) {
+                GetPlayersOfJsonObject(response);
+            }
+
             return response.code();
         } catch (Exception ex) {
             Gdx.app.log("Check Registration Error", ex.getMessage());
@@ -123,13 +129,7 @@ public class ConnectionService {
 
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                JSONArray playerArray = jsonObject.getJSONArray("players");
-
-                for (int i=0; i<playerArray.length(); i++) {
-                    JSONObject playerObject = playerArray.getJSONObject(i);
-                    players.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username")));
-                }
+                GetPlayersOfJsonObject(response);
             }
 
             return response.code();
@@ -138,5 +138,15 @@ public class ConnectionService {
         }
 
         return ServerErrorCode;
+    }
+
+    private void GetPlayersOfJsonObject(Response response) throws IOException {
+        JSONObject jsonObject = new JSONObject(response.body().string());
+        JSONArray playerArray = jsonObject.getJSONArray("players");
+
+        for (int i=0; i<playerArray.length(); i++) {
+            JSONObject playerObject = playerArray.getJSONObject(i);
+            players.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username")));
+        }
     }
 }

@@ -17,7 +17,7 @@ public class StartScreen implements Screen {
         this.game = game;
         this.mainScreen = mainScreen;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 400, 800);
+        camera.setToOrtho(false, 600, 1000);
         camera.rotate(0);
 
         Logo1 = new Texture(Gdx.files.internal("CLUEDO.png"));
@@ -35,9 +35,9 @@ public class StartScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.batch.draw(Logo1,-50,320);
-        game.font.draw(game.batch, "Welcome to CLUEDO!!! ", 130, 450);
-        game.font.draw(game.batch, "Tap anywhere to begin!", 130, 400);
+        game.batch.draw(Logo1,50,450);
+        game.font.draw(game.batch, "Welcome to CLUEDO!!! ", 230, 500);
+        game.font.draw(game.batch, "Tap anywhere to begin!", 230, 450);
         Gdx.gl.glClearColor(53/255f, 28/255f, 67/255f, 1);
         game.batch.end();
 

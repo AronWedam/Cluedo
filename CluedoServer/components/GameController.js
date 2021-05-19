@@ -5,15 +5,10 @@ const stopwatch = new Stopwatch();
 var router = express.Router();
 
 //Array that holds up to 5 users which will play together
-let players = [
-  { id: '1234', username: 'Alex' },
-  { id: '2346', username: 'Mira' },
-  { id: '1246', username: 'Sarah' },
-  { id: '5232', username: 'Aron' },
-];
+let players = [];
 
 //Array of all current Games running
-let currentGames = [{ id: '5431', players: players }];
+let currentGames = [];
 let stopwatchRunning = false;
 
 // define the home page route
@@ -24,18 +19,20 @@ router.get('/', function (req, res) {
 //Route for the players to register to a game
 router.post('/register', function (req, res) {
   let playerId = uuidv4();
-  players.push({ id: playerId, userName: req.body.Username, x: 0, y: 0 });
+  players.push({ id: playerId, username: req.body.Username, x: 0, y: 0 });
 
   if (!stopwatchRunning) {
     stopwatch.start();
     stopwatchRunning = true;
   }
 
-  res.status(200).send(playerId);
+  res.status(200).send({ playerId: playerId });
 });
 
 //Route for the players to check if the game
 router.get('/checkGameState', function (req, res) {
+  console.log(players.length);
+  console.log(stopwatch.read() / 1000);
   if (
     players.length >= 2 &&
     players.length <= 6 &&
