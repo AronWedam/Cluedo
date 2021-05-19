@@ -1,14 +1,9 @@
 package com.cluedo.game;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 
 public class Notebook {
@@ -18,7 +13,7 @@ public class Notebook {
     private Object GameClass;
     private CardHandOut cardHandOut;
 
-    public void setNotebook(Notebook notebook, Stage stage) {
+    public Notebook setNotebook() {
 
         this.table = new Table((Skin) GameClass);
         this.table.defaults().padLeft(5).align(Align.left);
@@ -54,7 +49,7 @@ public class Notebook {
         this.table.row();
         this.table.add((CharSequence) new Label("ROOMS", (Skin) GameClass), "default-yellow");
 
-        stage.addActor(pane);
+        return this;
 
     }
 
