@@ -81,7 +81,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         Thread GetGameThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                connectionService.GetGame("5431");
+                connectionService.GetGame(connectionService.GetGameId());
             }
         });
         GetGameThread.start();
@@ -153,6 +153,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     @Override
     public void render (float delta) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                connectionService.GetGame(connectionService.GetGameId());
+            }
+        }).start();
+
         //clear the screen
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -212,11 +219,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     }
                 }
 
-                Thread PostNewPositionThread = new Thread(new Runnable() {
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        connectionService.PostNewPosition(player.getX(), player.getY());
                     }
-                });
+                }).start();
             }
         }
 

@@ -13,7 +13,7 @@ let stopwatchRunning = false;
 
 // define the home page route
 router.get('/', function (req, res) {
-  res.send('Game home page');
+  res.status(200).send(currentGames);
 });
 
 //Route for the players to register to a game
@@ -31,12 +31,10 @@ router.post('/register', function (req, res) {
 
 //Route for the players to check if the game
 router.get('/checkGameState', function (req, res) {
-  console.log(players.length);
-  console.log(stopwatch.read() / 1000);
   if (
     players.length >= 2 &&
     players.length <= 6 &&
-    stopwatch.read() / 1000 <= 10
+    stopwatch.read() / 1000 >= 10
   ) {
     let newGame = { gameId: uuidv4(), players: players };
     currentGames.push(newGame);
@@ -59,12 +57,19 @@ router.post('/playerMoved', function (req, res) {
     }
   }
 
-  console.log(currentPlayer);
   res.status(200).send();
 });
 
+//Resetting the new Gamestate
+router.get('/reset', function (req, res) {
+  players = [];
+  currentGames = [];
+  stopwatch.stop();
+  res.send(200).send();
+});
+
 //Getting the new Gamestate
-router.get('/:id', function (req, res) {
+router.get('/getGame/:id', function (req, res) {
   let id = req.params.id;
   let retGame = currentGames.filter((x) => x.id === id);
 

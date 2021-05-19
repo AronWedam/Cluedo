@@ -78,7 +78,6 @@ public class MenuScreen implements Screen{
                     Thread RegisterThread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Gdx.app.log("Username", textFieldUsername.getText());
                             connectionService.RegisterForGame(textFieldUsername.getText());
                         }
                     });
@@ -95,11 +94,6 @@ public class MenuScreen implements Screen{
                                     responseCode = connectionService.CheckRegistration();
                                     Thread.sleep(500);
                                 } while(responseCode != 200);
-
-                                if (responseCode == 200) {
-                                    Gdx.app.log("Response", String.valueOf(responseCode));
-                                    mainScreen.setScreen(new Cluedo(gameClass));
-                                }
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -107,6 +101,8 @@ public class MenuScreen implements Screen{
                     });
                     CheckRegisterThread.start();
                     CheckRegisterThread.join();
+                    mainScreen.setScreen(new Cluedo(gameClass));
+
                     startBtn.setDisabled(false);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

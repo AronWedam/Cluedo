@@ -98,10 +98,10 @@ public class ConnectionService {
         Method to check the Registration.
         Gets called periodically when registering for game.
     */
-    public int PostNewPosition(String playerId, int x, int y) {
+    public int PostNewPosition(int x, int y) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("playerId", playerId);
+            jsonObject.put("playerId", PlayerId);
             jsonObject.put("x", x);
             jsonObject.put("y", y);
 
@@ -123,7 +123,7 @@ public class ConnectionService {
     public int GetGame(String id) {
         try {
             Request request = new Request.Builder()
-                    .url(Url + "games/" + id)
+                    .url(Url + "games/getGame" + id)
                     .get()
                     .build();
 
