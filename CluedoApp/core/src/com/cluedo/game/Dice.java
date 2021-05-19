@@ -3,9 +3,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -20,6 +23,12 @@ public class Dice implements Screen {
     Random random=new Random();
     SpriteBatch batch;
     Texture img;
+    TextureAtlas atlas;
+    Skin skin;
+    Animation animation;
+    int diceOneValue, diceTwoValue;
+
+
 
 
     public Dice(int num, int sideNum) {
@@ -45,15 +54,30 @@ public class Dice implements Screen {
         return sum;
     }
 
+    public int getDiceOneValue(){
+        return diceOneValue;
+    }
+    public int getDiceTwoValue() {
+        return diceOneValue;
+    }
+    public void setDiceOneValue(int diceOneValue) {
+        this.diceOneValue=diceOneValue;
+    }
+    public void setDiceTwoValue(int diceTwoValue) {
+        this.diceTwoValue=diceTwoValue;
+    }
+
+
 
     @Override
     public void show() {
         batch=new SpriteBatch();
-        img=new Texture("dice_transparent.png");
+        atlas = new TextureAtlas("skin.atlas");
+        skin = new Skin(Gdx.files.internal("skin.json"), atlas);
+        img=new Texture(Gdx.files.internal("dice_transparent.png"));
 
 
         Button RollDice = new TextButton("Roll Dice", skin);
-
 
         RollDice.setSize(100, 50);
         RollDice.setPosition(20, 20);
@@ -62,13 +86,17 @@ public class Dice implements Screen {
         RollDice.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //TODO add path to game
+               // call animation
             }
         });
     }
 
     @Override
     public void render(float delta) {
+
+        batch.begin();
+        batch.draw(img, 0,0);
+        batch.end();
 
     }
 
@@ -94,6 +122,7 @@ public class Dice implements Screen {
 
     @Override
     public void dispose() {
-
+        batch.dispose();
+        img.dispose();
     }
 }
