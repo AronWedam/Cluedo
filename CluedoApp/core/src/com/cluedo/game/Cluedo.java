@@ -2,9 +2,11 @@ package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
@@ -15,6 +17,15 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
+
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
 
@@ -38,8 +49,25 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     Texture gamepieceBlue;
 
+    //
+    private final Viewport viewport = new ScreenViewport();
+    Table innerTable;
+    Table outerTable;
+    ScrollPane scrollPane;
+    ScrollPane.ScrollPaneStyle scrollPaneStyle = new ScrollPane.ScrollPaneStyle();
+    private SpriteBatch Notebookbatch;
+    private BitmapFont font;
+    private Stage stage;
+    private static final String reallyLongString = "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n"
+            + "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n"
+            + "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n";
+
+    Notebook notebook;
+
+//
 
     public Cluedo(final GameClass game){
+
         this.game = game;
 
         //create map
@@ -69,6 +97,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         //create the player
         player = new Player(gamepieceBlue, cluedoMap);
         player.setPos((int)firstStartPos.x, (int)firstStartPos.y);
+
+        //
+        Notebookbatch = new SpriteBatch();
+        font = new BitmapFont();
+        font.setColor(Color.RED);
+        //
     }
 
 
@@ -80,7 +114,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     @Override
     public void render (float delta) {
 
-
         //clear the screen
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -90,9 +123,17 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         renderer.render();
         camera.update();
 
+        mapViewport();
+        mapNotebook();
+
         game.batch.setProjectionMatrix(camera.combined);
 
         player.render(camera, game.batch, player.getX(), player.getY(), piece.width, piece.height);
+
+
+        //
+        //notebook.setNotebook(notebook, this.stage);
+        //
 
 
         //Single Touch enables player Movement for 1 Tile
@@ -133,6 +174,69 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
             }
         }
+
+        private void mapViewport(){
+            Gdx.gl.glViewport(0,0, (int) (Gdx.graphics.getWidth()/1.5),
+                    Gdx.graphics.getHeight());
+        }
+
+        private void mapNotebook() {
+            Gdx.gl.glViewport(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth(),
+                    Gdx.graphics.getHeight());
+
+
+            /*
+            notebook.setNotebook();
+
+            innerTable = new Table();
+            outerTable = new Table();
+            scrollPane = new ScrollPane(innerTable);
+            outerTable.add(scrollPane).height(800);
+
+            scrollPane.setStyle(scrollPaneStyle);
+            //Label.LabelStyle style = new Label.LabelStyle();
+            //Label label = new Label("Text here", style);
+            //innerTable.add(label);
+
+            //innerTable.add("Your Cards", String.valueOf(new Label.LabelStyle(new BitmapFont(), Color.WHITE)));
+            /*
+            Notebookbatch.begin();
+            font.draw(Notebookbatch, "Hello World", 0, 200);
+            Notebookbatch.end();
+
+
+            this.stage = new Stage();
+            Gdx.input.setInputProcessor(this.stage);
+            final Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+
+            final Label text = new Label(reallyLongString, skin);
+            text.setAlignment(Align.center);
+            text.setWrap(true);
+            final Label text2 = new Label("This is a short string!", skin);
+            text2.setAlignment(Align.center);
+            text2.setWrap(true);
+            final Label text3 = new Label(reallyLongString, skin);
+            text3.setAlignment(Align.center);
+            text3.setWrap(true);
+
+            final Table scrollTable = new Table();
+            scrollTable.add(text);
+            scrollTable.row();
+            scrollTable.add(text2);
+            scrollTable.row();
+            scrollTable.add(text3);
+
+            final ScrollPane scroller = new ScrollPane(scrollTable);
+
+            final Table table = new Table();
+            table.setFillParent(true);
+            table.add(scroller).fill().expand();
+
+            this.stage.addActor(table);
+            */
+
+        }
+
 
     @Override
     public void resize(int width, int height) {
