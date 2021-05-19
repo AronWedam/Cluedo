@@ -1,21 +1,17 @@
 package com.cluedo.game.network;
-import com.badlogic.gdx.Gdx;
 
+import com.badlogic.gdx.Gdx;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
 public class ConnectionService {
-
     private OkHttpClient client;
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
@@ -45,10 +41,10 @@ public class ConnectionService {
     }
 
     /*
-            Method to register for a game with a username.
-            Takes in the username.
-            Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
-        */
+        Method to register for a game with a username.
+        Takes in the username.
+        Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
+    */
     public int RegisterForGame(String username)
     {
         try {

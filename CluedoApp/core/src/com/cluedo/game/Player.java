@@ -1,29 +1,16 @@
 package com.cluedo.game;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import java.lang.reflect.Array;
 
 public class Player {
-  
-     private static CardHandOut cardHandOut;
-
+    private static CardHandOut cardHandOut;
     SpriteBatch batch;
-
     Texture texture;
-
     private int x,y;
-
     private CluedoMap cluedoMap;
-
-    public Player(Texture texture, CluedoMap cluedoMap){
-        this.texture = texture; this. cluedoMap = cluedoMap;
-    }
 
     public Player(Texture texture, CluedoMap cluedoMap, int x, int y){
         this.texture = texture;
@@ -43,7 +30,6 @@ public class Player {
 
     //Set Player position
     public void setPos(int x, int y){
-
         if(valid(x,y)){
             this.x = x;
             this.y = y;

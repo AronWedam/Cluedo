@@ -33,10 +33,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
-
     private GameClass game;
     private com.cluedo.game.network.ConnectionService connectionService;
-    Vector2 firstStartPos = new Vector2(0,0);
     private Player player;
     Rectangle piece;
 
@@ -155,8 +153,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     @Override
     public void render (float delta) {
-
-
         //clear the screen
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -215,6 +211,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                         }
                     }
                 }
+
+                Thread PostNewPositionThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                    }
+                });
             }
         }
 

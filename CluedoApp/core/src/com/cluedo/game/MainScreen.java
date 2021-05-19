@@ -6,6 +6,9 @@ class MainScreen extends Game {
 
     @Override
     public void create() {
-        this.setScreen(new StartScreen(new GameClass()));
+        if (this.getScreen() == null) {
+            StartScreen startScreen = new StartScreen(new GameClass(), this);
+            this.setScreen(startScreen);
+        }
     }
 }

@@ -5,19 +5,17 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 
 public class StartScreen implements Screen {
 
     final GameClass game;
     OrthographicCamera camera;
-
     private Texture Logo1;
+    private MainScreen mainScreen;
 
-
-    public StartScreen(final GameClass game){
+    public StartScreen(final GameClass game, MainScreen mainScreen){
         this.game = game;
+        this.mainScreen = mainScreen;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 400, 800);
         camera.rotate(0);
@@ -25,10 +23,8 @@ public class StartScreen implements Screen {
         Logo1 = new Texture(Gdx.files.internal("CLUEDO.png"));
     }
 
-
     @Override
     public void show() {
-
     }
 
     @Override
@@ -46,8 +42,7 @@ public class StartScreen implements Screen {
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
-            game.setScreen(new MenuScreen());
-            dispose();
+            mainScreen.setScreen(new MenuScreen(mainScreen, game));
         }
     }
 
@@ -73,7 +68,6 @@ public class StartScreen implements Screen {
 
     @Override
     public void dispose() {
-
     }
 }
 
