@@ -28,8 +28,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-
-
 public class Cluedo implements Screen, GestureDetector.GestureListener{
     private GameClass game;
     private com.cluedo.game.network.ConnectionService connectionService;
@@ -58,18 +56,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     Texture prof_plum;
     private boolean DrewFlag = false;
 
-    private final Viewport viewport = new ScreenViewport();
-    Table innerTable;
-    Table outerTable;
-    ScrollPane scrollPane;
-    ScrollPane.ScrollPaneStyle scrollPaneStyle = new ScrollPane.ScrollPaneStyle();
     private SpriteBatch Notebookbatch;
-    private BitmapFont font;
-    private Stage stage;
-
     Notebook notebook;
-    private TextureAtlas atlas;
-    protected Skin skin;
 
     public Cluedo(final GameClass game) throws InterruptedException {
         this.game = game;
@@ -85,12 +73,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         });
         GetGameThread.start();
         GetGameThread.join();
-        atlas = new TextureAtlas("uiskin.atlas");
-        skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
-
-        //create map
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
         map = new TmxMapLoader().load("maps/map1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
 
@@ -110,10 +92,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         mrs_scarlet = new Texture("Mrs_Scarlet.png");
         mrs_white = new Texture("Mrs_White.png");
         prof_plum = new Texture("Prof_Plum.png");
+        //batch for the viewportNotebook method
+        Notebookbatch = new SpriteBatch();
+
 
         SyncNetworkPlayersWithGamePlayers();
-
-        /*
+/*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -129,14 +113,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
             }
         }).start();
-
         */
     }
 
     private void SyncNetworkPlayersWithGamePlayers() {
         List<Player> tempPlayers = new ArrayList<>();
         List<Rectangle> tempRectange = new ArrayList<>();
-        Gdx.app.log("Here", "Here");
 
         for(int i=0; i<connectionService.getPlayers().size(); i++) {
             if (connectionService.getPlayers().get(i).getId().equals(connectionService.GetPlayerId())) {
@@ -164,12 +146,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 tempRectange.add(rect);
             }
         }
-
-        //batch for the viewportNotebook method
-        Notebookbatch = new SpriteBatch();
-        font = new BitmapFont();
-        font.setColor(Color.RED);
-
         players = tempPlayers;
         pieces = tempRectange;
     }
@@ -257,28 +233,28 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         }
     }
 
-        private void mapViewport(){
-            Gdx.gl.glViewport(0,0, (int) (Gdx.graphics.getWidth()/1.5),
-                    Gdx.graphics.getHeight());
-        }
+    private void mapViewport(){
+        Gdx.gl.glViewport(0,0, (int) (Gdx.graphics.getWidth()/1.5),
+                Gdx.graphics.getHeight());
+    }
 
-        private void mapNotebook() {
-            notebook = new Notebook();
+    private void mapNotebook() {
+        notebook = new Notebook();
 
-            notebook.getPane().setBounds(0, 0, Gdx.graphics.getWidth()/2,
-                    Gdx.graphics.getHeight());
-
-
-            Notebookbatch.begin();
-            notebook.getPane().draw(Notebookbatch, 1);
-            notebook.table.draw(Notebookbatch, 1);
-            Notebookbatch.end();
+        notebook.getPane().setBounds(0, 0, Gdx.graphics.getWidth()/2,
+                Gdx.graphics.getHeight());
 
 
-            Gdx.gl.glViewport(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth(),
-                    Gdx.graphics.getHeight());
+        Notebookbatch.begin();
+        notebook.getPane().draw(Notebookbatch, 1);
+        notebook.table.draw(Notebookbatch, 1);
+        Notebookbatch.end();
 
-        }
+
+        Gdx.gl.glViewport(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight());
+
+    }
 
 
     @Override

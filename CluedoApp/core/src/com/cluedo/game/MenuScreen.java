@@ -101,9 +101,7 @@ public class MenuScreen implements Screen{
                     });
                     CheckRegisterThread.start();
                     CheckRegisterThread.join();
-
                     mainScreen.setScreen(new Cluedo(gameClass));
-
                     startBtn.setDisabled(false);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

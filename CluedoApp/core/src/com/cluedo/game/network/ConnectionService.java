@@ -17,7 +17,7 @@ public class ConnectionService {
     private OkHttpClient client;
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-    private static final String Url = "https://se2ss21cluedo.herokuapp.com/";
+    private static final String Url = "http://10.0.0.4:3000/";
     //"Free" Error Code. Signals that something in the Method for calling the server failed
     private final int ServerErrorCode = 512;
     private String GameId;
@@ -85,7 +85,10 @@ public class ConnectionService {
 
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
-                GetPlayersOfJsonObject(response);
+                String responseBody = response.body().string();
+                JSONObject jsonObject = new JSONObject(responseBody);
+                GameId = jsonObject.getString("gameId");
+                GetPlayersOfJsonObject(responseBody);
             }
 
             return response.code();
@@ -131,7 +134,7 @@ public class ConnectionService {
 
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
-                GetPlayersOfJsonObject(response);
+                GetPlayersOfJsonObject(response.body().string());
             }
 
             return response.code();
@@ -142,9 +145,9 @@ public class ConnectionService {
         return ServerErrorCode;
     }
 
-    private void GetPlayersOfJsonObject(Response response) throws IOException {
+    private void GetPlayersOfJsonObject(String responseBody) throws IOException {
         List<NetworkPlayer> tempPlayers = new ArrayList<>();
-        JSONObject jsonObject = new JSONObject(response.body().string());
+        JSONObject jsonObject = new JSONObject(responseBody);
         JSONArray playerArray = jsonObject.getJSONArray("players");
 
         for (int i=0; i<playerArray.length(); i++) {

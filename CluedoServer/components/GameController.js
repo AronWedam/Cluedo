@@ -67,8 +67,6 @@ router.post('/playerMoved', function (req, res) {
       players[i].x = x;
       players[i].y = y;
       currentPlayer = players[i];
-
-      console.log(player);
     }
   }
 
