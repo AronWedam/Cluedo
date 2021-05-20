@@ -2,10 +2,13 @@ package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -15,6 +18,15 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
+
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
 
@@ -38,9 +50,26 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     Texture gamepieceBlue;
 
+    //
+    private final Viewport viewport = new ScreenViewport();
+    Table innerTable;
+    Table outerTable;
+    ScrollPane scrollPane;
+    ScrollPane.ScrollPaneStyle scrollPaneStyle = new ScrollPane.ScrollPaneStyle();
+    private SpriteBatch Notebookbatch;
+    private BitmapFont font;
+    private Stage stage;
+
+    Notebook notebook;
+    private TextureAtlas atlas;
+    protected Skin skin;
+
+//
 
     public Cluedo(final GameClass game){
         this.game = game;
+        atlas = new TextureAtlas("uiskin.atlas");
+        skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
 
         //create map
         float w = Gdx.graphics.getWidth();
@@ -69,6 +98,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         //create the player
         player = new Player(gamepieceBlue, cluedoMap);
         player.setPos((int)firstStartPos.x, (int)firstStartPos.y);
+
+        //batch for the viewportNotebook method
+        Notebookbatch = new SpriteBatch();
+        font = new BitmapFont();
+        font.setColor(Color.RED);
+
     }
 
 
@@ -80,7 +115,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     @Override
     public void render (float delta) {
 
-
         //clear the screen
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -90,20 +124,28 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         renderer.render();
         camera.update();
 
+        mapViewport();
+        mapNotebook();
+
         game.batch.setProjectionMatrix(camera.combined);
 
         player.render(camera, game.batch, player.getX(), player.getY(), piece.width, piece.height);
 
 
+
+
         //Single Touch enables player Movement for 1 Tile
         if(Gdx.input.justTouched()) {
+            double x = Gdx.input.getX(0) - (Gdx.graphics.getWidth()/3);
+            double y = Gdx.input.getY(0);
+
             //TODO first if doesn't work properly
             //Check if Player figure is touched - doesn't work at all
-            if(Gdx.input.getX(0) >= player.getX()-1 || Gdx.input.getX(0) <= player.getX()+1 && Gdx.input.getY(0) >= player.getY()-1 || Gdx.input.getY(0) <= player.getY()+1) {
+            if(x >= player.getX()-1 || x <= player.getX()+1 && y >= player.getY()-1 || y <= player.getY()+1) {
                 //Save Coordinates of Touched Area
                 if(Gdx.input.justTouched()) {
                     Vector3 touchPos = new Vector3();
-                    touchPos.set(Gdx.input.getX(0), Gdx.input.getY(0), 0);
+                    touchPos.set((float) x, Gdx.input.getY(0), 0);
                     camera.unproject(touchPos);
 
                     //Make move in touched direction
@@ -133,6 +175,30 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
             }
         }
+
+        private void mapViewport(){
+            Gdx.gl.glViewport(0,0, (int) (Gdx.graphics.getWidth()/1.5),
+                    Gdx.graphics.getHeight());
+        }
+
+        private void mapNotebook() {
+            notebook = new Notebook();
+
+            notebook.getPane().setBounds(0, 0, Gdx.graphics.getWidth()/2,
+                    Gdx.graphics.getHeight());
+
+
+            Notebookbatch.begin();
+            notebook.getPane().draw(Notebookbatch, 1);
+            notebook.table.draw(Notebookbatch, 1);
+            Notebookbatch.end();
+
+
+            Gdx.gl.glViewport(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth(),
+                    Gdx.graphics.getHeight());
+
+        }
+
 
     @Override
     public void resize(int width, int height) {

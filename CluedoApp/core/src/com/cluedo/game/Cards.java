@@ -25,6 +25,10 @@ public class Cards {
     public static boolean weaponCard = false;
     public static boolean roomCard = false;
 
+    public static final int TYPE_SUSPECT = 0;
+    public static final int TYPE_WEAPON = 1;
+    public static final int TYPE_ROOM = 2;
+
     //suspect cards
     public static final Integer suspectMissScarlett = 0;
     public static final Integer suspectColonelMustard = 1;
