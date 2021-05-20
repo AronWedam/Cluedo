@@ -39,7 +39,7 @@ router.post('/register', function (req, res) {
 //Route for the players to check if the game
 router.get('/checkGameState', function (req, res) {
   if (
-    players.length >= 2 &&
+    players.length >= 3 &&
     players.length <= 6 &&
     stopwatch.read() / 1000 >= 10
   ) {
@@ -53,6 +53,7 @@ router.get('/checkGameState', function (req, res) {
 
 //Posting the new position and updating the player
 router.post('/playerMoved', function (req, res) {
+  console.log(players);
   let x = req.body.x;
   let y = req.body.y;
 
@@ -64,6 +65,7 @@ router.post('/playerMoved', function (req, res) {
     }
   }
 
+  console.log(players);
   res.status(200).send();
 });
 

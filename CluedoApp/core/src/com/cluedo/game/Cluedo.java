@@ -19,6 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.cluedo.game.network.NetworkPlayer;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -58,6 +59,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     Texture mrs_scarlet;
     Texture mrs_white;
     Texture prof_plum;
+    private boolean DrewFlag = false;
 
     private final Viewport viewport = new ScreenViewport();
     Table innerTable;
@@ -173,6 +175,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         game.batch.setProjectionMatrix(camera.combined);
 
+        //Draw the players
+        for (int i=0; i<players.size(); i++) {
+            Player currentPlayer = players.get(i);
+            Rectangle currentPiece = pieces.get(i);
+            currentPlayer.render(camera, game.batch, currentPlayer.getX(), currentPlayer.getY(), currentPiece.width, currentPiece.height);
+        }
+
         //Single Touch enables player Movement for 1 Tile
         if(Gdx.input.justTouched()) {
             double x = Gdx.input.getX(0) - (Gdx.graphics.getWidth()/3);
@@ -212,29 +221,39 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     }
                 }
 
-                new Thread(new Runnable() {
+                Thread postPosThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Gdx.app.log("Pos", String.valueOf(player.getX()));
                         connectionService.PostNewPosition(player.getX(), player.getY());
                     }
-                }).start();
+                });
+                postPosThread.start();
+            try {
+                postPosThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-                if (!Gdx.input.justTouched()) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            connectionService.GetGame(connectionService.GetGameId());
-                            SyncNetworkPlayersWithGamePlayers();
-                        }
-                    }).start();
+            Gdx.app.log("Finished", "Finished POSTING");
+        }
+        /*
+        else {
+            Thread getGameThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        connectionService.GetGame(connectionService.GetGameId());
+                        SyncNetworkPlayersWithGamePlayers();
+                    }
+                });
+                getGameThread.start();
+                try {
+                    getGameThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-
-            for (int i=0; i<players.size(); i++) {
-                Player currentPlayer = players.get(i);
-                Rectangle currentPiece = pieces.get(i);
-                currentPlayer.render(camera, game.batch, currentPlayer.getX(), currentPlayer.getY(), currentPiece.width, currentPiece.height);
             }
-            }
+            */
         }
 
         private void mapViewport(){

@@ -17,7 +17,7 @@ public class ConnectionService {
     private OkHttpClient client;
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-    private static final String Url = "http://10.0.0.4:3000/";
+    private static final String Url = "https://se2ss21cluedo.herokuapp.com/";
     //"Free" Error Code. Signals that something in the Method for calling the server failed
     private final int ServerErrorCode = 512;
     private String GameId;
@@ -143,6 +143,7 @@ public class ConnectionService {
     }
 
     private void GetPlayersOfJsonObject(Response response) throws IOException {
+        players = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(response.body().string());
         JSONArray playerArray = jsonObject.getJSONArray("players");
 
