@@ -41,7 +41,7 @@ router.post('/register', function (req, res) {
 //Route for the players to check if the game
 router.get('/checkGameState', function (req, res) {
   if (
-    players.length >= 3 &&
+    players.length >= 1 &&
     players.length <= 6 &&
     stopwatch.read() / 1000 >= 10
   ) {
