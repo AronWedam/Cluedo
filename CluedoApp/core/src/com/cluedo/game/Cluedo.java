@@ -2,14 +2,10 @@ package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -17,16 +13,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
     private GameClass game;
@@ -84,6 +73,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 400, 800);
 
+        /*
         //load images
         gamepieceBlue = new Texture("Gamepiece_blue.png");
         colMustard = new Texture("Col_Mustard.png");
@@ -92,12 +82,14 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         mrs_scarlet = new Texture("Mrs_Scarlet.png");
         mrs_white = new Texture("Mrs_White.png");
         prof_plum = new Texture("Prof_Plum.png");
+         */
+
         //batch for the viewportNotebook method
         Notebookbatch = new SpriteBatch();
 
 
         SyncNetworkPlayersWithGamePlayers();
-/*
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
