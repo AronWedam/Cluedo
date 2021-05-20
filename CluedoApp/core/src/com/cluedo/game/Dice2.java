@@ -34,7 +34,7 @@ public class Dice2 implements Screen, InputProcessor {
     private Stage stage;
     private BitmapFont font;
     private Skin skin;
-    int numberDice=1;
+    int numberDice=2;
     int sideDice=6;
     Random random=new Random();
     int sum=0;
@@ -70,10 +70,40 @@ public class Dice2 implements Screen, InputProcessor {
     public void render(float delta) {
 
         if (Gdx.input.isTouched()){
-            randomDiceValue();
 
+            roll();
+            int dice1=getDiceOneValue();
+            int dice2=getDiceTwoValue();
 
-        }
+                if (dice1==1) {
+                    textureDice1 = new Texture(Gdx.files.internal("dice_1.png"));
+                } else if (dice1==2) {
+                    textureDice1 = new Texture(Gdx.files.internal("dice_2.png"));
+                } else if (dice1==3) {
+                    textureDice1 = new Texture(Gdx.files.internal("dice_3.png"));
+                } else if (dice1==4) {
+                    textureDice1 = new Texture(Gdx.files.internal("dice_4.png"));
+                } else if (dice1==5) {
+                    textureDice1 = new Texture(Gdx.files.internal("dice_5.png"));
+                } else if (dice1== 6) {
+                    textureDice1 = new Texture(Gdx.files.internal("dice_6.png"));
+                }
+
+                if (dice2==1) {
+                    textureDice2 = new Texture(Gdx.files.internal("dice_1.png"));
+                } else if (dice2==2) {
+                    textureDice1 = new Texture(Gdx.files.internal("dice_2.png"));
+                } else if (dice2==3) {
+                    textureDice2 = new Texture(Gdx.files.internal("dice_3.png"));
+                } else if (dice2==4) {
+                    textureDice2 = new Texture(Gdx.files.internal("dice_4.png"));
+                } else if (dice2==5) {
+                    textureDice2 = new Texture(Gdx.files.internal("dice_5.png"));
+                } else if (dice2== 6) {
+                    textureDice2 = new Texture(Gdx.files.internal("dice_6.png"));
+                }
+            }
+
 
         Gdx.gl.glClearColor(1,1,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -97,22 +127,18 @@ public class Dice2 implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
@@ -134,7 +160,6 @@ public class Dice2 implements Screen, InputProcessor {
          nextInt method to get a random int value between 0 and specified value
          drawn from random number generator
         */
-
         return random.nextInt(sideDice)+1;
     }
 
@@ -143,9 +168,11 @@ public class Dice2 implements Screen, InputProcessor {
         for (int i = 0; i < numberDice; i++) {
 
             sum += randomDiceValue();
-        }
+            }
+
         return sum;
-}
+    }
+
     public int getDiceOneValue(){
         return diceOneValue;
     }
@@ -158,6 +185,8 @@ public class Dice2 implements Screen, InputProcessor {
     public void setDiceTwoValue(int diceTwoValue) {
         this.diceTwoValue=diceTwoValue;
     }
+
+
 
     @Override
     public boolean keyDown(int keycode) {
