@@ -101,6 +101,7 @@ public class MenuScreen implements Screen{
                     });
                     CheckRegisterThread.start();
                     CheckRegisterThread.join();
+
                     mainScreen.setScreen(new Cluedo(gameClass));
 
                     startBtn.setDisabled(false);
@@ -120,7 +121,8 @@ public class MenuScreen implements Screen{
         optionsBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsScreen());}
+                //((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsScreen());
+            }
         });
 
 

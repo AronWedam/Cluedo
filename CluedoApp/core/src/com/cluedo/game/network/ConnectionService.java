@@ -143,13 +143,15 @@ public class ConnectionService {
     }
 
     private void GetPlayersOfJsonObject(Response response) throws IOException {
-        players = new ArrayList<>();
+        List<NetworkPlayer> tempPlayers = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(response.body().string());
         JSONArray playerArray = jsonObject.getJSONArray("players");
 
         for (int i=0; i<playerArray.length(); i++) {
             JSONObject playerObject = playerArray.getJSONObject(i);
-            players.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username"), playerObject.getInt("x"), playerObject.getInt("y")));
+            tempPlayers.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username"), playerObject.getInt("x"), playerObject.getInt("y")));
         }
+
+        players = tempPlayers;
     }
 }

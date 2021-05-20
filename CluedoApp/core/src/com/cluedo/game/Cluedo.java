@@ -17,9 +17,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.cluedo.game.network.NetworkPlayer;
-
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -115,11 +112,31 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         prof_plum = new Texture("Prof_Plum.png");
 
         SyncNetworkPlayersWithGamePlayers();
+
+        /*
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //Should not do this but who cares
+                while(true) {
+                    connectionService.GetGame(connectionService.GetGameId());
+                    SyncNetworkPlayersWithGamePlayers();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
+        */
     }
 
     private void SyncNetworkPlayersWithGamePlayers() {
-        players = new ArrayList<>();
-        pieces = new ArrayList<>();
+        List<Player> tempPlayers = new ArrayList<>();
+        List<Rectangle> tempRectange = new ArrayList<>();
+        Gdx.app.log("Here", "Here");
 
         for(int i=0; i<connectionService.getPlayers().size(); i++) {
             if (connectionService.getPlayers().get(i).getId().equals(connectionService.GetPlayerId())) {
@@ -131,8 +148,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
                 //create the player
                 player = new Player(gamepieceBlue, cluedoMap, (int) piece.x, (int) piece.y);
-                players.add(player);
-                pieces.add(piece);
+                tempPlayers.add(player);
+                tempRectange.add(piece);
             } else {
                 //create a Rectangle to logically represent one player
                 Rectangle rect = new Rectangle();
@@ -143,8 +160,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
                 //create the player
                 Player otherPlayer = new Player(gamepieceBlue, cluedoMap, (int) rect.x, (int) rect.y);
-                players.add(otherPlayer);
-                pieces.add(rect);
+                tempPlayers.add(otherPlayer);
+                tempRectange.add(rect);
             }
         }
 
@@ -152,6 +169,9 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         Notebookbatch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.RED);
+
+        players = tempPlayers;
+        pieces = tempRectange;
     }
 
     @Override
@@ -175,6 +195,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         game.batch.setProjectionMatrix(camera.combined);
 
+        //SyncNetworkPlayersWithGamePlayers();
         //Draw the players
         for (int i=0; i<players.size(); i++) {
             Player currentPlayer = players.get(i);
@@ -224,7 +245,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 Thread postPosThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Gdx.app.log("Pos", String.valueOf(player.getX()));
                         connectionService.PostNewPosition(player.getX(), player.getY());
                     }
                 });
@@ -234,27 +254,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            Gdx.app.log("Finished", "Finished POSTING");
         }
-        /*
-        else {
-            Thread getGameThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        connectionService.GetGame(connectionService.GetGameId());
-                        SyncNetworkPlayersWithGamePlayers();
-                    }
-                });
-                getGameThread.start();
-                try {
-                    getGameThread.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            */
-        }
+    }
 
         private void mapViewport(){
             Gdx.gl.glViewport(0,0, (int) (Gdx.graphics.getWidth()/1.5),

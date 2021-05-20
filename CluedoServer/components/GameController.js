@@ -8,13 +8,13 @@ var router = express.Router();
 let players = [];
 
 //Array of all current Games running
-let currentGames = [];
+let currentGame = undefined;
 let stopwatchRunning = false;
 let positionCounter = 0;
 
 // define the home page route
 router.get('/', function (req, res) {
-  res.status(200).send(currentGames);
+  res.status(200).send(currentGame);
 });
 
 //Route for the players to register to a game
@@ -33,6 +33,8 @@ router.post('/register', function (req, res) {
   }
 
   positionCounter++;
+  console.log('Register');
+  console.log(players);
   res.status(200).send({ playerId: playerId });
 });
 
@@ -43,9 +45,10 @@ router.get('/checkGameState', function (req, res) {
     players.length <= 6 &&
     stopwatch.read() / 1000 >= 10
   ) {
-    let newGame = { gameId: uuidv4(), players: players };
-    currentGames.push(newGame);
-    res.status(200).json(newGame);
+    console.log('here');
+    currentGame = { gameId: uuidv4(), players: players };
+    console.log(currentGame);
+    res.status(200).json(currentGame);
   } else {
     res.status(212).json({ Info: 'Still waiting for other players.' });
   }
@@ -53,26 +56,29 @@ router.get('/checkGameState', function (req, res) {
 
 //Posting the new position and updating the player
 router.post('/playerMoved', function (req, res) {
-  console.log(players);
   let x = req.body.x;
   let y = req.body.y;
+  console.log('Moved');
+  console.log(req.body);
+  console.log(players);
 
   for (let i = 0; i < players.length; i++) {
     if (players[i].id === req.body.playerId) {
       players[i].x = x;
       players[i].y = y;
       currentPlayer = players[i];
+
+      console.log(player);
     }
   }
 
-  console.log(players);
   res.status(200).send();
 });
 
 //Resetting the new Gamestate
 router.get('/reset', function (req, res) {
   players = [];
-  currentGames = [];
+  currentGame = undefined;
   positionCounter = 0;
   stopwatch.stop();
   res.send(200).send();
