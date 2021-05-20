@@ -59,9 +59,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     private SpriteBatch Notebookbatch;
     private BitmapFont font;
     private Stage stage;
-    private static final String reallyLongString = "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n"
-            + "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n"
-            + "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n";
 
     Notebook notebook;
     private TextureAtlas atlas;
@@ -102,11 +99,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         player = new Player(gamepieceBlue, cluedoMap);
         player.setPos((int)firstStartPos.x, (int)firstStartPos.y);
 
-        //
+        //batch for the viewportNotebook method
         Notebookbatch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.RED);
-        //
+
     }
 
 
@@ -135,9 +132,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         player.render(camera, game.batch, player.getX(), player.getY(), piece.width, piece.height);
 
 
-        //
-        //notebook.setNotebook(notebook, this.stage);
-        //
 
 
         //Single Touch enables player Movement for 1 Tile
@@ -185,58 +179,20 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         }
 
         private void mapNotebook() {
-            Gdx.gl.glViewport(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth(),
+            notebook = new Notebook();
+
+            notebook.getPane().setBounds(0, 0, Gdx.graphics.getWidth()/2,
                     Gdx.graphics.getHeight());
 
 
-
-            notebook = new Notebook();
-
-            innerTable = new Table(skin);
-            outerTable = new Table();
-            scrollPane = new ScrollPane(innerTable);
-            outerTable.add(scrollPane).height(800);
-
-            //scrollPane.setStyle(scrollPaneStyle);
-            //Label.LabelStyle style = new Label.LabelStyle();
-            //Label label = new Label("Text here", style);
-            //innerTable.add(label);
-
-            //innerTable.add("Your Cards", String.valueOf(new Label.LabelStyle(new BitmapFont(), Color.WHITE)));
-
             Notebookbatch.begin();
-            font.draw(Notebookbatch, "Hello World", 0, 200);
+            notebook.getPane().draw(Notebookbatch, 1);
+            notebook.table.draw(Notebookbatch, 1);
             Notebookbatch.end();
 
 
-            this.stage = new Stage();
-            Gdx.input.setInputProcessor(this.stage);
-            final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
-
-            final Label text = new Label(reallyLongString, skin);
-            text.setAlignment(Align.center);
-            text.setWrap(true);
-            final Label text2 = new Label("This is a short string!", skin);
-            text2.setAlignment(Align.center);
-            text2.setWrap(true);
-            final Label text3 = new Label(reallyLongString, skin);
-            text3.setAlignment(Align.center);
-            text3.setWrap(true);
-
-            final Table scrollTable = new Table();
-            scrollTable.add(text);
-            scrollTable.row();
-            scrollTable.add(text2);
-            scrollTable.row();
-            scrollTable.add(text3);
-
-            final ScrollPane scroller = new ScrollPane(scrollTable);
-
-            final Table table = new Table();
-            table.setFillParent(true);
-            table.add(scroller).fill().expand();
-
-            this.stage.addActor(table);
+            Gdx.gl.glViewport(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth(),
+                    Gdx.graphics.getHeight());
 
         }
 
