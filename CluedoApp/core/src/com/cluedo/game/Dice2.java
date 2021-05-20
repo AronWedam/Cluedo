@@ -5,22 +5,30 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Dice2 implements Screen {
 
     private SpriteBatch batchDice1;
     private SpriteBatch batchDice2;
+    private SpriteBatch batchFont;
     private Texture textureDice1;
     private Sprite spriteDice1;
     private Sprite spriteDice2;
     private Texture textureDice2;
+    private Viewport viewport;
+    private Stage stage;
+    private BitmapFont font;
     private Skin skin;
 
     @Override
@@ -40,6 +48,11 @@ public class Dice2 implements Screen {
         spriteDice2 = new Sprite(textureDice2, 0,0,64,64);
         spriteDice2.setPosition(185,200);
         spriteDice2.setSize(128,128);
+
+        viewport=new FitViewport(400, 800, camera);
+        viewport.apply();
+
+        stage=new Stage(viewport, batchFont);
     }
 
     @Override
@@ -56,9 +69,13 @@ public class Dice2 implements Screen {
         spriteDice2.draw(batchDice2);
         batchDice2.end();
 
-        Button RollDice = new TextButton("Roll Dice", skin);
+        /*Button RollDice = new TextButton("Roll Dice", skin);
         RollDice.setSize(100, 50);
         RollDice.setPosition(20, 20);
+         */
+        batchFont.begin();
+        font.draw(batchFont, "Tap to Roll", 50, 100);
+        batchFont.end();
     }
 
     @Override
@@ -85,6 +102,7 @@ public class Dice2 implements Screen {
     public void dispose() {
         batchDice1.dispose();
         batchDice2.dispose();
+        batchFont.dispose();
         textureDice1.dispose();
         textureDice2.dispose();
     }
