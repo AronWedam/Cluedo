@@ -1,6 +1,7 @@
 package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,7 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class Dice2 implements Screen {
+import java.util.Random;
+
+public class Dice2 implements Screen, InputProcessor {
 
     private SpriteBatch batchDice1;
     private SpriteBatch batchDice2;
@@ -30,6 +33,13 @@ public class Dice2 implements Screen {
     private Stage stage;
     private BitmapFont font;
     private Skin skin;
+    int numberDice=1;
+    int sideDice=6;
+    Random random=new Random();
+    int sum=0;
+    int diceOneValue, diceTwoValue;
+
+
 
     @Override
     public void show() {
@@ -57,6 +67,7 @@ public class Dice2 implements Screen {
 
     @Override
     public void render(float delta) {
+
 
         Gdx.gl.glClearColor(1,1,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -105,5 +116,80 @@ public class Dice2 implements Screen {
         batchFont.dispose();
         textureDice1.dispose();
         textureDice2.dispose();
+    }
+
+    public Dice2(int num, int sideNum) {
+        this.numberDice = num;
+        this.sideDice = sideNum;
+    }
+
+    public int randomDiceValue(){
+        /*
+         nextInt method to get a random int value between 0 and specified value
+         drawn from random number generator
+        */
+
+        return random.nextInt(sideDice)+1;
+    }
+
+    public int roll(){
+
+        for (int i = 0; i < numberDice; i++) {
+
+            sum += randomDiceValue();
+        }
+        return sum;
+}
+    public int getDiceOneValue(){
+        return diceOneValue;
+    }
+    public int getDiceTwoValue() {
+        return diceOneValue;
+    }
+    public void setDiceOneValue(int diceOneValue) {
+        this.diceOneValue=diceOneValue;
+    }
+    public void setDiceTwoValue(int diceTwoValue) {
+        this.diceTwoValue=diceTwoValue;
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
     }
 }
