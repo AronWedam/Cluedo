@@ -125,8 +125,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 piece = new Rectangle();
                 piece.x = connectionService.getPlayers().get(i).getX();
                 piece.y = connectionService.getPlayers().get(i).getY();
-                piece.width = 30;
-                piece.height = 30;
+                piece.width = 32;
+                piece.height = 32;
 
                 //create the player
                 player = new Player(gamePieces.get(randVal), cluedoMap, (int) piece.x, (int) piece.y);
@@ -137,8 +137,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 Rectangle rect = new Rectangle();
                 rect.x = connectionService.getPlayers().get(i).getX();
                 rect.y = connectionService.getPlayers().get(i).getY();
-                rect.width = 30;
-                rect.height = 30;
+                rect.width = 32;
+                rect.height = 32;
 
                 //create the player
                 Player otherPlayer = new Player(gamePieces.get(randVal), cluedoMap, (int) rect.x, (int) rect.y);

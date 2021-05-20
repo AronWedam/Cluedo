@@ -23,7 +23,7 @@ router.post('/register', function (req, res) {
   players.push({
     id: playerId,
     username: req.body.Username,
-    x: positionCounter * 30,
+    x: positionCounter * 32,
     y: 0,
   });
 
