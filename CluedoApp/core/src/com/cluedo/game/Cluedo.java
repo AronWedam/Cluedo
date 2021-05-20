@@ -136,13 +136,16 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         //Single Touch enables player Movement for 1 Tile
         if(Gdx.input.justTouched()) {
+            double x = Gdx.input.getX(0) - (Gdx.graphics.getWidth()/3);
+            double y = Gdx.input.getY(0);
+
             //TODO first if doesn't work properly
             //Check if Player figure is touched - doesn't work at all
-            if(Gdx.input.getX(0) >= player.getX()-1 || Gdx.input.getX(0) <= player.getX()+1 && Gdx.input.getY(0) >= player.getY()-1 || Gdx.input.getY(0) <= player.getY()+1) {
+            if(x >= player.getX()-1 || x <= player.getX()+1 && y >= player.getY()-1 || y <= player.getY()+1) {
                 //Save Coordinates of Touched Area
                 if(Gdx.input.justTouched()) {
                     Vector3 touchPos = new Vector3();
-                    touchPos.set(Gdx.input.getX(0), Gdx.input.getY(0), 0);
+                    touchPos.set((float) x, Gdx.input.getY(0), 0);
                     camera.unproject(touchPos);
 
                     //Make move in touched direction
