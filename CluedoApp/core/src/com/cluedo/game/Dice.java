@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -136,10 +137,10 @@ public class Dice implements Screen {
         RollDice.setPosition(20, 20);
 
 
-        RollDice.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // call animation
+        RollDice.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("Example", "touch started at (" + x + ", " + y + ")");
+                return false;
             }
         });
 
