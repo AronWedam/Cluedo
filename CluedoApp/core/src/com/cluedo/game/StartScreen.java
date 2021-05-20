@@ -5,49 +5,44 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 
 public class StartScreen implements Screen {
 
     final GameClass game;
     OrthographicCamera camera;
-
     private Texture Logo1;
+    private MainScreen mainScreen;
 
-
-    public StartScreen(final GameClass game){
+    public StartScreen(final GameClass game, MainScreen mainScreen){
         this.game = game;
+        this.mainScreen = mainScreen;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 400, 800);
+        camera.setToOrtho(false, 600, 1000);
         camera.rotate(0);
 
         Logo1 = new Texture(Gdx.files.internal("CLUEDO.png"));
     }
 
-
     @Override
     public void show() {
-
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.batch.draw(Logo1,-50,320);
-        game.font.draw(game.batch, "Welcome to CLUEDO!!! ", 130, 450);
-        game.font.draw(game.batch, "Tap anywhere to begin!", 130, 400);
+        game.batch.draw(Logo1,50,450);
+        game.font.draw(game.batch, "Welcome to CLUEDO!!! ", 230, 500);
+        game.font.draw(game.batch, "Tap anywhere to begin!", 230, 450);
+        Gdx.gl.glClearColor(53/255f, 28/255f, 67/255f, 1);
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
-            game.setScreen(new MenuScreen());
-            dispose();
+            mainScreen.setScreen(new MenuScreen(mainScreen, game));
         }
     }
 
@@ -73,7 +68,6 @@ public class StartScreen implements Screen {
 
     @Override
     public void dispose() {
-
     }
 }
 
