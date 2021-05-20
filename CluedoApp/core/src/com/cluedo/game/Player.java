@@ -89,6 +89,13 @@ public class Player {
        return true;
     }
 
+    public boolean checkIfPlayerIsInRoom(int x, int y){
+        for(int i = 0; i < cluedoMap.roomTiles.length-1; i++){
+            if(cluedoMap.roomTiles[i].x == x && cluedoMap.roomTiles[i].y == y) return true;
+        }
+        return false;
+    }
+
 
     public static void myCards() {
         int mySuspectCard = cardHandOut.handOutSuspect();
