@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
     private GameClass game;
@@ -36,6 +37,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     float currentZoom;
 
+    private List<Texture> gamePieces;
     Texture gamepieceBlue;
     Texture colMustard;
     Texture mr_green;
@@ -43,7 +45,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     Texture mrs_scarlet;
     Texture mrs_white;
     Texture prof_plum;
-    private boolean DrewFlag = false;
 
     private SpriteBatch Notebookbatch;
     Notebook notebook;
@@ -52,6 +53,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         this.game = game;
         players = new ArrayList<>();
         pieces = new ArrayList<>();
+        gamePieces = new ArrayList<>();
         //Get the Players of the Current Game
         connectionService = com.cluedo.game.network.ConnectionService.GetInstance();
         Thread GetGameThread = new Thread(new Runnable() {
@@ -73,20 +75,27 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 400, 800);
 
-        /*
+
         //load images
         gamepieceBlue = new Texture("Gamepiece_blue.png");
+        gamePieces.add(gamepieceBlue);
+        /*
         colMustard = new Texture("Col_Mustard.png");
+        gamePieces.add(colMustard);
         mr_green = new Texture("Mr_Green.png");
+        gamePieces.add(mr_green);
         mrs_peacock = new Texture("Mrs_Peacock.png");
+        gamePieces.add(mrs_peacock);
         mrs_scarlet = new Texture("Mrs_Scarlet.png");
+        gamePieces.add(mrs_scarlet);
         mrs_white = new Texture("Mrs_White.png");
+        gamePieces.add(mrs_white);
         prof_plum = new Texture("Prof_Plum.png");
+        gamePieces.add(prof_plum);
          */
 
         //batch for the viewportNotebook method
         Notebookbatch = new SpriteBatch();
-
 
         SyncNetworkPlayersWithGamePlayers();
         /*
@@ -111,8 +120,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     private void SyncNetworkPlayersWithGamePlayers() {
         List<Player> tempPlayers = new ArrayList<>();
         List<Rectangle> tempRectange = new ArrayList<>();
+        int randVal;
+        Random rand = new Random();
 
         for(int i=0; i<connectionService.getPlayers().size(); i++) {
+            randVal = rand.nextInt(gamePieces.size());
+
             if (connectionService.getPlayers().get(i).getId().equals(connectionService.GetPlayerId())) {
                 piece = new Rectangle();
                 piece.x = connectionService.getPlayers().get(i).getX();
@@ -121,7 +134,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 piece.height = 30;
 
                 //create the player
-                player = new Player(gamepieceBlue, cluedoMap, (int) piece.x, (int) piece.y);
+                player = new Player(gamePieces.get(randVal), cluedoMap, (int) piece.x, (int) piece.y);
                 tempPlayers.add(player);
                 tempRectange.add(piece);
             } else {
@@ -133,7 +146,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 rect.height = 30;
 
                 //create the player
-                Player otherPlayer = new Player(gamepieceBlue, cluedoMap, (int) rect.x, (int) rect.y);
+                Player otherPlayer = new Player(gamePieces.get(randVal), cluedoMap, (int) rect.x, (int) rect.y);
                 tempPlayers.add(otherPlayer);
                 tempRectange.add(rect);
             }
