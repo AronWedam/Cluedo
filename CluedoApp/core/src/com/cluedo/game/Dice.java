@@ -29,20 +29,22 @@ public class Dice implements Screen {
     int sideDice=6;
     Random random=new Random();
 
-    Texture img;
-    TextureAtlas atlas;
-    Skin skin;
+    Texture img1;
+    Texture img2;
+    Texture img3;
+    Texture img4;
+    Texture img5;
+    Texture img6;
 
+    //TextureAtlas atlas;
+    Skin skin;
 
     int diceOneValue, diceTwoValue;
 
-
-    public static final String DICE_IMG_PATH="dice_1.png";
+    //public static final String DICE_IMG_PATH="dice_1.png";
     SpriteBatch batch = new SpriteBatch();
     Texture texture;
     Sprite sprite;
-
-
 
 
     public Dice(int num, int sideNum) {
@@ -67,6 +69,21 @@ public class Dice implements Screen {
         }
         return sum;
     }
+    public void changeDiceValue(){
+        if(sum==1){
+            img1 = new Texture(Gdx.files.internal("dice_1.png"));
+        } else if(sum==2) {
+            img1 = new Texture(Gdx.files.internal("dice_2.png"));
+        } else if(sum==3){
+            img1 = new Texture(Gdx.files.internal("dice_3.png"));
+        }else if(sum==4){
+            img1 = new Texture(Gdx.files.internal("dice_4.png"));
+        }else if(sum==5){
+            img1 = new Texture(Gdx.files.internal("dice_5.png"));
+        }else if(sum==6){
+            img1 = new Texture(Gdx.files.internal("dice_6.png"));
+        }
+    }
 
     public int getDiceOneValue(){
         return diceOneValue;
@@ -86,13 +103,35 @@ public class Dice implements Screen {
     @Override
     public void show() {
         batch=new SpriteBatch();
-        texture = new Texture(Gdx.files.internal("dice_1.png"));
+        img1 = new Texture(Gdx.files.internal("dice_1.png"));
+        img2 = new Texture(Gdx.files.internal("dice_2.png"));
+        img3 = new Texture(Gdx.files.internal("dice_3.png"));
+        img4 = new Texture(Gdx.files.internal("dice_4.png"));
+        img5 = new Texture(Gdx.files.internal("dice_5.png"));
+        img6 = new Texture(Gdx.files.internal("dice_6.png"));
         sprite=new Sprite(texture);
 
+    }
 
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+
+        float xDice1 = 150;
+        float yDice1 = 20;
+        float xDice2 = 150;
+        float yDice2 = 180;
+        int srcX = 100;
+        int srcY = 30;
+        int srcWidth = 140;
+        int srcHeight = 140;
+
+        batch.begin();
+        batch.draw(img1, xDice1, yDice1, srcX, srcY, srcWidth, srcHeight);
+        batch.draw(img2, xDice2, yDice2, srcX, srcY, srcWidth, srcHeight);
+        batch.end();
 
         Button RollDice = new TextButton("Roll Dice", skin);
-
         RollDice.setSize(100, 50);
         RollDice.setPosition(20, 20);
 
@@ -100,19 +139,9 @@ public class Dice implements Screen {
         RollDice.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-               // call animation
+                // call animation
             }
         });
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-
-        batch.begin();
-        sprite.draw(batch);
-        batch.end();
-
 
     }
 
@@ -139,7 +168,8 @@ public class Dice implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        img.dispose();
+        img1.dispose();
+        img2.dispose();
         texture.dispose();
     }
 }
