@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -63,12 +64,15 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
             + "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n";
 
     Notebook notebook;
+    private TextureAtlas atlas;
+    protected Skin skin;
 
 //
 
     public Cluedo(final GameClass game){
-
         this.game = game;
+        atlas = new TextureAtlas("uiskin.atlas");
+        skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
 
         //create map
         float w = Gdx.graphics.getWidth();
@@ -185,21 +189,21 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     Gdx.graphics.getHeight());
 
 
-            /*
-            notebook.setNotebook();
 
-            innerTable = new Table();
+            notebook = new Notebook();
+
+            innerTable = new Table(skin);
             outerTable = new Table();
             scrollPane = new ScrollPane(innerTable);
             outerTable.add(scrollPane).height(800);
 
-            scrollPane.setStyle(scrollPaneStyle);
+            //scrollPane.setStyle(scrollPaneStyle);
             //Label.LabelStyle style = new Label.LabelStyle();
             //Label label = new Label("Text here", style);
             //innerTable.add(label);
 
             //innerTable.add("Your Cards", String.valueOf(new Label.LabelStyle(new BitmapFont(), Color.WHITE)));
-            /*
+
             Notebookbatch.begin();
             font.draw(Notebookbatch, "Hello World", 0, 200);
             Notebookbatch.end();
@@ -207,7 +211,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
             this.stage = new Stage();
             Gdx.input.setInputProcessor(this.stage);
-            final Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+            final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
             final Label text = new Label(reallyLongString, skin);
             text.setAlignment(Align.center);
@@ -233,7 +237,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
             table.add(scroller).fill().expand();
 
             this.stage.addActor(table);
-            */
 
         }
 

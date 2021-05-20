@@ -14,9 +14,9 @@ public class Notebook {
     private ScrollPane pane;
     private Object Cluedo;
     private CardHandOut cardHandOut;
-    final Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+    final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-    public void setNotebook(Notebook notebook, Stage stage) {
+    public Notebook() {
 
         this.table = new Table((Skin) Cluedo);
         this.table.defaults().padLeft(5).align(Align.left);
