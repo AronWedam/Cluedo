@@ -38,7 +38,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     float currentZoom;
 
     private List<Texture> gamePieces;
-    Texture gamepieceBlue;
     Texture colMustard;
     Texture mr_green;
     Texture mrs_peacock;
@@ -77,22 +76,18 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
 
         //load images
-        gamepieceBlue = new Texture("Gamepiece_blue.png");
-        gamePieces.add(gamepieceBlue);
-        /*
-        colMustard = new Texture("Col_Mustard.png");
+        colMustard = new Texture("chars/Col_Mustard.png");
         gamePieces.add(colMustard);
-        mr_green = new Texture("Mr_Green.png");
+        mr_green = new Texture("chars/Mr_Green.png");
         gamePieces.add(mr_green);
-        mrs_peacock = new Texture("Mrs_Peacock.png");
+        mrs_peacock = new Texture("chars/Mrs_Peacock.png");
         gamePieces.add(mrs_peacock);
-        mrs_scarlet = new Texture("Mrs_Scarlet.png");
+        mrs_scarlet = new Texture("chars/Mrs_Scarlet.png");
         gamePieces.add(mrs_scarlet);
-        mrs_white = new Texture("Mrs_White.png");
+        mrs_white = new Texture("chars/Mrs_White.png");
         gamePieces.add(mrs_white);
-        prof_plum = new Texture("Prof_Plum.png");
+        prof_plum = new Texture("chars/Prof_Plum.png");
         gamePieces.add(prof_plum);
-         */
 
         //batch for the viewportNotebook method
         Notebookbatch = new SpriteBatch();
