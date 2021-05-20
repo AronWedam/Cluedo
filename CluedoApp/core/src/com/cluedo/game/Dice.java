@@ -1,7 +1,6 @@
 package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,19 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.Random;
 
-public class Dice2 implements Screen, InputProcessor {
-
+public class Dice implements Screen, InputProcessor {
     private SpriteBatch batchDice1;
     private SpriteBatch batchDice2;
     private SpriteBatch batchFont;
@@ -39,8 +33,6 @@ public class Dice2 implements Screen, InputProcessor {
     Random random=new Random();
     int sum=0;
     int diceOneValue, diceTwoValue;
-
-
 
     @Override
     public void show() {
@@ -150,7 +142,7 @@ public class Dice2 implements Screen, InputProcessor {
         textureDice2.dispose();
     }
 
-    public Dice2(int num, int sideNum) {
+    public Dice(int num, int sideNum) {
         this.numberDice = num;
         this.sideDice = sideNum;
     }
