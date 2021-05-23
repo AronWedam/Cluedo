@@ -1,10 +1,12 @@
 package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 
 public class Notebook {
@@ -43,6 +45,24 @@ public class Notebook {
         this.table.add(new Label("", skin));
         this.table.row();
         this.table.add(new Label("ROOMS",skin, "default"));
+
+        this.table.row();
+        TextButton btnDice;
+        this.table.add(btnDice = new TextButton("Dice", skin, "default"));
+        btnDice.setSize(20, 20);
+        this.table.row();
+
+        this.table.row();
+        TextButton btnAccusation;
+        this.table.add(btnDice = new TextButton("Accusation", skin, "default"));
+        btnDice.setSize(20, 20);
+        this.table.row();
+
+        this.table.row();
+        TextButton btnHelp;
+        this.table.add(btnDice = new TextButton("Help", skin, "default"));
+        btnDice.setSize(20, 20);
+        this.table.row();
 
 
         pane.setActor(this.table);
