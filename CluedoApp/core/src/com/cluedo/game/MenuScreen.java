@@ -63,6 +63,7 @@ public class MenuScreen implements Screen{
         //Create Buttons
         final TextButton startBtn = new TextButton("Start Game", skin);
         TextButton optionsBtn = new TextButton("Options", skin);
+        TextButton rulesBtn= new TextButton("Rules", skin);
         TextButton exitBtn = new TextButton("Exit Game", skin);
         final TextField textFieldUsername = new TextField("", skin);
         textFieldUsername.setSize(250, 50);
@@ -120,6 +121,12 @@ public class MenuScreen implements Screen{
                 //((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsScreen());
             }
         });
+        rulesBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
 
 
         //Add Buttons to the table
@@ -128,6 +135,7 @@ public class MenuScreen implements Screen{
         mainTable.add(textFieldUsername).size(300, 50);
         mainTable.add(startBtn).size(100, 50);
         mainTable.row().colspan(2);
+        mainTable.add(rulesBtn).size(100,50).align(Align.left);
         mainTable.add(optionsBtn).size(100, 50).align(Align.left);
         mainTable.add(exitBtn).size(100, 50).align(Align.left);
 
