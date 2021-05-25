@@ -25,7 +25,7 @@ public class RulesScreen implements Screen {
     private GameClass gameClass;
     private ConnectionService connectionService;
 
-    public RulesScreen(MainScreen mainScreen, GameClass game){
+    public RulesScreen(GameClass game){
         gameClass = game;
         this.mainScreen = mainScreen;
         connectionService = ConnectionService.GetInstance();
