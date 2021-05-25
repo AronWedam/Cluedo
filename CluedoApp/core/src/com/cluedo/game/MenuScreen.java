@@ -122,6 +122,7 @@ public class MenuScreen implements Screen{
                 //((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsScreen());
             }
         });
+        //If clicked go to Rules
         rulesBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {

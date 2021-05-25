@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cluedo.game.network.ConnectionService;
 
+import java.awt.Menu;
+
 public class RulesScreen implements Screen {
     private SpriteBatch batch;
     protected Stage stage;
@@ -33,7 +35,6 @@ public class RulesScreen implements Screen {
 
     public RulesScreen(GameClass game){
         gameClass = game;
-        this.mainScreen = mainScreen;
         connectionService = ConnectionService.GetInstance();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
@@ -62,11 +63,11 @@ public class RulesScreen implements Screen {
 
         //Create Buttons
         final TextButton mainBtn = new TextButton("Back to Main", skin);
-        TextButton optionsBtn = new TextButton("Options", skin);
+
         TextButton exitBtn = new TextButton("Exit Game", skin);
 
         //If clicked go back to MainMenu
-        exitBtn.addListener(new ClickListener(){
+        mainBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 mainScreen.setScreen(new MenuScreen(mainScreen, gameClass));
@@ -81,13 +82,6 @@ public class RulesScreen implements Screen {
             }
         });
 
-        //If clicked go to Options menu
-        optionsBtn.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                //((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsScreen());
-            }
-        });
 
         //Add Text and Buttons to the table
         mainTable.add("RULES").align(Align.center);
@@ -114,12 +108,11 @@ public class RulesScreen implements Screen {
         mainTable.add("Each player acts in a similar manner, and by a process of "+'\n'+"elimination will eventually discover the three murder cards."+'\n'+
                 "When a player is satisfied that he knows the three Murder Cards"+'\n'+"the player can make an accusation. The player then gets to look"+'\n'+
                 "at the Murder Cards in the envelope. If it matches the accusation,"+'\n'+" this player has won the game. If not the player lost and is out."+'\n'+
-                "The other players are still in the game with a chance to win.").align(Align.left);
+                "The other players are still in the game with a chance to win."+'\n'+'\n').align(Align.left);
         mainTable.row().colspan(2);
 
-        mainTable.add(mainBtn).size(100, 50);
+        mainTable.add(mainBtn).size(100, 50).align(Align.left);
         mainTable.row().colspan(2);
-        mainTable.add(optionsBtn).size(100, 50).align(Align.left);
         mainTable.add(exitBtn).size(100, 50).align(Align.left);
 
         //Add table to stage
