@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
 //Route for the players to register to a game
 router.post('/register', function (req, res) {
   let playerId = uuidv4();
-  if (playerImagesCounter > playerImages.length) playerImagesCounter = 0;
+  if (playerImagesCounter >= playerImages.length) playerImagesCounter = 0;
 
   players.push({
     id: playerId,
@@ -95,15 +95,6 @@ router.get('/reset', function (req, res) {
   positionCounter = 0;
   stopwatch.stop();
   res.send(200).send();
-});
-
-//Getting the new Gamestate
-router.get('/getGame/:id', function (req, res) {
-  let id = req.params.id;
-  let retGame = currentGames.filter((x) => x.id === id);
-
-  if (retGame.length > 0) res.status(200).send(retGame[0]);
-  else res.send(404).send();
 });
 
 module.exports = router;
