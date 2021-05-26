@@ -6,11 +6,20 @@ var router = express.Router();
 
 //Array that holds up to 5 users which will play together
 let players = [];
+let playerImages = [
+  'chars/Col_Mustard.png',
+  'chars/Mr_Green.png',
+  'chars/Mrs_Peacock.png',
+  'chars/Mrs_Scarlet.png',
+  'chars/Mrs_White.png',
+  'chars/Prof_Plum.png',
+];
 
 //Array of all current Games running
 let currentGame = undefined;
 let stopwatchRunning = false;
 let positionCounter = 0;
+let playerImagesCounter = 0;
 
 // define the home page route
 router.get('/', function (req, res) {
@@ -20,11 +29,14 @@ router.get('/', function (req, res) {
 //Route for the players to register to a game
 router.post('/register', function (req, res) {
   let playerId = uuidv4();
+  if (playerImagesCounter >= playerImages.length) playerImagesCounter = 0;
+
   players.push({
     id: playerId,
     username: req.body.Username,
     x: positionCounter * 32,
     y: 0,
+    playerImage: playerImages[playerImagesCounter],
   });
 
   if (!stopwatchRunning) {
@@ -32,6 +44,7 @@ router.post('/register', function (req, res) {
     stopwatchRunning = true;
   }
 
+  playerImagesCounter++;
   positionCounter++;
   console.log('Register');
   console.log(players);
@@ -69,6 +82,8 @@ router.post('/playerMoved', function (req, res) {
       currentPlayer = players[i];
     }
   }
+  console.log('New Pos');
+  console.log(players);
 
   res.status(200).send();
 });
@@ -80,15 +95,6 @@ router.get('/reset', function (req, res) {
   positionCounter = 0;
   stopwatch.stop();
   res.send(200).send();
-});
-
-//Getting the new Gamestate
-router.get('/getGame/:id', function (req, res) {
-  let id = req.params.id;
-  let retGame = currentGames.filter((x) => x.id === id);
-
-  if (retGame.length > 0) res.status(200).send(retGame[0]);
-  else res.send(404).send();
 });
 
 module.exports = router;
