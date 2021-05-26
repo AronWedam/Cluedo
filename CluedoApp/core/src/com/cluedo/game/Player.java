@@ -1,9 +1,9 @@
 package com.cluedo.game;
 
-
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.cluedo.game.network.ConnectionService;
 
 public class Player {
     private static CardHandOut cardHandOut;
@@ -11,12 +11,15 @@ public class Player {
     Texture texture;
     private int x,y;
     private CluedoMap cluedoMap;
+    private ConnectionService connectionService;
 
     public Player(Texture texture, CluedoMap cluedoMap, int x, int y){
         this.texture = texture;
         this.cluedoMap = cluedoMap;
         this.x = x;
         this.y = y;
+
+        connectionService = ConnectionService.GetInstance();
     }
 
     // Display Player
@@ -33,6 +36,19 @@ public class Player {
         if(valid(x,y)){
             this.x = x;
             this.y = y;
+
+            Thread postPosThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    connectionService.PostNewPosition(getX(), getY());
+                }
+            });
+            postPosThread.start();
+            try {
+                postPosThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
