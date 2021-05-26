@@ -62,8 +62,7 @@ public class RulesScreen implements Screen {
         mainTable.align(Align.top);
 
         //Create Buttons
-        final TextButton mainBtn = new TextButton("Back to Main", skin);
-
+        TextButton mainBtn = new TextButton("Back to Main", skin);
         TextButton exitBtn = new TextButton("Exit Game", skin);
 
         //If clicked go back to MainMenu
@@ -73,7 +72,6 @@ public class RulesScreen implements Screen {
                 mainScreen.setScreen(new MenuScreen(mainScreen, gameClass));
             }
         });
-
         //If clicked exit the game
         exitBtn.addListener(new ClickListener(){
             @Override
@@ -81,6 +79,7 @@ public class RulesScreen implements Screen {
                 Gdx.app.exit();
             }
         });
+
 
 
         //Add Text and Buttons to the table
@@ -154,5 +153,6 @@ public class RulesScreen implements Screen {
     public void dispose() {
         skin.dispose();
         atlas.dispose();
+        batch.dispose();
     }
 }

@@ -65,6 +65,7 @@ public class MenuScreen implements Screen{
         final TextButton startBtn = new TextButton("Start Game", skin);
         TextButton optionsBtn = new TextButton("Options", skin);
         TextButton rulesBtn= new TextButton("Rules", skin);
+        TextButton diceBtn= new TextButton("Dice", skin);
         TextButton exitBtn = new TextButton("Exit Game", skin);
         final TextField textFieldUsername = new TextField("", skin);
         textFieldUsername.setSize(250, 50);
@@ -131,6 +132,8 @@ public class MenuScreen implements Screen{
         });
 
 
+
+
         //Add Buttons to the table
         mainTable.add("Please enter a username to start the game!").align(Align.center);
         mainTable.row().colspan(2);
@@ -138,6 +141,7 @@ public class MenuScreen implements Screen{
         mainTable.add(startBtn).size(100, 50);
         mainTable.row().colspan(2);
         mainTable.add(rulesBtn).size(100,50).align(Align.left);
+        mainTable.add(diceBtn).size(100,50).align(Align.left);
         mainTable.add(optionsBtn).size(100, 50).align(Align.left);
         mainTable.add(exitBtn).size(100, 50).align(Align.left);
 
