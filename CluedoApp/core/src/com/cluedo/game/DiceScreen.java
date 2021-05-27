@@ -49,6 +49,7 @@ public class DiceScreen implements Screen, InputProcessor {
     private ExtendViewport viewport1;
     private Animation animation;
     private float elapsedTime = 0;
+    Dice dice;
 
     //to store sprites
     final HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
@@ -86,13 +87,53 @@ public class DiceScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         batch.begin();
 
         drawSprite("dice1", 40, 450);
         drawSprite("dice6", 304, 450);
+        gameClass.font.draw(gameClass.batch, "Tap to roll", 230, 450);
 
         batch.end();
 
+        int dice1Value;
+        int dice2Value;
+
+        if (Gdx.input.isTouched()) {
+            diceAnimation();
+            dice1Value = dice.randomDiceValue();
+            dice2Value = dice.randomDiceValue();
+
+            switch (dice1Value) {
+                case 1:
+                    drawSprite("dice1.png", 40, 450);
+                case 2:
+                    drawSprite("dice2.png", 40, 450);
+                case 3:
+                    drawSprite("dice3.png", 40, 450);
+                case 4:
+                    drawSprite("dice4.png", 40, 450);
+                case 5:
+                    drawSprite("dice5.png", 40, 450);
+                case 6:
+                    drawSprite("dice6.png", 40, 450);
+
+            }
+            switch (dice2Value) {
+                case 1:
+                    drawSprite("dice1.png", 304, 450);
+                case 2:
+                    drawSprite("dice2.png", 304, 450);
+                case 3:
+                    drawSprite("dice3.png", 304, 450);
+                case 4:
+                    drawSprite("dice4.png", 304, 450);
+                case 5:
+                    drawSprite("dice5.png", 304, 450);
+                case 6:
+                    drawSprite("dice6.png", 304, 450);
+            }
+        }
 
         stage.act();
         stage.draw();
