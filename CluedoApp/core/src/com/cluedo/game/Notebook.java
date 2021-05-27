@@ -18,40 +18,38 @@ public class Notebook {
     public Table table;
     private ScrollPane pane;
     final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
-    private Label notebookText;
-    private Label handCardText;
-    private Label shownCardText;
-    private Label markText;
-    private Label suspectsText;
-    private Label weaponsText;
-    private Label roomsText;
-    private TextButton btnDice;
-    private TextButton btnAccusation;
-    private TextButton btnHelp;
+    private final Label notebookText        =   new Label("Notebook: ", skin);
+    private final Label markText            =   new Label("(you can mark it off below!)", skin, "default");
+    private final Label suspectsText        =   new Label("SUSPECTS", skin, "default");
+    private final Label weaponsText         =   new Label("WEAPONS", skin, "default");
+    private final Label roomsText           =   new Label("ROOMS",skin, "default");
+    private final TextButton btnDice        =   new TextButton("Dice", skin, "default");
+    private final TextButton btnAccusation  =   new TextButton("Accusation", skin, "default");
+    private final TextButton btnHelp        =   new TextButton("Help", skin, "default");
 
-    private CheckBox cBMissScarlett = new CheckBox("MissScarlett", skin);
-    private CheckBox cBColonelMustard = new CheckBox("ColonelMustard", skin);
-    private CheckBox cBMrsWhite = new CheckBox("MrsWhite", skin);
-    private CheckBox cBReverend = new CheckBox("Reverend", skin);
-    private CheckBox cBMrsPeacock = new CheckBox("MrsPeacock", skin);
-    private CheckBox cBProfessorPlum = new CheckBox("ProfessorPlum", skin);
+    private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
+    private final CheckBox cBColonelMustard =   new CheckBox("ColonelMustard", skin);
+    private final CheckBox cBMrsWhite       =   new CheckBox("MrsWhite", skin);
+    private final CheckBox cBReverend       =   new CheckBox("Reverend", skin);
+    private final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
+    private final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
 
-    private CheckBox cBRoomEntrance = new CheckBox("Entrance", skin);
-    private CheckBox cBRoomGarden = new CheckBox("Garden", skin);
-    private CheckBox cBRoomDining = new CheckBox("Dining", skin);
-    private CheckBox cBRoomKitchen = new CheckBox("Kitchen", skin);
-    private CheckBox cBRoomBallroom = new CheckBox("Ballroom", skin);
-    private CheckBox cBRoomMusicroom = new CheckBox("Musicroom", skin);
-    private CheckBox cBRoomGameroom  = new CheckBox("Gameroom ", skin);
-    private CheckBox cBRoomStudy = new CheckBox("Study", skin);
-    private CheckBox cBRoomLibrary = new CheckBox("Library", skin);
+    private final CheckBox cBRoomEntrance   =   new CheckBox("Entrance", skin);
+    private final CheckBox cBRoomGarden     =   new CheckBox("Garden", skin);
+    private final CheckBox cBRoomDining     =   new CheckBox("Dining", skin);
+    private final CheckBox cBRoomKitchen    =   new CheckBox("Kitchen", skin);
+    private final CheckBox cBRoomBallroom   =   new CheckBox("Ballroom", skin);
+    private final CheckBox cBRoomMusicroom  =   new CheckBox("Musicroom", skin);
+    private final CheckBox cBRoomGameroom   =   new CheckBox("Gameroom ", skin);
+    private final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
+    private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
 
-    private CheckBox cBWeaponKnife = new CheckBox("Knife", skin);
-    private CheckBox cBWeaponRope = new CheckBox("Rope", skin);
-    private CheckBox cBWeaponGun = new CheckBox("Gun", skin);
-    private CheckBox cBWeaponPoison = new CheckBox("Poison", skin);
-    private CheckBox cBWeaponPipe = new CheckBox("Pipe", skin);
-    private CheckBox cBWeaponCandle = new CheckBox("Candle", skin);
+    private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
+    private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
+    private final CheckBox cBWeaponGun      =   new CheckBox("Gun", skin);
+    private final CheckBox cBWeaponPoison   =   new CheckBox("Poison", skin);
+    private final CheckBox cBWeaponPipe     =   new CheckBox("Pipe", skin);
+    private final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
 
 
 
@@ -63,13 +61,12 @@ public class Notebook {
 
 
 
-        this.table.add(notebookText = new Label("Notebook: ", skin));
-        notebookText.setFontScale(5
-                , 5);
+        this.table.add(notebookText);
+        notebookText.setFontScale(5, 5);
         this.table.row();
 
 
-        this.table.add(markText = new Label("(you can mark it off below!)", skin, "default"));
+        this.table.add(markText);
         markText.setFontScale(2, 2);
         this.table.row();
 
@@ -78,68 +75,84 @@ public class Notebook {
         this.table.row();
 
 
-        this.table.add(suspectsText = new Label("SUSPECTS", skin, "default"));
+        this.table.add(suspectsText );
         suspectsText.setFontScale(4, 4);
         this.table.row();
-        /*
-        for (int i = 0; i < Cards.numSuspects; i++) {
-            this.table.row();
-            Cards card = new Cards(Cards.TYPE_SUSPECT, i);
-            this.table.add(new Item(card));
-        }
 
-         */
         this.table.add(cBMissScarlett);
+        cBMissScarlett.getLabel().setFontScale(getPane().getScaleX() / 2,
+                getPane().getScaleY() / 2);
+        this.table.row();
         this.table.add(cBColonelMustard);
+        this.table.row();
         this.table.add(cBMrsWhite);
+        this.table.row();
         this.table.add(cBReverend);
+        this.table.row();
         this.table.add(cBMrsPeacock);
+        this.table.row();
         this.table.add(cBProfessorPlum);
 
 
 
         this.table.add(new Label("", skin));
         this.table.row();
-        this.table.add(weaponsText = new Label("WEAPONS", skin, "default"));
+        this.table.add(weaponsText);
         weaponsText.setFontScale(4, 4);
         this.table.row();
 
         this.table.add(cBWeaponCandle);
+        this.table.row();
         this.table.add(cBWeaponGun);
+        this.table.row();
         this.table.add(cBWeaponKnife);
+        this.table.row();
         this.table.add(cBWeaponPipe);
+        this.table.row();
         this.table.add(cBWeaponPoison);
+        this.table.row();
         this.table.add(cBWeaponRope);
 
         this.table.add(new Label("", skin));
         this.table.row();
 
-        this.table.add(roomsText = new Label("ROOMS",skin, "default"));
+        this.table.add(roomsText);
         roomsText.setFontScale(4, 4);
         this.table.row();
 
         this.table.add(cBRoomBallroom);
+        cBRoomBallroom.scaleBy(4, 4);
+        this.table.row();
         this.table.add(cBRoomDining);
+        this.table.row();
         this.table.add(cBRoomEntrance);
+        this.table.row();
         this.table.add(cBRoomGameroom);
+        this.table.row();
         this.table.add(cBRoomGarden);
+        this.table.row();
         this.table.add(cBRoomKitchen);
+        this.table.row();
         this.table.add(cBRoomLibrary);
+        this.table.row();
         this.table.add(cBRoomMusicroom);
+        this.table.row();
         this.table.add(cBRoomStudy);
 
 
-        this.table.add(btnDice = new TextButton("Dice", skin, "default"));
+        this.table.row();
+        this.table.row();
+        this.table.add(btnDice);
         btnDice.setSize(20, 20);
         this.table.row();
 
         this.table.row();
-        this.table.add(btnAccusation = new TextButton("Accusation", skin, "default"));
+        this.table.add(btnAccusation);
         btnAccusation.setSize(20, 20);
         this.table.row();
 
         this.table.row();
-        this.table.add(btnHelp = new TextButton("Help", skin, "default"));
+        this.table.add(btnHelp);
         btnHelp.setSize(20, 20);
         this.table.row();
 
@@ -149,24 +162,6 @@ public class Notebook {
     }
     public ScrollPane getPane(){
         return pane;
-    }
-
-    private class Item {
-        Cards card;
-        CheckBox checkBox;
-        Boolean isCardInHand;
-
-        Item(Cards card) {
-            this.card = card;
-            if(isCardInHand){
-                this.checkBox = new CheckBox(card.toString(), skin);
-                this.checkBox.setDisabled(true);
-                this.checkBox.setChecked(true);
-            } else {
-                this.checkBox = new CheckBox(card.toString(), skin);
-            }
-
-        }
     }
 
 }
