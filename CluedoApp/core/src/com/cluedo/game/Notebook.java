@@ -62,12 +62,14 @@ public class Notebook {
 
 
         this.table.add(notebookText);
-        notebookText.setFontScale(5, 5);
+        notebookText.setFontScale((float) (getPane().getScaleX() / 0.2),
+                (float) (getPane().getScaleY() / 0.2));;
         this.table.row();
 
 
         this.table.add(markText);
-        markText.setFontScale(2, 2);
+        markText.setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
 
 
@@ -76,68 +78,110 @@ public class Notebook {
 
 
         this.table.add(suspectsText );
-        suspectsText.setFontScale(4, 4);
+        suspectsText.setFontScale((float) (getPane().getScaleX() / 0.25),
+                (float) (getPane().getScaleY() / 0.25));;
         this.table.row();
 
         this.table.add(cBMissScarlett);
-        cBMissScarlett.getLabel().setFontScale(getPane().getScaleX() / 2,
-                getPane().getScaleY() / 2);
+        cBMissScarlett.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBColonelMustard);
+        cBColonelMustard.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBMrsWhite);
+        cBMrsWhite.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBReverend);
+        cBReverend.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBMrsPeacock);
+        cBMrsPeacock.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBProfessorPlum);
+        cBProfessorPlum.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
 
 
 
         this.table.add(new Label("", skin));
         this.table.row();
         this.table.add(weaponsText);
-        weaponsText.setFontScale(4, 4);
+        weaponsText.setFontScale((float) (getPane().getScaleX() / 0.25),
+                (float) (getPane().getScaleY() / 0.25));
         this.table.row();
 
         this.table.add(cBWeaponCandle);
+        cBWeaponCandle.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBWeaponGun);
+        cBWeaponGun.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBWeaponKnife);
+        cBWeaponKnife.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBWeaponPipe);
+        cBWeaponPipe.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBWeaponPoison);
+        cBWeaponPoison.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBWeaponRope);
+        cBWeaponRope.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
 
         this.table.add(new Label("", skin));
         this.table.row();
 
         this.table.add(roomsText);
-        roomsText.setFontScale(4, 4);
+        roomsText.setFontScale((float) (getPane().getScaleX() / 0.25),
+                (float) (getPane().getScaleY() / 0.25));
         this.table.row();
 
         this.table.add(cBRoomBallroom);
-        cBRoomBallroom.scaleBy(4, 4);
+        cBRoomBallroom.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBRoomDining);
+        cBRoomDining.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBRoomEntrance);
+        cBRoomEntrance.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBRoomGameroom);
+        cBRoomGameroom.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBRoomGarden);
+        cBRoomGarden.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBRoomKitchen);
+        cBRoomKitchen.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBRoomLibrary);
+        cBRoomLibrary.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBRoomMusicroom);
+        cBRoomMusicroom.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
         this.table.add(cBRoomStudy);
+        cBRoomStudy.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
 
 
         this.table.row();
