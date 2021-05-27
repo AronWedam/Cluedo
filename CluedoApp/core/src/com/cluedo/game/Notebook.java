@@ -2,14 +2,12 @@ package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 
@@ -52,14 +50,10 @@ public class Notebook {
     private final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
 
 
-
-
     public Notebook() {
         this.table = new Table(skin);
         this.table.defaults().padLeft(5).align(Align.left);
         this.pane = new ScrollPane(this.table, skin);
-
-
 
         this.table.add(notebookText);
         notebookText.setFontScale((float) (getPane().getScaleX() / 0.2),
@@ -77,135 +71,175 @@ public class Notebook {
         this.table.row();
 
 
+        //SUSPECTS Category in Notebook
         this.table.add(suspectsText );
         suspectsText.setFontScale((float) (getPane().getScaleX() / 0.25),
-                (float) (getPane().getScaleY() / 0.25));;
+                (float) (getPane().getScaleY() / 0.25));
         this.table.row();
 
         this.table.add(cBMissScarlett);
-        cBMissScarlett.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.5);
+        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.5);
+        cBMissScarlett.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBMissScarlett);
         this.table.row();
+
         this.table.add(cBColonelMustard);
-        cBColonelMustard.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBColonelMustard.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBColonelMustard);
         this.table.row();
+
         this.table.add(cBMrsWhite);
-        cBMrsWhite.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBMrsWhite.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBMrsWhite);
         this.table.row();
+
         this.table.add(cBReverend);
-        cBReverend.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBReverend.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBReverend);
         this.table.row();
+
         this.table.add(cBMrsPeacock);
-        cBMrsPeacock.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBMrsPeacock.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBMrsPeacock);
         this.table.row();
+
         this.table.add(cBProfessorPlum);
-        cBProfessorPlum.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
-
-
-
+        cBProfessorPlum.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBProfessorPlum);
         this.table.add(new Label("", skin));
         this.table.row();
+
+
+        //WEAPONS Category in Notebook
         this.table.add(weaponsText);
         weaponsText.setFontScale((float) (getPane().getScaleX() / 0.25),
                 (float) (getPane().getScaleY() / 0.25));
         this.table.row();
 
         this.table.add(cBWeaponCandle);
-        cBWeaponCandle.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBWeaponCandle.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBWeaponCandle);
         this.table.row();
+
         this.table.add(cBWeaponGun);
-        cBWeaponGun.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBWeaponGun.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBWeaponGun);
         this.table.row();
+
         this.table.add(cBWeaponKnife);
-        cBWeaponKnife.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBWeaponKnife.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBWeaponKnife);
         this.table.row();
+
         this.table.add(cBWeaponPipe);
-        cBWeaponPipe.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBWeaponPipe.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBWeaponPipe);
         this.table.row();
+
         this.table.add(cBWeaponPoison);
-        cBWeaponPoison.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBWeaponPoison.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBWeaponPoison);
         this.table.row();
+
         this.table.add(cBWeaponRope);
-        cBWeaponRope.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBWeaponRope.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBWeaponPoison);
 
         this.table.add(new Label("", skin));
         this.table.row();
 
+
+        //ROOMS Category in Notebook
         this.table.add(roomsText);
         roomsText.setFontScale((float) (getPane().getScaleX() / 0.25),
                 (float) (getPane().getScaleY() / 0.25));
         this.table.row();
 
         this.table.add(cBRoomBallroom);
-        cBRoomBallroom.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBRoomBallroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBRoomBallroom);
         this.table.row();
+
         this.table.add(cBRoomDining);
-        cBRoomDining.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBRoomDining.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBRoomDining);
         this.table.row();
+
         this.table.add(cBRoomEntrance);
-        cBRoomEntrance.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBRoomEntrance.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBRoomEntrance);
         this.table.row();
+
         this.table.add(cBRoomGameroom);
-        cBRoomGameroom.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBRoomGameroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBRoomGameroom);
         this.table.row();
+
         this.table.add(cBRoomGarden);
-        cBRoomGarden.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBRoomGarden.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBRoomGarden);
         this.table.row();
+
         this.table.add(cBRoomKitchen);
-        cBRoomKitchen.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBRoomKitchen.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBRoomKitchen);
         this.table.row();
+
         this.table.add(cBRoomLibrary);
-        cBRoomLibrary.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBRoomLibrary.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBRoomLibrary);
         this.table.row();
+
         this.table.add(cBRoomMusicroom);
-        cBRoomMusicroom.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBRoomMusicroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBRoomMusicroom);
         this.table.row();
+
         this.table.add(cBRoomStudy);
-        cBRoomStudy.getLabel().setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        cBRoomStudy.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        addListenerToCheckBox(cBRoomStudy);
 
-
+        this.table.add(new Label("", skin));
         this.table.row();
         this.table.row();
+
+
+        //BUTTONS
         this.table.add(btnDice);
-        btnDice.setSize(20, 20);
+        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
+        btnAccusation.center();
         this.table.row();
 
         this.table.row();
         this.table.add(btnAccusation);
-        btnAccusation.setSize(20, 20);
+        btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
+        btnAccusation.center();
         this.table.row();
 
         this.table.row();
         this.table.add(btnHelp);
-        btnHelp.setSize(20, 20);
+        btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
+        btnAccusation.center();
         this.table.row();
 
-
         pane.setActor(this.table);
-
     }
+
     public ScrollPane getPane(){
         return pane;
+    }
+
+    private static void addListenerToCheckBox(final CheckBox cB){
+        cB.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.graphics.setContinuousRendering(cB.isChecked());
+            }
+        });
     }
 
 }
