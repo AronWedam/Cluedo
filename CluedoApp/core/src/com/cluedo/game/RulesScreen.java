@@ -81,7 +81,6 @@ public class RulesScreen implements Screen {
         });
 
 
-
         //Add Text and Buttons to the table
         mainTable.add("RULES").align(Align.center);
         mainTable.row().colspan(2);

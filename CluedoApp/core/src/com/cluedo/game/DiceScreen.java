@@ -79,7 +79,7 @@ public class DiceScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
