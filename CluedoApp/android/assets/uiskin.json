@@ -61,7 +61,8 @@ TouchpadStyle: {
 	default: { background: default-pane, knob: default-round-large }
 },
 TreeStyle: {
-	default: { minus: tree-minus, plus: tree-plus, selection: default-select-selection }
+	default: { minus: tree-minus, plus: tree-plus, selection: default-select-selection },
+
 },
 	TextTooltipStyle: {
 		default: {
