@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 //made with help of tutorial https://www.codeandweb.com/texturepacker/tutorials/libgdx-physics
+// and https://gamefromscratch.com/libgdx-tutorial-3b-simple-animation/
 
 public class DiceScreen implements Screen, InputProcessor {
 
@@ -45,6 +47,8 @@ public class DiceScreen implements Screen, InputProcessor {
     private TextureAtlas atlas;
     private TextureAtlas textureAtlas;
     private ExtendViewport viewport1;
+    private Animation animation;
+    private float elapsedTime = 0;
 
     //to store sprites
     final HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
@@ -109,6 +113,20 @@ public class DiceScreen implements Screen, InputProcessor {
 
             sprites.put(region.name, sprite);
         }
+    }
+    public void diceAnimation(){
+        textureAtlas=new TextureAtlas(Gdx.files.internal("dice/diceSprite.png"));
+
+        //need to pass amount of time per frame, using all of the regions available (dice sides 1-6)
+        animation=new Animation(1/15f, textureAtlas.getRegions());
+
+        batch.begin();
+        //drawing the current frame from the animation to the screen
+        //true tells to loop the animation
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        batch.draw((Texture) animation.getKeyFrame(elapsedTime, true),40,450);
+        batch.draw((Texture) animation.getKeyFrame(elapsedTime, true),304,450);
+        batch.end();
     }
 
 
