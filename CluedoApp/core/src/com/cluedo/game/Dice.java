@@ -9,10 +9,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cluedo.game.network.ConnectionService;
 
 import java.util.Random;
 
@@ -33,6 +35,33 @@ public class Dice implements Screen, InputProcessor {
     Random random=new Random();
     int sum=0;
     int diceOneValue, diceTwoValue;
+    private MainScreen mainScreen;
+    private GameClass gameClass;
+    private ConnectionService connectionService;
+    private SpriteBatch batch;
+
+    private OrthographicCamera camera;
+    private TextureAtlas atlas;
+
+
+    public Dice(GameClass game){
+        gameClass = game;
+        this.mainScreen = mainScreen;
+        connectionService = ConnectionService.GetInstance();
+        atlas = new TextureAtlas("uiskin.atlas");
+        skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
+
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera();
+
+        viewport = new FitViewport(600,1000, camera);
+        viewport.apply();
+
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        camera.update();
+
+        stage = new Stage(viewport, batch);
+    }
 
     @Override
     public void show() {
@@ -60,7 +89,7 @@ public class Dice implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-
+        /*
         if (Gdx.input.isTouched()){
 
             roll();
@@ -108,13 +137,14 @@ public class Dice implements Screen, InputProcessor {
         spriteDice2.draw(batchDice2);
         batchDice2.end();
 
-        /*Button RollDice = new TextButton("Roll Dice", skin);
+        Button RollDice = new TextButton("Roll Dice", skin);
         RollDice.setSize(100, 50);
         RollDice.setPosition(20, 20);
-         */
+
         batchFont.begin();
         font.draw(batchFont, "Tap to Roll", 50, 100);
         batchFont.end();
+        */
     }
 
     @Override

@@ -125,10 +125,10 @@ public class ConnectionService {
         return ServerErrorCode;
     }
 
-    public int GetGame(String id) {
+    public int GetGame() {
         try {
             Request request = new Request.Builder()
-                    .url(Url + "games/getGame" + id)
+                    .url(Url + "games")
                     .get()
                     .build();
 
@@ -152,7 +152,7 @@ public class ConnectionService {
 
         for (int i=0; i<playerArray.length(); i++) {
             JSONObject playerObject = playerArray.getJSONObject(i);
-            tempPlayers.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username"), playerObject.getInt("x"), playerObject.getInt("y")));
+            tempPlayers.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username"), playerObject.getInt("x"), playerObject.getInt("y"), playerObject.getString("playerImage")));
         }
 
         players = tempPlayers;
