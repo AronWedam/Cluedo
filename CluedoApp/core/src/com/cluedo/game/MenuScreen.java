@@ -127,7 +127,7 @@ public class MenuScreen implements Screen{
         rulesBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                mainScreen.setScreen(new RulesScreen(gameClass));
+                mainScreen.setScreen(new RulesScreen(gameClass, mainScreen));
             }
         });
         /*diceBtn.addListener(new ClickListener(){
