@@ -1,12 +1,13 @@
 package com.cluedo.game;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.smartcardio.Card;
+public class Card {
 
-public class Cards {
+    public enum TYPE{
+        SUSPECT, ROOMS, WEAPONS, EVIDENCE
+    }
 
     private int type;
     private int value;
@@ -65,7 +66,7 @@ public class Cards {
     private static List<Integer> weaponCards = Arrays.asList(weaponCandle, weaponGun, weaponKnife,
             weaponPipe, weaponPoison, weaponRope);
 
-    public Cards(int type, int value) {
+    public Card(int type, int value) {
         this.type = type;
         this.value = value;
     }
@@ -98,8 +99,8 @@ public class Cards {
 
 
     public boolean equals(Object obj) {
-        if (obj instanceof Cards) {
-            Cards c = (Cards) obj;
+        if (obj instanceof Card) {
+            Card c = (Card) obj;
             return (c.type == this.type && c.value == this.value);
         } else {
             return false;

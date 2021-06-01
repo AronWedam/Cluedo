@@ -1,6 +1,7 @@
 package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,6 +17,9 @@ public class Notebook {
     public Table table;
     private ScrollPane pane;
     final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+    Player player;
+
+
     private final Label notebookText        =   new Label("Notebook: ", skin);
     private final Label markText            =   new Label("(you can mark it off below!)", skin, "default");
     private final Label suspectsText        =   new Label("SUSPECTS", skin, "default");
@@ -229,6 +233,68 @@ public class Notebook {
         pane.setActor(this.table);
     }
 
+
+    private void yourRoomCards(){
+        if(player.getMyRoomCard() == 1){
+            setColor(cBRoomEntrance);
+        }else if(player.getMyRoomCard() == 2){
+            setColor(cBRoomGarden);
+        }else if(player.getMyRoomCard() == 3){
+            setColor(cBRoomDining);
+        }else if(player.getMyRoomCard() == 4){
+            setColor(cBRoomKitchen);
+        }else if(player.getMyRoomCard() == 5){
+            setColor(cBRoomBallroom);
+        }else if(player.getMyRoomCard() == 6){
+            setColor(cBRoomBallroom);
+        }else if(player.getMyRoomCard() == 7){
+            setColor(cBRoomMusicroom);
+        }else if(player.getMyRoomCard() == 8){
+            setColor(cBRoomGameroom);
+        }else if(player.getMyRoomCard() == 9){
+            setColor(cBRoomStudy);
+        }else if(player.getMyRoomCard() == 10){
+            setColor(cBRoomLibrary);
+        }
+    }
+
+    private void yourSuspectCard(){
+        if(player.getMySuspectCard() == 1){
+            setColor(cBMissScarlett);
+        }else if(player.getMySuspectCard() == 2){
+            setColor(cBColonelMustard);
+        }else if(player.getMySuspectCard() == 3){
+            setColor(cBMrsWhite);
+        }else if(player.getMySuspectCard() == 4){
+            setColor(cBReverend);
+        }else if(player.getMySuspectCard() == 5){
+            setColor(cBMrsPeacock);
+        }else if(player.getMySuspectCard() == 6){
+            setColor(cBProfessorPlum);
+        }
+    }
+
+
+    private void yourWeaponCard(){
+        if(player.getMyWeaponCard() == 1){
+            setColor(cBWeaponKnife);
+        }else if(player.getMyWeaponCard() == 2){
+            setColor(cBWeaponRope);
+        }else if(player.getMyWeaponCard() == 3){
+            setColor(cBWeaponGun);
+        }else if(player.getMyWeaponCard() == 4){
+            setColor(cBWeaponPoison);
+        }else if(player.getMyWeaponCard() == 5){
+            setColor(cBWeaponPipe);
+        }else if(player.getMyWeaponCard() == 6){
+            setColor(cBWeaponCandle);
+        }
+    }
+
+    //Mark your cards Green, so you know what Card is yours
+    private void setColor(CheckBox cB){
+        cB.getLabel().setColor(Color.GREEN);
+    }
     public ScrollPane getPane(){
         return pane;
     }

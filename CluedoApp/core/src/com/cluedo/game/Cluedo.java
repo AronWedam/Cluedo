@@ -17,7 +17,6 @@ import com.cluedo.game.network.NetworkPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
     private GameClass game;
