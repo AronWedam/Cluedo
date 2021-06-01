@@ -5,12 +5,14 @@ public class NetworkPlayer {
     private String Username;
     private int x;
     private int y;
+    private String playerImage;
 
-    public NetworkPlayer(String id, String username, int x, int y) {
+    public NetworkPlayer(String id, String username, int x, int y, String playerImage) {
         Id = id;
         Username = username;
         this.x = x;
         this.y = y;
+        this.playerImage = playerImage;
     }
 
     public String getId() {
@@ -43,5 +45,13 @@ public class NetworkPlayer {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public String getPlayerImage() {
+        return playerImage;
+    }
+
+    public void setPlayerImage(String playerImage) {
+        this.playerImage = playerImage;
     }
 }

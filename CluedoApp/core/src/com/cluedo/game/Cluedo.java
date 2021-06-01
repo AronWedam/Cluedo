@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.cluedo.game.network.NetworkPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +38,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     float currentZoom;
 
-    private List<Texture> gamePieces;
-    Texture colMustard;
-    Texture mr_green;
-    Texture mrs_peacock;
-    Texture mrs_scarlet;
-    Texture mrs_white;
-    Texture prof_plum;
-
     private SpriteBatch Notebookbatch;
     Notebook notebook;
 
@@ -52,17 +45,9 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         this.game = game;
         players = new ArrayList<>();
         pieces = new ArrayList<>();
-        gamePieces = new ArrayList<>();
         //Get the Players of the Current Game
         connectionService = com.cluedo.game.network.ConnectionService.GetInstance();
-        Thread GetGameThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.GetGame(connectionService.GetGameId());
-            }
-        });
-        GetGameThread.start();
-        GetGameThread.join();
+
         map = new TmxMapLoader().load("maps/map1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
 
@@ -74,80 +59,56 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 400, 800);
 
-
-        //load images
-        colMustard = new Texture("chars/Col_Mustard.png");
-        gamePieces.add(colMustard);
-        mr_green = new Texture("chars/Mr_Green.png");
-        gamePieces.add(mr_green);
-        mrs_peacock = new Texture("chars/Mrs_Peacock.png");
-        gamePieces.add(mrs_peacock);
-        mrs_scarlet = new Texture("chars/Mrs_Scarlet.png");
-        gamePieces.add(mrs_scarlet);
-        mrs_white = new Texture("chars/Mrs_White.png");
-        gamePieces.add(mrs_white);
-        prof_plum = new Texture("chars/Prof_Plum.png");
-        gamePieces.add(prof_plum);
-
         //batch for the viewportNotebook method
         Notebookbatch = new SpriteBatch();
 
-        SyncNetworkPlayersWithGamePlayers();
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //Should not do this but who cares
-                while(true) {
-                    connectionService.GetGame(connectionService.GetGameId());
-                    SyncNetworkPlayersWithGamePlayers();
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-        */
+        getPlayers();
     }
 
     private void SyncNetworkPlayersWithGamePlayers() {
         List<Player> tempPlayers = new ArrayList<>();
         List<Rectangle> tempRectange = new ArrayList<>();
-        int randVal;
-        Random rand = new Random();
 
-        for(int i=0; i<connectionService.getPlayers().size(); i++) {
-            randVal = rand.nextInt(gamePieces.size());
-
-            if (connectionService.getPlayers().get(i).getId().equals(connectionService.GetPlayerId())) {
+        for(NetworkPlayer currentPlayer : connectionService.getPlayers()) {
+            if (currentPlayer.getId().equals(connectionService.GetPlayerId())) {
                 piece = new Rectangle();
-                piece.x = connectionService.getPlayers().get(i).getX();
-                piece.y = connectionService.getPlayers().get(i).getY();
-                piece.width = 30;
-                piece.height = 30;
+                piece.x = currentPlayer.getX();
+                piece.y = currentPlayer.getY();
+                piece.width = 32;
+                piece.height = 32;
 
                 //create the player
-                player = new Player(gamePieces.get(randVal), cluedoMap, (int) piece.x, (int) piece.y);
+                player = new Player(new Texture(currentPlayer.getPlayerImage()), cluedoMap, (int) piece.x, (int) piece.y);
                 tempPlayers.add(player);
                 tempRectange.add(piece);
             } else {
                 //create a Rectangle to logically represent one player
                 Rectangle rect = new Rectangle();
-                rect.x = connectionService.getPlayers().get(i).getX();
-                rect.y = connectionService.getPlayers().get(i).getY();
-                rect.width = 30;
-                rect.height = 30;
+                rect.x = currentPlayer.getX();
+                rect.y = currentPlayer.getY();
+                rect.width = 32;
+                rect.height = 32;
 
                 //create the player
-                Player otherPlayer = new Player(gamePieces.get(randVal), cluedoMap, (int) rect.x, (int) rect.y);
+                Player otherPlayer = new Player(new Texture(currentPlayer.getPlayerImage()), cluedoMap, (int) rect.x, (int) rect.y);
                 tempPlayers.add(otherPlayer);
                 tempRectange.add(rect);
             }
         }
         players = tempPlayers;
         pieces = tempRectange;
+    }
+
+    private void getPlayers() throws InterruptedException {
+        Thread GetGameThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                connectionService.GetGame();
+            }
+        });
+        GetGameThread.start();
+        GetGameThread.join();
+        SyncNetworkPlayersWithGamePlayers();
     }
 
     @Override
@@ -171,7 +132,15 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         game.batch.setProjectionMatrix(camera.combined);
 
-        //SyncNetworkPlayersWithGamePlayers();
+        if(!Gdx.input.justTouched()) {
+            try {
+                getPlayers();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Gdx.app.log("Drawing Players", "Drawing Players");
         //Draw the players
         for (int i=0; i<players.size(); i++) {
             Player currentPlayer = players.get(i);
@@ -204,31 +173,19 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                             player.setPos((int) player.getX(), player.getY() + 32);
                         }
                     }
-                        if(touchPos.x < player.getX() || touchPos.y < player.getY()) {
-                            if (touchPos.x < player.getX()) {
-                                player.setPos((int) player.getX() - 32, player.getY());
-                                if (touchPos.y < player.getY()) {
-                                    player.setPos((int) player.getX(), player.getY() - 32);
-                                }
-                            } else
-                                if (touchPos.y < player.getY()) {
-                                    player.setPos((int) player.getX(), player.getY() - 32);
+
+                    if(touchPos.x < player.getX() || touchPos.y < player.getY()) {
+                        if (touchPos.x < player.getX()) {
+                            player.setPos((int) player.getX() - 32, player.getY());
+                            if (touchPos.y < player.getY()) {
+                                player.setPos((int) player.getX(), player.getY() - 32);
                             }
+                        } else
+                            if (touchPos.y < player.getY()) {
+                                player.setPos((int) player.getX(), player.getY() - 32);
                         }
                     }
                 }
-
-                Thread postPosThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        connectionService.PostNewPosition(player.getX(), player.getY());
-                    }
-                });
-                postPosThread.start();
-            try {
-                postPosThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }
