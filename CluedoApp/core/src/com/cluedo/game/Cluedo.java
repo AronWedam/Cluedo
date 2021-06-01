@@ -80,6 +80,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         getPlayers();
 
+        //set up stage and Multiplexer to handle Inputs
         stage = new Stage(viewport);
 
         multiplexer = new InputMultiplexer();
@@ -155,6 +156,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         mapViewport();
         mapNotebook();
 
+        //Add Notebook-Buttons to stage so they listen to Inputevents
         stage.addActor(notebook.getBtnAccusation());
         stage.addActor(notebook.getBtnDice());
         stage.addActor(notebook.getBtnHelp());
