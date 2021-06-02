@@ -231,62 +231,70 @@ public class Notebook {
         this.table.row();
 
         pane.setActor(this.table);
+
+        //yourWeaponCard();
+        //yourRoomCards();
+        //yourSuspectCard();
     }
 
 
-    private void yourRoomCards(){
-        if(player.getMyRoomCard() == 1){
+    public void yourRoomCards(){
+        int value = player.getMyRoomCard().getValue();
+
+        if(value == 1){
             setColor(cBRoomEntrance);
-        }else if(player.getMyRoomCard() == 2){
+        }else if(value == 2){
             setColor(cBRoomGarden);
-        }else if(player.getMyRoomCard() == 3){
+        }else if(value == 3){
             setColor(cBRoomDining);
-        }else if(player.getMyRoomCard() == 4){
+        }else if(value == 4){
             setColor(cBRoomKitchen);
-        }else if(player.getMyRoomCard() == 5){
+        }else if(value == 5){
             setColor(cBRoomBallroom);
-        }else if(player.getMyRoomCard() == 6){
+        }else if(value == 6){
             setColor(cBRoomBallroom);
-        }else if(player.getMyRoomCard() == 7){
+        }else if(value == 7){
             setColor(cBRoomMusicroom);
-        }else if(player.getMyRoomCard() == 8){
+        }else if(value == 8){
             setColor(cBRoomGameroom);
-        }else if(player.getMyRoomCard() == 9){
+        }else if(value == 9){
             setColor(cBRoomStudy);
-        }else if(player.getMyRoomCard() == 10){
+        }else if(value == 10){
             setColor(cBRoomLibrary);
         }
     }
 
-    private void yourSuspectCard(){
-        if(player.getMySuspectCard() == 1){
+    public void yourSuspectCard(){
+        int value = player.getMySuspectCard().getValue();
+        if(value == 1){
             setColor(cBMissScarlett);
-        }else if(player.getMySuspectCard() == 2){
+        }else if(value == 2){
             setColor(cBColonelMustard);
-        }else if(player.getMySuspectCard() == 3){
+        }else if(value == 3){
             setColor(cBMrsWhite);
-        }else if(player.getMySuspectCard() == 4){
+        }else if(value == 4){
             setColor(cBReverend);
-        }else if(player.getMySuspectCard() == 5){
+        }else if(value == 5){
             setColor(cBMrsPeacock);
-        }else if(player.getMySuspectCard() == 6){
+        }else if(value == 6){
             setColor(cBProfessorPlum);
         }
     }
 
 
-    private void yourWeaponCard(){
-        if(player.getMyWeaponCard() == 1){
+    public void yourWeaponCard(){
+        int value = player.getMyWeaponCard().getValue();
+        if(value == 1){
             setColor(cBWeaponKnife);
-        }else if(player.getMyWeaponCard() == 2){
+        }else if(value == 2){
             setColor(cBWeaponRope);
-        }else if(player.getMyWeaponCard() == 3){
+        }else if(value == 3){
             setColor(cBWeaponGun);
-        }else if(player.getMyWeaponCard() == 4){
+        }else if(value == 4){
             setColor(cBWeaponPoison);
-        }else if(player.getMyWeaponCard() == 5){
+        }else if(value == 5){
             setColor(cBWeaponPipe);
-        }else if(player.getMyWeaponCard() == 6){
+        }else if(value == 6){
             setColor(cBWeaponCandle);
         }
     }
@@ -298,6 +306,7 @@ public class Notebook {
     public ScrollPane getPane(){
         return pane;
     }
+
 
     private static void addListenerToCheckBox(final CheckBox cB){
         cB.addListener(new ChangeListener() {

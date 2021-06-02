@@ -7,17 +7,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cluedo.game.network.ConnectionService;
 
 public class Player {
-    private static CardHandOut cardHandOut;
+    private static CardHandOut cardHandOut = new CardHandOut();
     SpriteBatch batch;
     Texture texture;
     private int x,y;
     private CluedoMap cluedoMap;
     private ConnectionService connectionService;
 
-    Notebook notebook;
-    private static int mySuspectCard;
-    private static int myWeaponCard;
-    private static int myRoomCard;
+    Notebook notebook = new Notebook();
+    private static Card mySuspectCard;
+    private static Card myWeaponCard;
+    private static Card myRoomCard;
 
     public Player(Texture texture, CluedoMap cluedoMap, int x, int y){
         this.texture = texture;
@@ -97,7 +97,8 @@ public class Player {
         if(y < 0) return false;
 
         //If someone is touching on the notebook it returns false
-        if(y <= Gdx.graphics.getWidth() / 3) return false;
+        //int j = Gdx.graphics.getWidth() / 3;
+        //if(y <= 0+j) return false;
 
         if(x > 32*28) return false;
         if(y > 32*28) return false;
@@ -118,20 +119,21 @@ public class Player {
 
 
     public static void myCards() {
-        mySuspectCard = cardHandOut.handOutSuspect();
-        myWeaponCard = cardHandOut.handOutWeapon();
-        myRoomCard = cardHandOut.handOutRoom();
+        mySuspectCard = cardHandOut.randomlyPickCardOfType(0);
+        myWeaponCard = cardHandOut.randomlyPickCardOfType(1);
+        myRoomCard = cardHandOut.randomlyPickCardOfType(2);
+
     }
 
-    public int getMyWeaponCard(){
+    public Card getMyWeaponCard(){
         return myWeaponCard;
     }
 
-    public int getMyRoomCard(){
+    public Card getMyRoomCard(){
         return myRoomCard;
     }
 
-    public int getMySuspectCard(){
+    public Card getMySuspectCard(){
         return mySuspectCard;
     }
 }

@@ -1,6 +1,7 @@
 package com.cluedo.game;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Card {
@@ -31,29 +32,29 @@ public class Card {
     public static final int TYPE_ROOM = 2;
 
     //suspect cards
-    public static final Integer suspectMissScarlett = 0;
-    public static final Integer suspectColonelMustard = 1;
-    public static final Integer suspectMrsWhite = 2;
-    public static final Integer suspectReverend = 3;
-    public static final Integer suspectMrsPeacock = 4;
-    public static final Integer suspectProfessorPlum = 5;
+    public static final int suspectMissScarlett = 0;
+    public static final int suspectColonelMustard = 1;
+    public static final int suspectMrsWhite = 2;
+    public static final int suspectReverend = 3;
+    public static final int suspectMrsPeacock = 4;
+    public static final int suspectProfessorPlum = 5;
 
-    private static List<Integer> suspectCards = Arrays.asList(suspectColonelMustard, suspectMissScarlett, suspectMrsWhite,
-            suspectReverend, suspectMrsPeacock, suspectProfessorPlum);
+    private static List<Integer> suspectCards = new LinkedList<>(Arrays.asList(suspectColonelMustard, suspectMissScarlett, suspectMrsWhite,
+            suspectReverend, suspectMrsPeacock, suspectProfessorPlum));
 
     //rooms in the house
-    public static final Integer roomEntrance = 0;
-    public static final Integer roomGarden = 1;
-    public static final Integer roomDining = 2;
-    public static final Integer roomKitchen = 3;
-    public static final Integer roomBallroom = 4;
-    public static final Integer roomMusicroom = 5;
-    public static final Integer roomGameroom = 6;
-    public static final Integer roomStudy = 7;
-    public static final Integer roomLibrary = 8;
+    public static final int roomEntrance = 0;
+    public static final int roomGarden = 1;
+    public static final int roomDining = 2;
+    public static final int roomKitchen = 3;
+    public static final int roomBallroom = 4;
+    public static final int roomMusicroom = 5;
+    public static final int roomGameroom = 6;
+    public static final int roomStudy = 7;
+    public static final int roomLibrary = 8;
 
-    private static List<Integer> roomCards = Arrays.asList(roomBallroom, roomDining, roomEntrance,
-            roomGameroom, roomGarden, roomKitchen, roomLibrary, roomMusicroom, roomStudy);
+    private static List<Integer> roomCards = new LinkedList<>(Arrays.asList(roomBallroom, roomDining, roomEntrance,
+            roomGameroom, roomGarden, roomKitchen, roomLibrary, roomMusicroom, roomStudy));
 
     //types of weapons
     public static final int weaponKnife = 0;
@@ -63,8 +64,8 @@ public class Card {
     public static final int weaponPipe = 4;
     public static final int weaponCandle = 5;
 
-    private static List<Integer> weaponCards = Arrays.asList(weaponCandle, weaponGun, weaponKnife,
-            weaponPipe, weaponPoison, weaponRope);
+    private static List<Integer> weaponCards = new LinkedList<>(Arrays.asList(weaponCandle, weaponGun, weaponKnife,
+            weaponPipe, weaponPoison, weaponRope));
 
     public Card(int type, int value) {
         this.type = type;
