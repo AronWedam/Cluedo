@@ -50,11 +50,10 @@ public class DiceScreen implements Screen, InputProcessor {
     private Animation animation;
     private float elapsedTime = 0;
     Dice dice;
+    private boolean started=true;
 
     //to store sprites
     final HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
-
-
 
     public DiceScreen(GameClass game){
         gameClass = game;
@@ -134,7 +133,6 @@ public class DiceScreen implements Screen, InputProcessor {
                     drawSprite("dice6.png", 304, 450);
             }
         }
-
         stage.act();
         stage.draw();
     }
@@ -161,16 +159,18 @@ public class DiceScreen implements Screen, InputProcessor {
         //need to pass amount of time per frame, using all of the regions available (dice sides 1-6)
         animation=new Animation(1/15f, textureAtlas.getRegions());
 
-        batch.begin();
-        //drawing the current frame from the animation to the screen
-        //true tells to loop the animation
-        elapsedTime += Gdx.graphics.getDeltaTime();
-        batch.draw((Texture) animation.getKeyFrame(elapsedTime, true),40,450);
-        batch.draw((Texture) animation.getKeyFrame(elapsedTime, true),304,450);
-        batch.end();
+        //if(started) {
+            batch.begin();
+            //drawing the current frame from the animation to the screen
+            //true tells to loop the animation
+            elapsedTime += Gdx.graphics.getDeltaTime();
+
+
+            batch.draw((Texture) animation.getKeyFrame(elapsedTime, true), 40, 450);
+            batch.draw((Texture) animation.getKeyFrame(elapsedTime, true), 304, 450);
+            batch.end();
+        //}
     }
-
-
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
