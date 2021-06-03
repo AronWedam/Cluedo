@@ -3,6 +3,7 @@ package com.cluedo.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -10,7 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.cluedo.game.network.ConnectionService;
+
+import org.omg.PortableServer.THREAD_POLICY_ID;
 
 public class Notebook {
 
@@ -28,6 +33,7 @@ public class Notebook {
     private final TextButton btnDice        =   new TextButton("Dice", skin, "default");
     private final TextButton btnAccusation  =   new TextButton("Accusation", skin, "default");
     private final TextButton btnHelp        =   new TextButton("Help", skin, "default");
+    private final TextButton btnFinishMove  =   new TextButton("Finish Move", skin);
 
     private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
     private final CheckBox cBColonelMustard =   new CheckBox("ColonelMustard", skin);
@@ -54,8 +60,11 @@ public class Notebook {
     private final CheckBox cBWeaponPipe     =   new CheckBox("Pipe", skin);
     private final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
 
+    /**************************Non UI-Variables*************************************/
+    private ConnectionService connectionService;
 
     public Notebook(Player player) {
+        connectionService = ConnectionService.GetInstance();
         this.player = player;
         this.table = new Table(skin);
         this.table.defaults().padLeft(5).align(Align.left);
@@ -212,6 +221,31 @@ public class Notebook {
 
 
         //BUTTONS
+        btnFinishMove.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("Clicked", "Clicked");
+                Thread finishMoveThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        connectionService.FinishMove();
+                    }
+                });
+                finishMoveThread.start();
+                try {
+                    finishMoveThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        this.table.add(btnFinishMove);
+        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
+        btnFinishMove.center();
+        this.table.row();
+
         this.table.add(btnDice);
         btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
                 (float) (getPane().getScaleY() / 0.45));
@@ -316,7 +350,6 @@ public class Notebook {
     public ScrollPane getPane(){
         return pane;
     }
-
 
     private static void addListenerToCheckBox(final CheckBox cB){
         cB.addListener(new ChangeListener() {

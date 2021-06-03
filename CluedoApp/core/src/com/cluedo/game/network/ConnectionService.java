@@ -17,7 +17,7 @@ public class ConnectionService {
     private OkHttpClient client;
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-    private static final String Url = "https://se2ss21cluedo.herokuapp.com/";
+    private static final String Url = "http://10.0.0.4:3000/";
     //"Free" Error Code. Signals that something in the Method for calling the server failed
     private final int ServerErrorCode = 512;
     private String GameId;
@@ -145,6 +145,26 @@ public class ConnectionService {
         return ServerErrorCode;
     }
 
+    public int FinishMove() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("playerId", PlayerId);
+
+            RequestBody body = RequestBody.create(JSON, jsonObject.toString());
+            Request request = new Request.Builder()
+                    .url(Url + "games/finishMove")
+                    .post(body)
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            return response.code();
+        } catch (Exception ex) {
+            Gdx.app.log("Finish Move Error", ex.getMessage());
+        }
+
+        return ServerErrorCode;
+    }
+
     private void GetPlayersOfJsonObject(String responseBody) throws IOException {
         List<NetworkPlayer> tempPlayers = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(responseBody);
@@ -152,7 +172,7 @@ public class ConnectionService {
 
         for (int i=0; i<playerArray.length(); i++) {
             JSONObject playerObject = playerArray.getJSONObject(i);
-            tempPlayers.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username"), playerObject.getInt("x"), playerObject.getInt("y"), playerObject.getString("playerImage")));
+            tempPlayers.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username"), playerObject.getInt("x"), playerObject.getInt("y"), playerObject.getString("playerImage"), playerObject.getBoolean("maywalk")));
         }
 
         players = tempPlayers;

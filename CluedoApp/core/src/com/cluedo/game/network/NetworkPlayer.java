@@ -6,13 +6,15 @@ public class NetworkPlayer {
     private int x;
     private int y;
     private String playerImage;
+    private Boolean maywalk;
 
-    public NetworkPlayer(String id, String username, int x, int y, String playerImage) {
+    public NetworkPlayer(String id, String username, int x, int y, String playerImage, Boolean maywalk) {
         Id = id;
         Username = username;
         this.x = x;
         this.y = y;
         this.playerImage = playerImage;
+        this.maywalk = maywalk;
     }
 
     public String getId() {
@@ -53,5 +55,13 @@ public class NetworkPlayer {
 
     public void setPlayerImage(String playerImage) {
         this.playerImage = playerImage;
+    }
+
+    public Boolean getMaywalk() {
+        return maywalk;
+    }
+
+    public void setMaywalk(Boolean maywalk) {
+        this.maywalk = maywalk;
     }
 }

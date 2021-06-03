@@ -151,7 +151,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
             }
         }
 
-        Gdx.app.log("Drawing Players", "Drawing Players");
         //Draw the players
         for (int i=0; i<players.size(); i++) {
             Player currentPlayer = players.get(i);
@@ -160,7 +159,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         }
 
         //Single Touch enables player Movement for 1 Tile
-        if(Gdx.input.justTouched()) {
+        if(Gdx.input.justTouched() && Gdx.input.getX(0) > Gdx.graphics.getWidth()/3) {
             double x = Gdx.input.getX(0) - (Gdx.graphics.getWidth()/3);
             double y = Gdx.input.getY(0);
 
