@@ -55,7 +55,8 @@ public class Notebook {
     private final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
 
 
-    public Notebook() {
+    public Notebook(Player player) {
+        this.player = player;
         this.table = new Table(skin);
         this.table.defaults().padLeft(5).align(Align.left);
         this.pane = new ScrollPane(this.table, skin);

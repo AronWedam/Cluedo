@@ -14,7 +14,6 @@ public class Player {
     private CluedoMap cluedoMap;
     private ConnectionService connectionService;
 
-    Notebook notebook = new Notebook();
     private static Card mySuspectCard;
     private static Card myWeaponCard;
     private static Card myRoomCard;
