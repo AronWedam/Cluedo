@@ -9,8 +9,6 @@ import java.util.Random;
 public class CardHandOut {
 
     public Card randomlyPickCardOfType(int type) {
-
-        //select a card of indicated type and check the cards in your hand
         Card picked_card = null;
         ArrayList<Card> picks = new ArrayList<>();
 

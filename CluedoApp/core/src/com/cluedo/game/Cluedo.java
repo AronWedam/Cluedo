@@ -78,6 +78,15 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
                 //create the player
                 player = new Player(new Texture(currentPlayer.getPlayerImage()), cluedoMap, (int) piece.x, (int) piece.y);
+
+                player.setMyRoomCard();
+                player.setMySuspectCard();
+                player.setMyWeaponCard();
+
+                notebook.yourSuspectCard();
+                notebook.yourRoomCards();
+                notebook.yourWeaponCard();
+
                 tempPlayers.add(player);
                 tempRectange.add(piece);
             } else {

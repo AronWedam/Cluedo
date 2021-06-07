@@ -25,8 +25,6 @@ public class Player {
         this.x = x;
         this.y = y;
 
-        myCards();
-
         connectionService = ConnectionService.GetInstance();
     }
 
@@ -117,10 +115,24 @@ public class Player {
         return false;
     }
 
-
+    /*
     public static void myCards() {
         mySuspectCard = cardHandOut.randomlyPickCardOfType(0);
         myWeaponCard = cardHandOut.randomlyPickCardOfType(1);
+        myRoomCard = cardHandOut.randomlyPickCardOfType(2);
+    }
+
+     */
+
+    public void setMySuspectCard(){
+        mySuspectCard = cardHandOut.randomlyPickCardOfType(0);
+    }
+
+    public void setMyWeaponCard(){
+        myWeaponCard = cardHandOut.randomlyPickCardOfType(1);
+    }
+
+    public void setMyRoomCard(){
         myRoomCard = cardHandOut.randomlyPickCardOfType(2);
     }
 

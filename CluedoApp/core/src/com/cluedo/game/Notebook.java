@@ -45,6 +45,7 @@ public class Notebook {
     private final CheckBox cBRoomGameroom   =   new CheckBox("Gameroom ", skin);
     private final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
     private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
+    private final CheckBox cBRoomNEEDSName  =   new CheckBox("NEEDS NAME", skin);
 
     private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
     private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
@@ -232,9 +233,12 @@ public class Notebook {
 
         pane.setActor(this.table);
 
-        //yourWeaponCard();
-        //yourRoomCards();
-        //yourSuspectCard();
+        /*
+        yourWeaponCard();
+        yourRoomCards();
+        yourSuspectCard();
+
+         */
     }
 
 
@@ -242,67 +246,72 @@ public class Notebook {
         int value = player.getMyRoomCard().getValue();
 
         if(value == 1){
-            setColor(cBRoomEntrance);
+            cardInHand(cBRoomEntrance);
         }else if(value == 2){
-            setColor(cBRoomGarden);
+            cardInHand(cBRoomGarden);
         }else if(value == 3){
-            setColor(cBRoomDining);
+            cardInHand(cBRoomDining);
         }else if(value == 4){
-            setColor(cBRoomKitchen);
+            cardInHand(cBRoomKitchen);
         }else if(value == 5){
-            setColor(cBRoomBallroom);
+            cardInHand(cBRoomBallroom);
         }else if(value == 6){
-            setColor(cBRoomBallroom);
+            cardInHand(cBRoomMusicroom);
         }else if(value == 7){
-            setColor(cBRoomMusicroom);
+            cardInHand(cBRoomGameroom);
         }else if(value == 8){
-            setColor(cBRoomGameroom);
+            cardInHand(cBRoomStudy);
         }else if(value == 9){
-            setColor(cBRoomStudy);
+            cardInHand(cBRoomLibrary);
         }else if(value == 10){
-            setColor(cBRoomLibrary);
+            cardInHand(cBRoomNEEDSName);
         }
     }
 
     public void yourSuspectCard(){
         int value = player.getMySuspectCard().getValue();
+
         if(value == 1){
-            setColor(cBMissScarlett);
+            cardInHand(cBMissScarlett);
         }else if(value == 2){
-            setColor(cBColonelMustard);
-        }else if(value == 3){
-            setColor(cBMrsWhite);
+            cardInHand(cBColonelMustard);
+        }else if(value == 3){ ;
+            cardInHand(cBMrsWhite);
         }else if(value == 4){
-            setColor(cBReverend);
+            cardInHand(cBReverend);
         }else if(value == 5){
-            setColor(cBMrsPeacock);
+            cardInHand(cBMrsPeacock);
         }else if(value == 6){
-            setColor(cBProfessorPlum);
+            cardInHand(cBProfessorPlum);
         }
     }
 
 
     public void yourWeaponCard(){
         int value = player.getMyWeaponCard().getValue();
+
         if(value == 1){
-            setColor(cBWeaponKnife);
+            cardInHand(cBWeaponKnife);
         }else if(value == 2){
-            setColor(cBWeaponRope);
+            cardInHand(cBWeaponRope);
         }else if(value == 3){
-            setColor(cBWeaponGun);
+            cardInHand(cBWeaponGun);
         }else if(value == 4){
-            setColor(cBWeaponPoison);
+            cardInHand(cBWeaponPoison);
         }else if(value == 5){
-            setColor(cBWeaponPipe);
+            cardInHand(cBWeaponPipe);
         }else if(value == 6){
-            setColor(cBWeaponCandle);
+            cardInHand(cBWeaponCandle);
         }
     }
 
-    //Mark your cards Green, so you know what Card is yours
-    private void setColor(CheckBox cB){
-        cB.getLabel().setColor(Color.GREEN);
+    private void cardInHand(CheckBox checkBox){
+        checkBox.getLabel().setColor(Color.GREEN);
+        checkBox.setDisabled(true);
+        checkBox.setChecked(true);
     }
+
+    //Mark your cards Green, so you know what Card is yours
     public ScrollPane getPane(){
         return pane;
     }
