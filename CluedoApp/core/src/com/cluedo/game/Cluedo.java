@@ -13,11 +13,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.cluedo.game.network.NetworkPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
     private GameClass game;
@@ -40,6 +41,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     private SpriteBatch Notebookbatch;
     Notebook notebook;
+    private Player currentPlayer;
 
     public Cluedo(final GameClass game) throws InterruptedException {
         this.game = game;
@@ -63,6 +65,15 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         Notebookbatch = new SpriteBatch();
 
         getPlayers();
+        notebook = new Notebook(currentPlayer);
+
+        currentPlayer.setMyRoomCard();
+        currentPlayer.setMySuspectCard();
+        currentPlayer.setMyWeaponCard();
+
+        notebook.yourSuspectCard();
+        notebook.yourRoomCards();
+        notebook.yourWeaponCard();
     }
 
     private void SyncNetworkPlayersWithGamePlayers() {
@@ -79,6 +90,9 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
                 //create the player
                 player = new Player(new Texture(currentPlayer.getPlayerImage()), cluedoMap, (int) piece.x, (int) piece.y);
+                this.currentPlayer = player;
+                connectionService.setCurrentPlayer(currentPlayer);
+
                 tempPlayers.add(player);
                 tempRectange.add(piece);
             } else {
@@ -140,7 +154,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
             }
         }
 
-        Gdx.app.log("Drawing Players", "Drawing Players");
         //Draw the players
         for (int i=0; i<players.size(); i++) {
             Player currentPlayer = players.get(i);
@@ -149,7 +162,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         }
 
         //Single Touch enables player Movement for 1 Tile
-        if(Gdx.input.justTouched()) {
+        if(Gdx.input.justTouched() && Gdx.input.getX(0) > Gdx.graphics.getWidth()/3) {
             double x = Gdx.input.getX(0) - (Gdx.graphics.getWidth()/3);
             double y = Gdx.input.getY(0);
 
@@ -187,6 +200,42 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     }
                 }
             }
+        } else if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth()/3) {
+            double y = Gdx.input.getY(0);
+            int row = notebook.table.getRow((float) (Gdx.graphics.getHeight() - y));
+            Gdx.app.log("Row", "Row: " + row);
+            Actor actor = notebook.table.getChild(row);
+            Gdx.app.log("Class", actor.getClass().getName());
+
+            if (actor instanceof TextButton) {
+                TextButton myButton = (TextButton) actor;
+                String clickedName = myButton.getText().toString();
+
+                switch (clickedName) {
+                    case "Finish Move":
+                        if (connectionService.getCurrentPlayer() != null && connectionService.getCurrentPlayer().getMaywalk()) {
+                            Thread finishMoveThread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    connectionService.FinishMove();
+                                }
+                            });
+                            finishMoveThread.start();
+                            try {
+                                finishMoveThread.join();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    break;
+
+                    default:
+                        break;
+                }
+
+                Gdx.app.log("Button Text", myButton.getText().toString());
+                Gdx.app.log("Button label", myButton.getLabel().toString());
+            }
         }
     }
 
@@ -196,8 +245,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     }
 
     private void mapNotebook() {
-        notebook = new Notebook();
-
         notebook.getPane().setBounds(0, 0, Gdx.graphics.getWidth()/2,
                 Gdx.graphics.getHeight());
 
@@ -210,7 +257,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         Gdx.gl.glViewport(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
-
     }
 
 
