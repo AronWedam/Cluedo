@@ -136,14 +136,6 @@ public class Player {
         return false;
     }
 
-    /*
-    public static void myCards() {
-        mySuspectCard = cardHandOut.randomlyPickCardOfType(0);
-        myWeaponCard = cardHandOut.randomlyPickCardOfType(1);
-        myRoomCard = cardHandOut.randomlyPickCardOfType(2);
-    }
-
-     */
 
     public void setMySuspectCard(){
         mySuspectCard = cardHandOut.randomlyPickCardOfType(0);
