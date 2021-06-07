@@ -122,7 +122,6 @@ public class Player {
         mySuspectCard = cardHandOut.randomlyPickCardOfType(0);
         myWeaponCard = cardHandOut.randomlyPickCardOfType(1);
         myRoomCard = cardHandOut.randomlyPickCardOfType(2);
-
     }
 
     public Card getMyWeaponCard(){
