@@ -1,17 +1,22 @@
 package com.cluedo.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cluedo.game.network.ConnectionService;
 
 public class Player {
-    private static CardHandOut cardHandOut;
+    private static CardHandOut cardHandOut = new CardHandOut();
     SpriteBatch batch;
     Texture texture;
     private int x,y;
     private CluedoMap cluedoMap;
     private ConnectionService connectionService;
+
+    private static Card mySuspectCard;
+    private static Card myWeaponCard;
+    private static Card myRoomCard;
 
     public Player(Texture texture, CluedoMap cluedoMap, int x, int y){
         this.texture = texture;
@@ -88,6 +93,10 @@ public class Player {
         if(x < 0) return false;
         if(y < 0) return false;
 
+        //If someone is touching on the notebook it returns false
+        //int j = Gdx.graphics.getWidth() / 3;
+        //if(y <= 0+j) return false;
+
         if(x > 32*28) return false;
         if(y > 32*28) return false;
 
@@ -105,10 +114,36 @@ public class Player {
         return false;
     }
 
-
+    /*
     public static void myCards() {
-        int mySuspectCard = cardHandOut.handOutSuspect();
-        int myWeaponCard = cardHandOut.handOutWeapon();
-        int myRoomCard = cardHandOut.handOutRoom();
+        mySuspectCard = cardHandOut.randomlyPickCardOfType(0);
+        myWeaponCard = cardHandOut.randomlyPickCardOfType(1);
+        myRoomCard = cardHandOut.randomlyPickCardOfType(2);
+    }
+
+     */
+
+    public void setMySuspectCard(){
+        mySuspectCard = cardHandOut.randomlyPickCardOfType(0);
+    }
+
+    public void setMyWeaponCard(){
+        myWeaponCard = cardHandOut.randomlyPickCardOfType(1);
+    }
+
+    public void setMyRoomCard(){
+        myRoomCard = cardHandOut.randomlyPickCardOfType(2);
+    }
+
+    public Card getMyWeaponCard(){
+        return myWeaponCard;
+    }
+
+    public Card getMyRoomCard(){
+        return myRoomCard;
+    }
+
+    public Card getMySuspectCard(){
+        return mySuspectCard;
     }
 }

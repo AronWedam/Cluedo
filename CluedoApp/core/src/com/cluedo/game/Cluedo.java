@@ -17,7 +17,6 @@ import com.cluedo.game.network.NetworkPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
     private GameClass game;
@@ -40,6 +39,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     private SpriteBatch Notebookbatch;
     Notebook notebook;
+    private Player currentPlayer;
 
     public Cluedo(final GameClass game) throws InterruptedException {
         this.game = game;
@@ -63,6 +63,15 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         Notebookbatch = new SpriteBatch();
 
         getPlayers();
+        notebook = new Notebook(currentPlayer);
+
+        currentPlayer.setMyRoomCard();
+        currentPlayer.setMySuspectCard();
+        currentPlayer.setMyWeaponCard();
+
+        notebook.yourSuspectCard();
+        notebook.yourRoomCards();
+        notebook.yourWeaponCard();
     }
 
     private void SyncNetworkPlayersWithGamePlayers() {
@@ -79,6 +88,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
                 //create the player
                 player = new Player(new Texture(currentPlayer.getPlayerImage()), cluedoMap, (int) piece.x, (int) piece.y);
+                this.currentPlayer = player;
+
                 tempPlayers.add(player);
                 tempRectange.add(piece);
             } else {
@@ -196,8 +207,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     }
 
     private void mapNotebook() {
-        notebook = new Notebook();
-
         notebook.getPane().setBounds(0, 0, Gdx.graphics.getWidth()/2,
                 Gdx.graphics.getHeight());
 
@@ -210,7 +219,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         Gdx.gl.glViewport(Gdx.graphics.getWidth() / 3, 0, Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
-
     }
 
 

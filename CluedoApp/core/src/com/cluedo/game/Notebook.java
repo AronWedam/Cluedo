@@ -1,6 +1,7 @@
 package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,6 +17,9 @@ public class Notebook {
     public Table table;
     private ScrollPane pane;
     final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+    Player player;
+
+
     private final Label notebookText        =   new Label("Notebook: ", skin);
     private final Label markText            =   new Label("(you can mark it off below!)", skin, "default");
     private final Label suspectsText        =   new Label("SUSPECTS", skin, "default");
@@ -41,6 +45,7 @@ public class Notebook {
     private final CheckBox cBRoomGameroom   =   new CheckBox("Gameroom ", skin);
     private final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
     private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
+    private final CheckBox cBRoomNEEDSName  =   new CheckBox("NEEDS NAME", skin);
 
     private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
     private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
@@ -50,7 +55,8 @@ public class Notebook {
     private final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
 
 
-    public Notebook() {
+    public Notebook(Player player) {
+        this.player = player;
         this.table = new Table(skin);
         this.table.defaults().padLeft(5).align(Align.left);
         this.pane = new ScrollPane(this.table, skin);
@@ -227,11 +233,90 @@ public class Notebook {
         this.table.row();
 
         pane.setActor(this.table);
+
+        /*
+        yourWeaponCard();
+        yourRoomCards();
+        yourSuspectCard();
+
+         */
     }
 
+
+    public void yourRoomCards(){
+        int value = player.getMyRoomCard().getValue();
+
+        if(value == 1){
+            cardInHand(cBRoomEntrance);
+        }else if(value == 2){
+            cardInHand(cBRoomGarden);
+        }else if(value == 3){
+            cardInHand(cBRoomDining);
+        }else if(value == 4){
+            cardInHand(cBRoomKitchen);
+        }else if(value == 5){
+            cardInHand(cBRoomBallroom);
+        }else if(value == 6){
+            cardInHand(cBRoomMusicroom);
+        }else if(value == 7){
+            cardInHand(cBRoomGameroom);
+        }else if(value == 8){
+            cardInHand(cBRoomStudy);
+        }else if(value == 9){
+            cardInHand(cBRoomLibrary);
+        }else if(value == 10){
+            cardInHand(cBRoomNEEDSName);
+        }
+    }
+
+    public void yourSuspectCard(){
+        int value = player.getMySuspectCard().getValue();
+
+        if(value == 1){
+            cardInHand(cBMissScarlett);
+        }else if(value == 2){
+            cardInHand(cBColonelMustard);
+        }else if(value == 3){ ;
+            cardInHand(cBMrsWhite);
+        }else if(value == 4){
+            cardInHand(cBReverend);
+        }else if(value == 5){
+            cardInHand(cBMrsPeacock);
+        }else if(value == 6){
+            cardInHand(cBProfessorPlum);
+        }
+    }
+
+
+    public void yourWeaponCard(){
+        int value = player.getMyWeaponCard().getValue();
+
+        if(value == 1){
+            cardInHand(cBWeaponKnife);
+        }else if(value == 2){
+            cardInHand(cBWeaponRope);
+        }else if(value == 3){
+            cardInHand(cBWeaponGun);
+        }else if(value == 4){
+            cardInHand(cBWeaponPoison);
+        }else if(value == 5){
+            cardInHand(cBWeaponPipe);
+        }else if(value == 6){
+            cardInHand(cBWeaponCandle);
+        }
+    }
+
+    private void cardInHand(CheckBox checkBox){
+        checkBox.getLabel().setColor(Color.GREEN);
+        checkBox.setDisabled(true);
+        checkBox.setChecked(true);
+    }
+
+    //Mark your cards Green, so you know what Card is yours
     public ScrollPane getPane(){
         return pane;
     }
+
 
     private static void addListenerToCheckBox(final CheckBox cB){
         cB.addListener(new ChangeListener() {
