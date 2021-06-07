@@ -194,20 +194,20 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnFinishMove);
-        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
-                (float) (getPane().getScaleY() / 0.6));
+        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
         btnFinishMove.center();
         this.table.row();
 
         this.table.add(btnDice);
-        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
-                (float) (getPane().getScaleY() / 0.6));
+        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
         this.table.row();
 
         this.table.add(btnAccusation);
         btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
-                (float) (getPane().getScaleY() / 0.6));
+                (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
         this.table.row();
 
