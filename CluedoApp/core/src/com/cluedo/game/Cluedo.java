@@ -13,6 +13,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.cluedo.game.network.NetworkPlayer;
 
 import java.util.ArrayList;
@@ -89,6 +91,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 //create the player
                 player = new Player(new Texture(currentPlayer.getPlayerImage()), cluedoMap, (int) piece.x, (int) piece.y);
                 this.currentPlayer = player;
+                connectionService.setCurrentPlayer(currentPlayer);
 
                 tempPlayers.add(player);
                 tempRectange.add(piece);
@@ -196,6 +199,42 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                         }
                     }
                 }
+            }
+        } else if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth()/3) {
+            double y = Gdx.input.getY(0);
+            int row = notebook.table.getRow((float) (Gdx.graphics.getHeight() - y));
+            Gdx.app.log("Row", "Row: " + row);
+            Actor actor = notebook.table.getChild(row);
+            Gdx.app.log("Class", actor.getClass().getName());
+
+            if (actor instanceof TextButton) {
+                TextButton myButton = (TextButton) actor;
+                String clickedName = myButton.getText().toString();
+
+                switch (clickedName) {
+                    case "Finish Move":
+                        if (connectionService.getCurrentPlayer() != null && connectionService.getCurrentPlayer().getMaywalk()) {
+                            Thread finishMoveThread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    connectionService.FinishMove();
+                                }
+                            });
+                            finishMoveThread.start();
+                            try {
+                                finishMoveThread.join();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    break;
+
+                    default:
+                        break;
+                }
+
+                Gdx.app.log("Button Text", myButton.getText().toString());
+                Gdx.app.log("Button label", myButton.getLabel().toString());
             }
         }
     }

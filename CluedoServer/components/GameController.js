@@ -84,13 +84,6 @@ router.post('/playerMoved', function (req, res) {
         players[i].x = x;
         players[i].y = y;
         currentPlayer = players[i];
-
-        //Its the last player
-        if (i === players.length - 1) {
-          players[0].maywalk = true;
-        } else {
-          players[i + 1].maywalk = true;
-        }
       }
     }
   }
@@ -101,25 +94,35 @@ router.post('/playerMoved', function (req, res) {
 });
 
 router.post('/finishMove', function (req, res) {
+  let index;
+
   for (let i = 0; i < players.length; i++) {
     if (players[i].id === req.body.playerId) {
+      index = i;
+
       //Its the last player
       if (i === players.length - 1) {
         players[0].maywalk = true;
       } else {
         players[i + 1].maywalk = true;
       }
+
+      break;
     }
   }
 
+  players[index].maywalk = false;
+
   res.status(200).send();
-})
+});
 
 //Resetting the new Gamestate
 router.get('/reset', function (req, res) {
   players = [];
   currentGame = undefined;
   positionCounter = 0;
+  playerImagesCounter = 0;
+  firstPlayer = true;
   stopwatch.stop();
   res.send(200).send();
 });

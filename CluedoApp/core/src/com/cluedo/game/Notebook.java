@@ -3,7 +3,6 @@ package com.cluedo.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -11,19 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.cluedo.game.network.ConnectionService;
-
-import org.omg.PortableServer.THREAD_POLICY_ID;
 
 public class Notebook {
 
     public Table table;
     private ScrollPane pane;
     final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
-    Player player;
-
+    private Player player;
 
     private final Label notebookText        =   new Label("Notebook: ", skin);
     private final Label markText            =   new Label("(you can mark it off below!)", skin, "default");
@@ -33,7 +28,7 @@ public class Notebook {
     private final TextButton btnDice        =   new TextButton("Dice", skin, "default");
     private final TextButton btnAccusation  =   new TextButton("Accusation", skin, "default");
     private final TextButton btnHelp        =   new TextButton("Help", skin, "default");
-    private final TextButton btnFinishMove  =   new TextButton("Finish Move", skin);
+    public final TextButton btnFinishMove  =   new TextButton("Finish Move", skin);
 
     private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
     private final CheckBox cBColonelMustard =   new CheckBox("ColonelMustard", skin);
@@ -82,10 +77,6 @@ public class Notebook {
         this.table.row();
 
 
-        this.table.add(new Label("", skin));
-        this.table.row();
-
-
         //SUSPECTS Category in Notebook
         this.table.add(suspectsText );
         suspectsText.setFontScale((float) (getPane().getScaleX() / 0.25),
@@ -122,7 +113,6 @@ public class Notebook {
         this.table.add(cBProfessorPlum);
         cBProfessorPlum.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         addListenerToCheckBox(cBProfessorPlum);
-        this.table.add(new Label("", skin));
         this.table.row();
 
 
@@ -160,8 +150,6 @@ public class Notebook {
         this.table.add(cBWeaponRope);
         cBWeaponRope.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         addListenerToCheckBox(cBWeaponPoison);
-
-        this.table.add(new Label("", skin));
         this.table.row();
 
 
@@ -214,31 +202,7 @@ public class Notebook {
         this.table.add(cBRoomStudy);
         cBRoomStudy.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         addListenerToCheckBox(cBRoomStudy);
-
-        this.table.add(new Label("", skin));
         this.table.row();
-        this.table.row();
-
-
-        //BUTTONS
-        btnFinishMove.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("Clicked", "Clicked");
-                Thread finishMoveThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        connectionService.FinishMove();
-                    }
-                });
-                finishMoveThread.start();
-                try {
-                    finishMoveThread.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
         this.table.add(btnFinishMove);
         btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
@@ -252,14 +216,12 @@ public class Notebook {
         btnAccusation.center();
         this.table.row();
 
-        this.table.row();
         this.table.add(btnAccusation);
         btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
                 (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
         this.table.row();
 
-        this.table.row();
         this.table.add(btnHelp);
         btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
                 (float) (getPane().getScaleY() / 0.45));

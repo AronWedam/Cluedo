@@ -17,13 +17,14 @@ public class ConnectionService {
     private OkHttpClient client;
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-    private static final String Url = "http://10.0.0.4:3000/";
+    private static final String Url = "https://se2ss21cluedo.herokuapp.com/";
     //"Free" Error Code. Signals that something in the Method for calling the server failed
     private final int ServerErrorCode = 512;
     private String GameId;
     private String PlayerId;
     private List<NetworkPlayer> players;
     private static ConnectionService instance;
+    private NetworkPlayer currentPlayer;
 
     private ConnectionService() {
         client = new OkHttpClient();
@@ -45,11 +46,19 @@ public class ConnectionService {
         return players;
     }
 
+    public NetworkPlayer getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(NetworkPlayer currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
     /*
-        Method to register for a game with a username.
-        Takes in the username.
-        Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
-    */
+            Method to register for a game with a username.
+            Takes in the username.
+            Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
+        */
     public int RegisterForGame(String username)
     {
         try {
