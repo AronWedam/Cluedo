@@ -228,7 +228,171 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                             }
                         }
                     break;
+                    case "Accusation":
+                        break;
+                    case "Help":
+                        break;
+                    case "Dice":
+                        break;
 
+                    //PERSON
+                    case "MissScarlett":
+                        if(notebook.isChecked){
+                            notebook.uncheckCheckBox(notebook.cBMissScarlett);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBMissScarlett);
+                        }
+                        break;
+                    case "ColonelMustard":
+                        if(notebook.isChecked){
+                            notebook.uncheckCheckBox(notebook.cBColonelMustard);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBColonelMustard);
+                        }
+                        break;
+                    case "MrsWhite":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBMrsWhite);
+                        }else{
+                            notebook.checkCheckBox(notebook.cBMrsWhite);
+                        }
+                        break;
+                    case "Reverend":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBReverend);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBReverend);
+                        }
+                        break;
+                    case "MrsPeacock":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBMrsPeacock);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBMrsPeacock);
+                        }
+                        break;
+                    case "ProfessorPlum":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBProfessorPlum);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBProfessorPlum);
+                        }
+                        break;
+
+                        //ROOM
+                    case "Entrance":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBRoomEntrance);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBRoomEntrance);
+                        }
+                        break;
+                    case "Garden":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBRoomGarden);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBRoomGarden);
+                        }
+                        break;
+                    case "Dining":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBRoomDining);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBRoomDining);
+                        }
+                        break;
+                    case "Kitchen":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBRoomKitchen);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBRoomKitchen);
+                        }
+                        break;
+                    case "Ballroom":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBRoomBallroom);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBRoomBallroom);
+                        }
+                        break;
+                    case "Musicroom":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBRoomMusicroom);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBRoomMusicroom);
+                        }
+                        break;
+                    case "Gameroom":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBRoomGameroom);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBRoomGameroom);
+                        }
+                        break;
+                    case "Study":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBRoomStudy);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBRoomStudy);
+                        }
+                        break;
+                    case "Library":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBRoomLibrary);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBRoomLibrary);
+                        }
+                        break;
+                    case "NEEDS NAME":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBRoomNEEDSName);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBRoomNEEDSName);
+                        }
+                        break;
+                        //ROOM
+                    case "Knife":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBWeaponKnife);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBWeaponKnife);
+                        }
+                        break;
+                    case "Rope":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBWeaponRope);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBWeaponRope);
+                        }
+                        break;
+                    case "Gun":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBWeaponGun);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBWeaponGun);
+                        }
+                        break;
+                    case "Poison":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBWeaponPoison);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBWeaponPoison);
+                        }
+                        break;
+                    case "Pipe":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBWeaponPipe);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBWeaponPipe);
+                        }
+                        break;
+                    case "Candle":
+                        if(notebook.isChecked) {
+                            notebook.uncheckCheckBox(notebook.cBWeaponCandle);
+                        }else {
+                            notebook.checkCheckBox(notebook.cBWeaponCandle);
+                        }
+                        break;
                     default:
                         break;
                 }

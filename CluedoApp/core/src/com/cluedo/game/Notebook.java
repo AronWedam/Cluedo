@@ -20,6 +20,8 @@ public class Notebook {
     final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
     private Player player;
 
+    public boolean isChecked = false;
+
     private final Label notebookText        =   new Label("Notebook: ", skin);
     private final Label markText            =   new Label("(you can mark it off below!)", skin, "default");
     private final Label suspectsText        =   new Label("SUSPECTS", skin, "default");
@@ -30,30 +32,30 @@ public class Notebook {
     private final TextButton btnHelp        =   new TextButton("Help", skin, "default");
     public final TextButton btnFinishMove  =   new TextButton("Finish Move", skin);
 
-    private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
-    private final CheckBox cBColonelMustard =   new CheckBox("ColonelMustard", skin);
-    private final CheckBox cBMrsWhite       =   new CheckBox("MrsWhite", skin);
-    private final CheckBox cBReverend       =   new CheckBox("Reverend", skin);
-    private final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
-    private final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
+    public final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
+    public final CheckBox cBColonelMustard =   new CheckBox("ColonelMustard", skin);
+    public final CheckBox cBMrsWhite       =   new CheckBox("MrsWhite", skin);
+    public final CheckBox cBReverend       =   new CheckBox("Reverend", skin);
+    public final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
+    public final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
 
-    private final CheckBox cBRoomEntrance   =   new CheckBox("Entrance", skin);
-    private final CheckBox cBRoomGarden     =   new CheckBox("Garden", skin);
-    private final CheckBox cBRoomDining     =   new CheckBox("Dining", skin);
-    private final CheckBox cBRoomKitchen    =   new CheckBox("Kitchen", skin);
-    private final CheckBox cBRoomBallroom   =   new CheckBox("Ballroom", skin);
-    private final CheckBox cBRoomMusicroom  =   new CheckBox("Musicroom", skin);
-    private final CheckBox cBRoomGameroom   =   new CheckBox("Gameroom ", skin);
-    private final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
-    private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
-    private final CheckBox cBRoomNEEDSName  =   new CheckBox("NEEDS NAME", skin);
+    public final CheckBox cBRoomEntrance   =   new CheckBox("Entrance", skin);
+    public final CheckBox cBRoomGarden     =   new CheckBox("Garden", skin);
+    public final CheckBox cBRoomDining     =   new CheckBox("Dining", skin);
+    public final CheckBox cBRoomKitchen    =   new CheckBox("Kitchen", skin);
+    public final CheckBox cBRoomBallroom   =   new CheckBox("Ballroom", skin);
+    public final CheckBox cBRoomMusicroom  =   new CheckBox("Musicroom", skin);
+    public final CheckBox cBRoomGameroom   =   new CheckBox("Gameroom ", skin);
+    public final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
+    public final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
+    public final CheckBox cBRoomNEEDSName  =   new CheckBox("NEEDS NAME", skin);
 
-    private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
-    private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
-    private final CheckBox cBWeaponGun      =   new CheckBox("Gun", skin);
-    private final CheckBox cBWeaponPoison   =   new CheckBox("Poison", skin);
-    private final CheckBox cBWeaponPipe     =   new CheckBox("Pipe", skin);
-    private final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
+    public final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
+    public final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
+    public final CheckBox cBWeaponGun      =   new CheckBox("Gun", skin);
+    public final CheckBox cBWeaponPoison   =   new CheckBox("Poison", skin);
+    public final CheckBox cBWeaponPipe     =   new CheckBox("Pipe", skin);
+    public final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
 
     /**************************Non UI-Variables*************************************/
     private ConnectionService connectionService;
@@ -87,32 +89,26 @@ public class Notebook {
         float CB_SCALING_X = (float) (getPane().getScaleX() / 0.5);
         float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.5);
         cBMissScarlett.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBMissScarlett);
         this.table.row();
 
         this.table.add(cBColonelMustard);
         cBColonelMustard.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBColonelMustard);
         this.table.row();
 
         this.table.add(cBMrsWhite);
         cBMrsWhite.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBMrsWhite);
         this.table.row();
 
         this.table.add(cBReverend);
         cBReverend.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBReverend);
         this.table.row();
 
         this.table.add(cBMrsPeacock);
         cBMrsPeacock.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBMrsPeacock);
         this.table.row();
 
         this.table.add(cBProfessorPlum);
         cBProfessorPlum.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBProfessorPlum);
         this.table.row();
 
 
@@ -124,32 +120,26 @@ public class Notebook {
 
         this.table.add(cBWeaponCandle);
         cBWeaponCandle.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBWeaponCandle);
         this.table.row();
 
         this.table.add(cBWeaponGun);
         cBWeaponGun.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBWeaponGun);
         this.table.row();
 
         this.table.add(cBWeaponKnife);
         cBWeaponKnife.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBWeaponKnife);
         this.table.row();
 
         this.table.add(cBWeaponPipe);
         cBWeaponPipe.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBWeaponPipe);
         this.table.row();
 
         this.table.add(cBWeaponPoison);
         cBWeaponPoison.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBWeaponPoison);
         this.table.row();
 
         this.table.add(cBWeaponRope);
         cBWeaponRope.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBWeaponPoison);
         this.table.row();
 
 
@@ -161,47 +151,38 @@ public class Notebook {
 
         this.table.add(cBRoomBallroom);
         cBRoomBallroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBRoomBallroom);
         this.table.row();
 
         this.table.add(cBRoomDining);
         cBRoomDining.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBRoomDining);
         this.table.row();
 
         this.table.add(cBRoomEntrance);
         cBRoomEntrance.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBRoomEntrance);
         this.table.row();
 
         this.table.add(cBRoomGameroom);
         cBRoomGameroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBRoomGameroom);
         this.table.row();
 
         this.table.add(cBRoomGarden);
         cBRoomGarden.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBRoomGarden);
         this.table.row();
 
         this.table.add(cBRoomKitchen);
         cBRoomKitchen.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBRoomKitchen);
         this.table.row();
 
         this.table.add(cBRoomLibrary);
         cBRoomLibrary.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBRoomLibrary);
         this.table.row();
 
         this.table.add(cBRoomMusicroom);
         cBRoomMusicroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBRoomMusicroom);
         this.table.row();
 
         this.table.add(cBRoomStudy);
         cBRoomStudy.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
-        addListenerToCheckBox(cBRoomStudy);
         this.table.row();
 
         this.table.add(btnFinishMove);
@@ -229,13 +210,6 @@ public class Notebook {
         this.table.row();
 
         pane.setActor(this.table);
-
-        /*
-        yourWeaponCard();
-        yourRoomCards();
-        yourSuspectCard();
-
-         */
     }
 
 
@@ -302,24 +276,26 @@ public class Notebook {
         }
     }
 
+    //Mark your cards Green and checks it, so you know what Card is yours
     private void cardInHand(CheckBox checkBox){
         checkBox.getLabel().setColor(Color.GREEN);
         checkBox.setDisabled(true);
         checkBox.setChecked(true);
     }
 
-    //Mark your cards Green, so you know what Card is yours
-    public ScrollPane getPane(){
-        return pane;
+    public void checkCheckBox(CheckBox checkBox){
+        checkBox.setDisabled(true);
+        checkBox.setChecked(true);
+        isChecked = true;
     }
 
-    private static void addListenerToCheckBox(final CheckBox cB){
-        cB.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.graphics.setContinuousRendering(cB.isChecked());
-            }
-        });
+    public void uncheckCheckBox(CheckBox checkBox){
+        checkBox.setChecked(false);
+        isChecked = false;
+    }
+
+    public ScrollPane getPane(){
+        return pane;
     }
 
 }
