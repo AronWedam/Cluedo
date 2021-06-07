@@ -11,14 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.cluedo.game.network.ConnectionService;
 
 public class Notebook {
 
     public Table table;
     private ScrollPane pane;
     final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
-    Player player;
-
+    private Player player;
 
     private final Label notebookText        =   new Label("Notebook: ", skin);
     private final Label markText            =   new Label("(you can mark it off below!)", skin, "default");
@@ -28,6 +28,7 @@ public class Notebook {
     private final TextButton btnDice        =   new TextButton("Dice", skin, "default");
     private final TextButton btnAccusation  =   new TextButton("Accusation", skin, "default");
     private final TextButton btnHelp        =   new TextButton("Help", skin, "default");
+    public final TextButton btnFinishMove  =   new TextButton("Finish Move", skin);
 
     private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
     private final CheckBox cBColonelMustard =   new CheckBox("ColonelMustard", skin);
@@ -54,8 +55,11 @@ public class Notebook {
     private final CheckBox cBWeaponPipe     =   new CheckBox("Pipe", skin);
     private final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
 
+    /**************************Non UI-Variables*************************************/
+    private ConnectionService connectionService;
 
     public Notebook(Player player) {
+        connectionService = ConnectionService.GetInstance();
         this.player = player;
         this.table = new Table(skin);
         this.table.defaults().padLeft(5).align(Align.left);
@@ -70,10 +74,6 @@ public class Notebook {
         this.table.add(markText);
         markText.setFontScale((float) (getPane().getScaleX() / 0.5),
                 (float) (getPane().getScaleY() / 0.5));
-        this.table.row();
-
-
-        this.table.add(new Label("", skin));
         this.table.row();
 
 
@@ -113,7 +113,6 @@ public class Notebook {
         this.table.add(cBProfessorPlum);
         cBProfessorPlum.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         addListenerToCheckBox(cBProfessorPlum);
-        this.table.add(new Label("", skin));
         this.table.row();
 
 
@@ -151,8 +150,6 @@ public class Notebook {
         this.table.add(cBWeaponRope);
         cBWeaponRope.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         addListenerToCheckBox(cBWeaponPoison);
-
-        this.table.add(new Label("", skin));
         this.table.row();
 
 
@@ -205,27 +202,26 @@ public class Notebook {
         this.table.add(cBRoomStudy);
         cBRoomStudy.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         addListenerToCheckBox(cBRoomStudy);
-
-        this.table.add(new Label("", skin));
-        this.table.row();
         this.table.row();
 
+        this.table.add(btnFinishMove);
+        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
+        btnFinishMove.center();
+        this.table.row();
 
-        //BUTTONS
         this.table.add(btnDice);
         btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
                 (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
         this.table.row();
 
-        this.table.row();
         this.table.add(btnAccusation);
         btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
                 (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
         this.table.row();
 
-        this.table.row();
         this.table.add(btnHelp);
         btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
                 (float) (getPane().getScaleY() / 0.45));
@@ -316,7 +312,6 @@ public class Notebook {
     public ScrollPane getPane(){
         return pane;
     }
-
 
     private static void addListenerToCheckBox(final CheckBox cB){
         cB.addListener(new ChangeListener() {

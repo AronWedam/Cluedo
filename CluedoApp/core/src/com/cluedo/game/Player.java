@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cluedo.game.network.ConnectionService;
+import com.cluedo.game.network.NetworkPlayer;
 
 public class Player {
     private static CardHandOut cardHandOut = new CardHandOut();
@@ -38,7 +39,28 @@ public class Player {
 
     //Set Player position
     public void setPos(int x, int y){
-        if(valid(x,y)){
+        Boolean maywalk = false;
+
+        Thread GetGameThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                connectionService.GetGame();
+            }
+        });
+        GetGameThread.start();
+        try {
+            GetGameThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for (NetworkPlayer player : connectionService.getPlayers()) {
+            if (player.getId().equals(connectionService.GetPlayerId())) {
+                maywalk = player.getMaywalk();
+            }
+        }
+
+        if(valid(x,y) && maywalk){
             this.x = x;
             this.y = y;
 
