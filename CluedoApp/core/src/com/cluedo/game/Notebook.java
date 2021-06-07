@@ -203,62 +203,24 @@ public class Notebook {
         btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
                 (float) (getPane().getScaleY() / 0.6));
         btnFinishMove.center();
-        btnFinishMove.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                Gdx.app.log("INFO","FINISH Clicked");
-                if (connectionService.getCurrentPlayer() != null && connectionService.getCurrentPlayer().getMaywalk()) {
-                    Thread finishMoveThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            connectionService.FinishMove();
-                        }
-                    });
-                    finishMoveThread.start();
-                    try {
-                        finishMoveThread.join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
         this.table.row();
 
         this.table.add(btnDice);
         btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
                 (float) (getPane().getScaleY() / 0.6));
         btnAccusation.center();
-        btnDice.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                Gdx.app.log("INFO", "DICE CLICKED");
-            }
-        });
         this.table.row();
 
         this.table.add(btnAccusation);
         btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
                 (float) (getPane().getScaleY() / 0.6));
         btnAccusation.center();
-        btnAccusation.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                Gdx.app.log("INFO", "ACCUSATION CLICKED");
-            }
-        });
         this.table.row();
 
         this.table.add(btnHelp);
         btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
                 (float) (getPane().getScaleY() / 0.6));
         btnAccusation.center();
-        btnHelp.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                Gdx.app.log("INFO", "HELP CLICKED");
-            }
-        });
         this.table.row();
 
         pane.setActor(this.table);
