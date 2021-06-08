@@ -60,7 +60,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     private MainScreen mainScreen = new MainScreen();
     //private AccusationScreen accusationScreen = new AccusationScreen();
     private RulesScreen rulesScreen = new RulesScreen(game, mainScreen);
-
     Stage stage;
 
     Viewport viewport = new ScreenViewport();
@@ -177,15 +176,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         renderer.setView(camera);
         renderer.render();
         camera.update();
-
-        /*
-        //Add Notebook-Buttons to stage so they listen to Inputevents
-        stage.addActor(notebook.getBtnAccusation());
-        stage.addActor(notebook.getBtnDice());
-        stage.addActor(notebook.getBtnHelp());
-        stage.addActor(notebook.getBtnFinishMove());
-        stage.draw();
-        */
 
         mapViewport();
         mapNotebook();
