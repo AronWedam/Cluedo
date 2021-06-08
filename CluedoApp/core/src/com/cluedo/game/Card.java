@@ -3,7 +3,6 @@ package com.cluedo.game;
 
 public class Card {
 
-
     private int type;
     private int value;
 
