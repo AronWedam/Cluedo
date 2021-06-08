@@ -133,7 +133,6 @@ public class AccusationScreen implements Screen {
         mainTable.row().colspan(2);
 
         mainTable.add(cBMissScarlett);
-        //cBMissScarlett.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         mainTable.row();
 
         mainTable.add(cBColonelMustard);
@@ -149,7 +148,6 @@ public class AccusationScreen implements Screen {
         mainTable.row();
 
         mainTable.add(cBProfessorPlum);
-        //cBProfessorPlum.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         mainTable.row();
 
 
