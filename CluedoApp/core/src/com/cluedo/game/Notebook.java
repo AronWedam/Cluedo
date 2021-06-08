@@ -31,7 +31,6 @@ public class Notebook {
     private final Label roomsText           =   new Label("ROOMS",skin, "default");
     public final TextButton btnDice        =   new TextButton("Dice", skin, "default");
     public final TextButton btnAccusation  =   new TextButton("Accusation", skin, "default");
-    public final TextButton btnHelp        =   new TextButton("Help", skin, "default");
     public final TextButton btnFinishMove  =   new TextButton("Finish Move", skin);
 
     public final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
@@ -314,10 +313,6 @@ public class Notebook {
 
     public TextButton getBtnAccusation(){
         return btnAccusation;
-    }
-
-    public TextButton getBtnHelp(){
-        return btnHelp;
     }
 
     public TextButton getBtnDice(){

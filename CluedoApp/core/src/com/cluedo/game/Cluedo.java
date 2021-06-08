@@ -180,6 +180,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         mapViewport();
         mapNotebook();
 
+        //Add Notebook-Buttons to stage so they listen to Inputevents
+        //stage.addActor(notebook.getBtnAccusation());
+        //stage.addActor(notebook.getBtnDice());
+        //stage.addActor(notebook.getBtnFinishMove());
+
         game.batch.setProjectionMatrix(camera.combined);
 
         if (!Gdx.input.justTouched()) {
@@ -287,13 +292,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
                 break;
             case "Accusation":
-               // notebook.btnAccusation.setDisabled(true);
-               // mainScreen.setScreen((Screen) accusationScreen);
-               // notebook.btnAccusation.setDisabled(false);
+                // notebook.btnAccusation.setDisabled(true);
+                // mainScreen.setScreen((Screen) accusationScreen);
+                // notebook.btnAccusation.setDisabled(false);
 
                 break;
             case "Help":
-                mainScreen.setScreen(new RulesScreen(game, mainScreen));
+                //mainScreen.setScreen(new RulesScreen(game));
                 /*
                 notebook.btnHelp.addListener(new ClickListener(){
                     @Override
