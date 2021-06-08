@@ -70,7 +70,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     public Cluedo(final GameClass game) throws InterruptedException {
         this.game = game;
 
-        viewport.setScreenSize(1000,2000);
+        viewport.setScreenSize(1, 1);
 
         players = new ArrayList<>();
         pieces = new ArrayList<>();
@@ -85,7 +85,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         //create camera
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, viewport.getScreenWidth(), viewport.getScreenHeight());
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         //batch for the viewportNotebook method
         Notebookbatch = new SpriteBatch();
@@ -110,7 +110,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         currentPlayer.setMyWeaponCard();
 
 
-
+        notebook = Notebook.getInstance(currentPlayer);
     }
 
     private void SyncNetworkPlayersWithGamePlayers() {
@@ -178,14 +178,17 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         renderer.render();
         camera.update();
 
-        mapViewport();
-        mapNotebook();
-
+        /*
         //Add Notebook-Buttons to stage so they listen to Inputevents
         stage.addActor(notebook.getBtnAccusation());
         stage.addActor(notebook.getBtnDice());
         stage.addActor(notebook.getBtnHelp());
         stage.addActor(notebook.getBtnFinishMove());
+        stage.draw();
+        */
+
+        mapViewport();
+        mapNotebook();
 
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -242,25 +245,32 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     }
                 }
             }
+
         } else if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth() / 3) {
             double y = Gdx.input.getY(0);
             int row = notebook.table.getRow((float) (Gdx.graphics.getHeight() - y));
             Gdx.app.log("Row", "Row: " + row);
-            Actor actor = notebook.table.getChild(row);
-            Gdx.app.log("Class", actor.getClass().getName());
 
-            if (actor instanceof TextButton) {
-                TextButton myButton = (TextButton) actor;
-                String clickedName = myButton.getText().toString();
-                buttonsNotebook(clickedName);
+            if (row <= 30 && row >= 0) {
+                try {
+                    Actor actor = notebook.table.getChild(row);
+                    Gdx.app.log("Class", actor.getClass().getName());
+
+                    if (actor instanceof TextButton) {
+                        TextButton myButton = (TextButton) actor;
+                        String clickedName = myButton.getText().toString();
+                        buttonsNotebook(clickedName);
+                    }
+
+                    if (actor instanceof CheckBox) {
+                        CheckBox myCheckBox = (CheckBox) actor;
+                        String clickedCheckbox = myCheckBox.getText().toString();
+                        checkBoxesNotebook(clickedCheckbox);
+                    }
+                } catch (Exception ex) {
+                    Gdx.app.log("Exception", ex.getMessage());
+                }
             }
-
-            if (actor instanceof CheckBox) {
-                    CheckBox myCheckBox = (CheckBox) actor;
-                    String clickedCheckbox = myCheckBox.getText().toString();
-                    checkBoxesNotebook(clickedCheckbox);
-            }
-
 
             //Gdx.app.log("Button Text", myButton.getText().toString());
             //Gdx.app.log("Button label", myButton.getLabel().toString());
@@ -483,8 +493,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     }
 
     private void mapNotebook() {
-        notebook = Notebook.getInstance(currentPlayer);
-
         notebook.yourSuspectCard();
         notebook.yourRoomCards();
         notebook.yourWeaponCard();

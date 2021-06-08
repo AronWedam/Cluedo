@@ -66,8 +66,9 @@ public class Notebook {
 
     public static Notebook getInstance(Player player){
         if(notebook == null){
-            return new Notebook(player);
+            notebook = new Notebook(player);
         }
+
         return notebook;
     }
 
@@ -199,8 +200,8 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnFinishMove);
-        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
-                (float) (getPane().getScaleY() / 0.45));
+        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
+                (float) (getPane().getScaleY() / 0.6));
         btnFinishMove.center();
         btnFinishMove.addListener(new ClickListener(){
             @Override
@@ -225,8 +226,8 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnDice);
-        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
-                (float) (getPane().getScaleY() / 0.45));
+        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
+                (float) (getPane().getScaleY() / 0.6));
         btnAccusation.center();
         btnDice.addListener(new ClickListener(){
             @Override
@@ -237,8 +238,8 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnAccusation);
-        btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
-                (float) (getPane().getScaleY() / 0.45));
+        btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
+                (float) (getPane().getScaleY() / 0.6));
         btnAccusation.center();
         btnAccusation.addListener(new ClickListener(){
             @Override
@@ -249,8 +250,8 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnHelp);
-        btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
-                (float) (getPane().getScaleY() / 0.45));
+        btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
+                (float) (getPane().getScaleY() / 0.6));
         btnAccusation.center();
         btnHelp.addListener(new ClickListener(){
             @Override
