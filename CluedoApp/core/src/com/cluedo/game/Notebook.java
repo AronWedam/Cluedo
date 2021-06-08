@@ -29,9 +29,9 @@ public class Notebook {
     private final Label suspectsText        =   new Label("SUSPECTS", skin, "default");
     private final Label weaponsText         =   new Label("WEAPONS", skin, "default");
     private final Label roomsText           =   new Label("ROOMS",skin, "default");
-    private final TextButton btnDice        =   new TextButton("Dice", skin, "default");
-    private final TextButton btnAccusation  =   new TextButton("Accusation", skin, "default");
-    private final TextButton btnHelp        =   new TextButton("Help", skin, "default");
+    public final TextButton btnDice        =   new TextButton("Dice", skin, "default");
+    public final TextButton btnAccusation  =   new TextButton("Accusation", skin, "default");
+    public final TextButton btnHelp        =   new TextButton("Help", skin, "default");
     public final TextButton btnFinishMove  =   new TextButton("Finish Move", skin);
 
     public final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
@@ -78,22 +78,26 @@ public class Notebook {
         this.table.defaults().padLeft(5).align(Align.left);
         this.pane = new ScrollPane(this.table, skin);
 
+        //for the font size of the checkBoxes
+        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.5);
+        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.5);
+
         this.table.add(notebookText);
-        notebookText.setFontScale((float) (getPane().getScaleX() / 0.15),
-                (float) (getPane().getScaleY() / 0.15));;
+        notebookText.setFontScale((float) (getPane().getScaleX() / 0.2),
+                (float) (getPane().getScaleY() / 0.2));;
         this.table.row();
 
 
         this.table.add(markText);
-        markText.setFontScale((float) (getPane().getScaleX() / 0.4),
-                (float) (getPane().getScaleY() / 0.4));
+        markText.setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
 
 
         //SUSPECTS Category in Notebook
         this.table.add(suspectsText );
-        suspectsText.setFontScale((float) (getPane().getScaleX() / 0.2),
-                (float) (getPane().getScaleY() / 0.2));
+        suspectsText.setFontScale((float) (getPane().getScaleX() / 0.25),
+                (float) (getPane().getScaleY() / 0.25));
         this.table.row();
 
         this.table.add(cBMissScarlett);
@@ -197,8 +201,8 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnFinishMove);
-        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.2),
-                (float) (getPane().getScaleY() / 0.2));
+        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
         btnFinishMove.center();
         btnFinishMove.addListener(new ClickListener(){
             @Override
@@ -223,8 +227,8 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnDice);
-        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.2),
-                (float) (getPane().getScaleY() / 0.2));
+        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
         btnDice.addListener(new ClickListener(){
             @Override
@@ -235,8 +239,8 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnAccusation);
-        btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.2),
-                (float) (getPane().getScaleY() / 0.2));
+        btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
         btnAccusation.addListener(new ClickListener(){
             @Override
@@ -246,10 +250,9 @@ public class Notebook {
         });
         this.table.row();
 
-
         this.table.add(btnHelp);
-        btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.2),
-                (float) (getPane().getScaleY() / 0.2));
+        btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
         btnHelp.addListener(new ClickListener(){
             @Override
