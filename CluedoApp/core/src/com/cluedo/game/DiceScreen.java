@@ -56,7 +56,8 @@ public class DiceScreen implements Screen, InputProcessor {
 
 
 
-    public DiceScreen(GameClass game){
+    public DiceScreen(GameClass game, MainScreen mainScreen){
+        this.mainScreen = mainScreen;
         gameClass = game;
         connectionService = ConnectionService.GetInstance();
         atlas = new TextureAtlas("uiskin.atlas");

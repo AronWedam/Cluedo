@@ -2,6 +2,7 @@ package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
 public class Notebook {
@@ -16,6 +18,8 @@ public class Notebook {
     public Table table;
     private ScrollPane pane;
     final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+    private GameClass gameClass;
+    private MainScreen mainScreen;
     private final Label notebookText        =   new Label("Notebook: ", skin);
     private final Label markText            =   new Label("(you can mark it off below!)", skin, "default");
     private final Label suspectsText        =   new Label("SUSPECTS", skin, "default");
@@ -57,7 +61,8 @@ public class Notebook {
 
         this.table.add(notebookText);
         notebookText.setFontScale((float) (getPane().getScaleX() / 0.2),
-                (float) (getPane().getScaleY() / 0.2));;
+                (float) (getPane().getScaleY() / 0.2));
+        ;
         this.table.row();
 
 
@@ -72,7 +77,7 @@ public class Notebook {
 
 
         //SUSPECTS Category in Notebook
-        this.table.add(suspectsText );
+        this.table.add(suspectsText);
         suspectsText.setFontScale((float) (getPane().getScaleX() / 0.25),
                 (float) (getPane().getScaleY() / 0.25));
         this.table.row();
@@ -227,7 +232,15 @@ public class Notebook {
         this.table.row();
 
         pane.setActor(this.table);
+
+        btnDice.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mainScreen.setScreen(new DiceScreen(gameClass, mainScreen));
+            }
+        });
     }
+
 
     public ScrollPane getPane(){
         return pane;
