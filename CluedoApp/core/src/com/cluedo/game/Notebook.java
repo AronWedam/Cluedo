@@ -40,16 +40,16 @@ public class Notebook {
     public final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
     public final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
 
+
     public final CheckBox cBRoomEntrance   =   new CheckBox("Entrance", skin);
-    public final CheckBox cBRoomGarden     =   new CheckBox("Garden", skin);
+    public final CheckBox cBRoomBedroom     =   new CheckBox("Bedroom", skin);
     public final CheckBox cBRoomDining     =   new CheckBox("Dining", skin);
     public final CheckBox cBRoomKitchen    =   new CheckBox("Kitchen", skin);
-    public final CheckBox cBRoomBallroom   =   new CheckBox("Ballroom", skin);
+    public final CheckBox cBRoomGuest   =   new CheckBox("Guestroom", skin);
     public final CheckBox cBRoomMusicroom  =   new CheckBox("Musicroom", skin);
-    public final CheckBox cBRoomGameroom   =   new CheckBox("Gameroom ", skin);
+    public final CheckBox cBRoomBathroom    =   new CheckBox("Bathroom ", skin);
     public final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
     public final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
-    public final CheckBox cBRoomNEEDSName  =   new CheckBox("NEEDS NAME", skin);
 
     public final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
     public final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
@@ -162,8 +162,8 @@ public class Notebook {
                 (float) (getPane().getScaleY() / 0.25));
         this.table.row();
 
-        this.table.add(cBRoomBallroom);
-        cBRoomBallroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        this.table.add(cBRoomGuest);
+        cBRoomGuest.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
         this.table.add(cBRoomDining);
@@ -174,12 +174,12 @@ public class Notebook {
         cBRoomEntrance.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
-        this.table.add(cBRoomGameroom);
-        cBRoomGameroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        this.table.add(cBRoomBathroom );
+        cBRoomBathroom .getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
-        this.table.add(cBRoomGarden);
-        cBRoomGarden.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        this.table.add(cBRoomBedroom);
+        cBRoomBedroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
         this.table.add(cBRoomKitchen);
@@ -232,23 +232,21 @@ public class Notebook {
         if(value == 1){
             cardInHand(cBRoomEntrance);
         }else if(value == 2){
-            cardInHand(cBRoomGarden);
+            cardInHand(cBRoomBedroom);
         }else if(value == 3){
             cardInHand(cBRoomDining);
         }else if(value == 4){
             cardInHand(cBRoomKitchen);
         }else if(value == 5){
-            cardInHand(cBRoomBallroom);
+            cardInHand(cBRoomGuest);
         }else if(value == 6){
             cardInHand(cBRoomMusicroom);
         }else if(value == 7){
-            cardInHand(cBRoomGameroom);
+            cardInHand(cBRoomBathroom );
         }else if(value == 8){
             cardInHand(cBRoomStudy);
         }else if(value == 9){
             cardInHand(cBRoomLibrary);
-        }else if(value == 10){
-            cardInHand(cBRoomNEEDSName);
         }
     }
 
