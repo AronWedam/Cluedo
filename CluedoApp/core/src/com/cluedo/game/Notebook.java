@@ -31,7 +31,6 @@ public class Notebook {
     private final Label roomsText           =   new Label("ROOMS",skin, "default");
     public final TextButton btnDice        =   new TextButton("Dice", skin, "default");
     public final TextButton btnAccusation  =   new TextButton("Accusation", skin, "default");
-    public final TextButton btnHelp        =   new TextButton("Help", skin, "default");
     public final TextButton btnFinishMove  =   new TextButton("Finish Move", skin);
 
     public final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
@@ -239,17 +238,6 @@ public class Notebook {
         });
         this.table.row();
 
-        this.table.add(btnHelp);
-        btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
-                (float) (getPane().getScaleY() / 0.45));
-        btnAccusation.center();
-        btnHelp.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                Gdx.app.log("INFO", "HELP CLICKED");
-            }
-        });
-        this.table.row();
 
         pane.setActor(this.table);
     }
@@ -342,10 +330,6 @@ public class Notebook {
 
     public TextButton getBtnAccusation(){
         return btnAccusation;
-    }
-
-    public TextButton getBtnHelp(){
-        return btnHelp;
     }
 
     public TextButton getBtnDice(){

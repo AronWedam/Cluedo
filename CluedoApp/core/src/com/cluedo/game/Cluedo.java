@@ -59,7 +59,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     private MainScreen mainScreen = new MainScreen();
     //private AccusationScreen accusationScreen = new AccusationScreen();
-    private RulesScreen rulesScreen = new RulesScreen(game, mainScreen);
+    //private RulesScreen rulesScreen = new RulesScreen(game);
 
     Stage stage;
 
@@ -94,14 +94,14 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
 
         //set up stage and Multiplexer to handle Inputs
-        stage = new Stage(viewport);
+        //stage = new Stage(viewport);
 
-        multiplexer = new InputMultiplexer();
+        //multiplexer = new InputMultiplexer();
 
-        multiplexer.addProcessor(0,stage);
-        multiplexer.addProcessor(1,gestureDetector);
+        //multiplexer.addProcessor(0,stage);
+        //multiplexer.addProcessor(1,gestureDetector);
 
-        Gdx.input.setInputProcessor(multiplexer);
+        //Gdx.input.setInputProcessor(multiplexer);
 
 
 
@@ -182,10 +182,9 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         mapNotebook();
 
         //Add Notebook-Buttons to stage so they listen to Inputevents
-        stage.addActor(notebook.getBtnAccusation());
-        stage.addActor(notebook.getBtnDice());
-        stage.addActor(notebook.getBtnHelp());
-        stage.addActor(notebook.getBtnFinishMove());
+        //stage.addActor(notebook.getBtnAccusation());
+        //stage.addActor(notebook.getBtnDice());
+        //stage.addActor(notebook.getBtnFinishMove());
 
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -256,9 +255,9 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
             }
 
             if (actor instanceof CheckBox) {
-                    CheckBox myCheckBox = (CheckBox) actor;
-                    String clickedCheckbox = myCheckBox.getText().toString();
-                    checkBoxesNotebook(clickedCheckbox);
+                CheckBox myCheckBox = (CheckBox) actor;
+                String clickedCheckbox = myCheckBox.getText().toString();
+                checkBoxesNotebook(clickedCheckbox);
             }
 
 
@@ -287,13 +286,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
                 break;
             case "Accusation":
-               // notebook.btnAccusation.setDisabled(true);
-               // mainScreen.setScreen((Screen) accusationScreen);
-               // notebook.btnAccusation.setDisabled(false);
+                // notebook.btnAccusation.setDisabled(true);
+                // mainScreen.setScreen((Screen) accusationScreen);
+                // notebook.btnAccusation.setDisabled(false);
 
                 break;
             case "Help":
-                mainScreen.setScreen(new RulesScreen(game, mainScreen));
+                //mainScreen.setScreen(new RulesScreen(game));
                 /*
                 notebook.btnHelp.addListener(new ClickListener(){
                     @Override
