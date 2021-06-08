@@ -92,7 +92,7 @@ public class AccusationScreen implements Screen {
 
         //Create Buttons
         TextButton mainBtn = new TextButton("Back to Main", skin);
-
+        TextButton exitBtn = new TextButton("Exit Game", skin);
 
         //If clicked go back to MainMenu
         mainBtn.addListener(new ClickListener(){
@@ -190,6 +190,7 @@ public class AccusationScreen implements Screen {
 
         mainTable.add(mainBtn).size(100, 50).align(Align.left);
         mainTable.row().colspan(2);
+        mainTable.add(exitBtn).size(100, 50).align(Align.left);
 
         //Add table to stage
         stage.addActor(mainTable);
