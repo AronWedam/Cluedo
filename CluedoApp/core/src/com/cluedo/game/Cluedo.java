@@ -306,7 +306,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
                 break;
             case "Help":
-                mainScreen.setScreen(new RulesScreen(game, mainScreen));
+                //mainScreen.setScreen(new RulesScreen(game));
                 /*
                 notebook.btnHelp.addListener(new ClickListener(){
                     @Override
