@@ -63,7 +63,7 @@ public class MenuScreen implements Screen{
 
         //Create Buttons
         final TextButton startBtn = new TextButton("Start Game", skin);
-        TextButton optionsBtn = new TextButton("Options", skin);
+        //TextButton optionsBtn = new TextButton("Options", skin);
         TextButton rulesBtn= new TextButton("Rules", skin);
         //TextButton diceBtn= new TextButton("Dice", skin);
         TextButton exitBtn = new TextButton("Exit Game", skin);
@@ -116,6 +116,8 @@ public class MenuScreen implements Screen{
                 Gdx.app.exit();
             }
         });
+
+        /*
         //If clicked go to Options menu
         optionsBtn.addListener(new ClickListener(){
             @Override
@@ -123,6 +125,10 @@ public class MenuScreen implements Screen{
                 //((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsScreen());
             }
         });
+
+         */
+
+
         //If clicked go to Rules
         rulesBtn.addListener(new ClickListener(){
             @Override
@@ -145,7 +151,7 @@ public class MenuScreen implements Screen{
         mainTable.row().colspan(2);
         mainTable.add(rulesBtn).size(100,50).align(Align.left);
         //mainTable.add(diceBtn).size(100,50).align(Align.left);
-        mainTable.add(optionsBtn).size(100, 50).align(Align.left);
+        //mainTable.add(optionsBtn).size(100, 50).align(Align.left);
         mainTable.add(exitBtn).size(100, 50).align(Align.left);
 
         //Add table to stage
