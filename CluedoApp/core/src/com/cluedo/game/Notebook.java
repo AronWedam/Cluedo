@@ -31,6 +31,7 @@ public class Notebook {
     private final Label roomsText           =   new Label("ROOMS",skin, "default");
     public final TextButton btnDice        =   new TextButton("Dice", skin, "default");
     public final TextButton btnAccusation  =   new TextButton("Accusation", skin, "default");
+    public final TextButton btnHelp        =   new TextButton("Help", skin, "default");
     public final TextButton btnFinishMove  =   new TextButton("Finish Move", skin);
 
     public final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
@@ -40,16 +41,16 @@ public class Notebook {
     public final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
     public final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
 
-
     public final CheckBox cBRoomEntrance   =   new CheckBox("Entrance", skin);
-    public final CheckBox cBRoomBedroom     =   new CheckBox("Bedroom", skin);
+    public final CheckBox cBRoomGarden     =   new CheckBox("Garden", skin);
     public final CheckBox cBRoomDining     =   new CheckBox("Dining", skin);
     public final CheckBox cBRoomKitchen    =   new CheckBox("Kitchen", skin);
-    public final CheckBox cBRoomGuest   =   new CheckBox("Guestroom", skin);
+    public final CheckBox cBRoomBallroom   =   new CheckBox("Ballroom", skin);
     public final CheckBox cBRoomMusicroom  =   new CheckBox("Musicroom", skin);
-    public final CheckBox cBRoomBathroom    =   new CheckBox("Bathroom ", skin);
+    public final CheckBox cBRoomGameroom   =   new CheckBox("Gameroom ", skin);
     public final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
     public final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
+    public final CheckBox cBRoomNEEDSName  =   new CheckBox("NEEDS NAME", skin);
 
     public final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
     public final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
@@ -61,7 +62,16 @@ public class Notebook {
     /**************************Non UI-Variables*************************************/
     private ConnectionService connectionService;
 
-    public Notebook(Player player) {
+    private static Notebook notebook;
+
+    public static Notebook getInstance(Player player){
+        if(notebook == null){
+            return new Notebook(player);
+        }
+        return notebook;
+    }
+
+    private Notebook(Player player) {
         connectionService = ConnectionService.GetInstance();
         this.player = player;
         this.table = new Table(skin);
@@ -91,6 +101,8 @@ public class Notebook {
         this.table.row();
 
         this.table.add(cBMissScarlett);
+        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.7);
+        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.7);
         cBMissScarlett.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
@@ -152,8 +164,8 @@ public class Notebook {
                 (float) (getPane().getScaleY() / 0.25));
         this.table.row();
 
-        this.table.add(cBRoomGuest);
-        cBRoomGuest.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        this.table.add(cBRoomBallroom);
+        cBRoomBallroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
         this.table.add(cBRoomDining);
@@ -164,12 +176,12 @@ public class Notebook {
         cBRoomEntrance.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
-        this.table.add(cBRoomBathroom );
-        cBRoomBathroom .getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        this.table.add(cBRoomGameroom);
+        cBRoomGameroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
-        this.table.add(cBRoomBedroom);
-        cBRoomBedroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        this.table.add(cBRoomGarden);
+        cBRoomGarden.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
         this.table.add(cBRoomKitchen);
@@ -238,6 +250,17 @@ public class Notebook {
         });
         this.table.row();
 
+        this.table.add(btnHelp);
+        btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
+        btnAccusation.center();
+        btnHelp.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.log("INFO", "HELP CLICKED");
+            }
+        });
+        this.table.row();
 
         pane.setActor(this.table);
     }
@@ -249,21 +272,23 @@ public class Notebook {
         if(value == 1){
             cardInHand(cBRoomEntrance);
         }else if(value == 2){
-            cardInHand(cBRoomBedroom);
+            cardInHand(cBRoomGarden);
         }else if(value == 3){
             cardInHand(cBRoomDining);
         }else if(value == 4){
             cardInHand(cBRoomKitchen);
         }else if(value == 5){
-            cardInHand(cBRoomGuest);
+            cardInHand(cBRoomBallroom);
         }else if(value == 6){
             cardInHand(cBRoomMusicroom);
         }else if(value == 7){
-            cardInHand(cBRoomBathroom );
+            cardInHand(cBRoomGameroom);
         }else if(value == 8){
             cardInHand(cBRoomStudy);
         }else if(value == 9){
             cardInHand(cBRoomLibrary);
+        }else if(value == 10){
+            cardInHand(cBRoomNEEDSName);
         }
     }
 
@@ -328,6 +353,10 @@ public class Notebook {
 
     public TextButton getBtnAccusation(){
         return btnAccusation;
+    }
+
+    public TextButton getBtnHelp(){
+        return btnHelp;
     }
 
     public TextButton getBtnDice(){
