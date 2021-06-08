@@ -79,8 +79,8 @@ public class Notebook {
         this.pane = new ScrollPane(this.table, skin);
 
         //for the font size of the checkBoxes
-        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.5);
-        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.5);
+        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.7);
+        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.7);
 
         this.table.add(notebookText);
         notebookText.setFontScale((float) (getPane().getScaleX() / 0.2),
@@ -101,8 +101,6 @@ public class Notebook {
         this.table.row();
 
         this.table.add(cBMissScarlett);
-        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.7);
-        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.7);
         cBMissScarlett.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
