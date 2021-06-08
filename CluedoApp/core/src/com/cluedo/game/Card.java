@@ -1,11 +1,7 @@
 package com.cluedo.game;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Card {
-
 
     private int type;
     private int value;
