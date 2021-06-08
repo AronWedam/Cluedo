@@ -96,15 +96,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         Gdx.input.setInputProcessor(multiplexer);
 
-        notebook = new Notebook(currentPlayer);
+
 
         currentPlayer.setMyRoomCard();
         currentPlayer.setMySuspectCard();
         currentPlayer.setMyWeaponCard();
 
-        notebook.yourSuspectCard();
-        notebook.yourRoomCards();
-        notebook.yourWeaponCard();
+
 
     }
 
@@ -180,6 +178,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         stage.addActor(notebook.getBtnAccusation());
         stage.addActor(notebook.getBtnDice());
         stage.addActor(notebook.getBtnHelp());
+        stage.addActor(notebook.getBtnFinishMove());
 
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -240,7 +239,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     }
                 }
             }
-        } else if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth()/3) {
+        }/* else if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth()/3) {
             double y = Gdx.input.getY(0);
             int row = notebook.table.getRow((float) (Gdx.graphics.getHeight() - y));
             Gdx.app.log("Row", "Row: " + row);
@@ -276,7 +275,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 Gdx.app.log("Button Text", myButton.getText().toString());
                 Gdx.app.log("Button label", myButton.getLabel().toString());
             }
-        }
+        }*/
     }
 
     private void mapViewport(){
@@ -285,6 +284,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     }
 
     private void mapNotebook() {
+        notebook = new Notebook(currentPlayer);
+
+        notebook.yourSuspectCard();
+        notebook.yourRoomCards();
+        notebook.yourWeaponCard();
+
         notebook.getPane().setBounds(0, 0, Gdx.graphics.getWidth()/2,
                 Gdx.graphics.getHeight());
 

@@ -207,9 +207,29 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnFinishMove);
-        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
-                (float) (getPane().getScaleY() / 0.45));
+        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.2),
+                (float) (getPane().getScaleY() / 0.2));
         btnFinishMove.center();
+        btnFinishMove.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.log("INFO","FINISH Clicked");
+                if (connectionService.getCurrentPlayer() != null && connectionService.getCurrentPlayer().getMaywalk()) {
+                    Thread finishMoveThread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            connectionService.FinishMove();
+                        }
+                    });
+                    finishMoveThread.start();
+                    try {
+                        finishMoveThread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         this.table.row();
 
         this.table.add(btnDice);
@@ -354,6 +374,8 @@ public class Notebook {
     public TextButton getBtnDice(){
         return btnDice;
     }
+
+    public TextButton getBtnFinishMove() {return btnFinishMove;}
 
     public Table getTable(){
         return table;
