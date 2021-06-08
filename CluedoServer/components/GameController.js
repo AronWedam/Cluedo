@@ -20,6 +20,7 @@ let currentGame = undefined;
 let stopwatchRunning = false;
 let positionCounter = 0;
 let playerImagesCounter = 0;
+let firstPlayer = true;
 
 // define the home page route
 router.get('/', function (req, res) {
@@ -30,6 +31,7 @@ router.get('/', function (req, res) {
 router.post('/register', function (req, res) {
   let playerId = uuidv4();
   if (playerImagesCounter >= playerImages.length) playerImagesCounter = 0;
+  if (players.length >= 1) firstPlayer = false;
 
   players.push({
     id: playerId,
@@ -37,6 +39,7 @@ router.post('/register', function (req, res) {
     x: positionCounter * 32,
     y: 0,
     playerImage: playerImages[playerImagesCounter],
+    maywalk: firstPlayer,
   });
 
   if (!stopwatchRunning) {
@@ -77,13 +80,38 @@ router.post('/playerMoved', function (req, res) {
 
   for (let i = 0; i < players.length; i++) {
     if (players[i].id === req.body.playerId) {
-      players[i].x = x;
-      players[i].y = y;
-      currentPlayer = players[i];
+      if (players[i].maywalk === true) {
+        players[i].x = x;
+        players[i].y = y;
+        currentPlayer = players[i];
+      }
     }
   }
   console.log('New Pos');
   console.log(players);
+
+  res.status(200).send();
+});
+
+router.post('/finishMove', function (req, res) {
+  let index;
+
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].id === req.body.playerId) {
+      index = i;
+
+      //Its the last player
+      if (i === players.length - 1) {
+        players[0].maywalk = true;
+      } else {
+        players[i + 1].maywalk = true;
+      }
+
+      break;
+    }
+  }
+
+  players[index].maywalk = false;
 
   res.status(200).send();
 });
@@ -93,6 +121,8 @@ router.get('/reset', function (req, res) {
   players = [];
   currentGame = undefined;
   positionCounter = 0;
+  playerImagesCounter = 0;
+  firstPlayer = true;
   stopwatch.stop();
   res.send(200).send();
 });

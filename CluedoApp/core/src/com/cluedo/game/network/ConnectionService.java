@@ -24,6 +24,7 @@ public class ConnectionService {
     private String PlayerId;
     private List<NetworkPlayer> players;
     private static ConnectionService instance;
+    private NetworkPlayer currentPlayer;
 
     private ConnectionService() {
         client = new OkHttpClient();
@@ -45,11 +46,19 @@ public class ConnectionService {
         return players;
     }
 
+    public NetworkPlayer getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(NetworkPlayer currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
     /*
-        Method to register for a game with a username.
-        Takes in the username.
-        Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
-    */
+            Method to register for a game with a username.
+            Takes in the username.
+            Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
+        */
     public int RegisterForGame(String username)
     {
         try {
@@ -145,6 +154,26 @@ public class ConnectionService {
         return ServerErrorCode;
     }
 
+    public int FinishMove() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("playerId", PlayerId);
+
+            RequestBody body = RequestBody.create(JSON, jsonObject.toString());
+            Request request = new Request.Builder()
+                    .url(Url + "games/finishMove")
+                    .post(body)
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            return response.code();
+        } catch (Exception ex) {
+            Gdx.app.log("Finish Move Error", ex.getMessage());
+        }
+
+        return ServerErrorCode;
+    }
+
     private void GetPlayersOfJsonObject(String responseBody) throws IOException {
         List<NetworkPlayer> tempPlayers = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(responseBody);
@@ -152,7 +181,7 @@ public class ConnectionService {
 
         for (int i=0; i<playerArray.length(); i++) {
             JSONObject playerObject = playerArray.getJSONObject(i);
-            tempPlayers.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username"), playerObject.getInt("x"), playerObject.getInt("y"), playerObject.getString("playerImage")));
+            tempPlayers.add(new NetworkPlayer(playerObject.getString("id"), playerObject.getString("username"), playerObject.getInt("x"), playerObject.getInt("y"), playerObject.getString("playerImage"), playerObject.getBoolean("maywalk")));
         }
 
         players = tempPlayers;
