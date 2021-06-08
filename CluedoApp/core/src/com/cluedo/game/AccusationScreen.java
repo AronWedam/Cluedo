@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -95,6 +94,7 @@ public class AccusationScreen implements Screen {
     }
 
 
+
     @Override
     public void show() {
         //Stage controls the input
@@ -107,20 +107,13 @@ public class AccusationScreen implements Screen {
 
         //Create Buttons
         TextButton mainBtn = new TextButton("Back to Main", skin);
-        TextButton exitBtn = new TextButton("Exit Game", skin);
+
 
         //If clicked go back to MainMenu
         mainBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 mainScreen.setScreen(new MenuScreen(mainScreen, gameClass));
-            }
-        });
-        //If clicked exit the game
-        exitBtn.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
             }
         });
 
@@ -212,7 +205,6 @@ public class AccusationScreen implements Screen {
 
         mainTable.add(mainBtn).size(100, 50).align(Align.left);
         mainTable.row().colspan(2);
-        mainTable.add(exitBtn).size(100, 50).align(Align.left);
 
         //Add table to stage
         stage.addActor(mainTable);
