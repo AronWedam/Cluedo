@@ -284,7 +284,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     }
 
     private void mapNotebook() {
-        notebook = new Notebook(currentPlayer);
+        notebook = Notebook.getInstance(currentPlayer);
 
         notebook.yourSuspectCard();
         notebook.yourRoomCards();

@@ -60,7 +60,16 @@ public class Notebook {
     /**************************Non UI-Variables*************************************/
     private ConnectionService connectionService;
 
-    public Notebook(Player player) {
+    private static Notebook notebook;
+
+    public static Notebook getInstance(Player player){
+        if(notebook == null){
+            return new Notebook(player);
+        }
+        return notebook;
+    }
+
+    private Notebook(Player player) {
         connectionService = ConnectionService.GetInstance();
         this.player = player;
         this.table = new Table(skin);
@@ -86,8 +95,8 @@ public class Notebook {
         this.table.row();
 
         this.table.add(cBMissScarlett);
-        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.35);
-        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.35);
+        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.7);
+        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.7);
         cBMissScarlett.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         addListenerToCheckBox(cBMissScarlett);
         this.table.row();
