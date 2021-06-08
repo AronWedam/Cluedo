@@ -3,6 +3,7 @@ package com.cluedo.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.cluedo.game.network.ConnectionService;
 
@@ -66,26 +68,26 @@ public class Notebook {
         this.pane = new ScrollPane(this.table, skin);
 
         this.table.add(notebookText);
-        notebookText.setFontScale((float) (getPane().getScaleX() / 0.2),
-                (float) (getPane().getScaleY() / 0.2));;
+        notebookText.setFontScale((float) (getPane().getScaleX() / 0.15),
+                (float) (getPane().getScaleY() / 0.15));;
         this.table.row();
 
 
         this.table.add(markText);
-        markText.setFontScale((float) (getPane().getScaleX() / 0.5),
-                (float) (getPane().getScaleY() / 0.5));
+        markText.setFontScale((float) (getPane().getScaleX() / 0.4),
+                (float) (getPane().getScaleY() / 0.4));
         this.table.row();
 
 
         //SUSPECTS Category in Notebook
         this.table.add(suspectsText );
-        suspectsText.setFontScale((float) (getPane().getScaleX() / 0.25),
-                (float) (getPane().getScaleY() / 0.25));
+        suspectsText.setFontScale((float) (getPane().getScaleX() / 0.2),
+                (float) (getPane().getScaleY() / 0.2));
         this.table.row();
 
         this.table.add(cBMissScarlett);
-        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.5);
-        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.5);
+        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.35);
+        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.35);
         cBMissScarlett.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         addListenerToCheckBox(cBMissScarlett);
         this.table.row();
@@ -211,21 +213,40 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnDice);
-        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
-                (float) (getPane().getScaleY() / 0.45));
+        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.2),
+                (float) (getPane().getScaleY() / 0.2));
         btnAccusation.center();
+        btnDice.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.log("INFO", "DICE CLICKED");
+            }
+        });
         this.table.row();
 
         this.table.add(btnAccusation);
-        btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
-                (float) (getPane().getScaleY() / 0.45));
+        btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.2),
+                (float) (getPane().getScaleY() / 0.2));
         btnAccusation.center();
+        btnAccusation.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.log("INFO", "ACCUSATION CLICKED");
+            }
+        });
         this.table.row();
 
+
         this.table.add(btnHelp);
-        btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
-                (float) (getPane().getScaleY() / 0.45));
+        btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.2),
+                (float) (getPane().getScaleY() / 0.2));
         btnAccusation.center();
+        btnHelp.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.log("INFO", "HELP CLICKED");
+            }
+        });
         this.table.row();
 
         pane.setActor(this.table);
@@ -320,6 +341,22 @@ public class Notebook {
                 Gdx.graphics.setContinuousRendering(cB.isChecked());
             }
         });
+    }
+
+    public TextButton getBtnAccusation(){
+        return btnAccusation;
+    }
+
+    public TextButton getBtnHelp(){
+        return btnHelp;
+    }
+
+    public TextButton getBtnDice(){
+        return btnDice;
+    }
+
+    public Table getTable(){
+        return table;
     }
 
 }

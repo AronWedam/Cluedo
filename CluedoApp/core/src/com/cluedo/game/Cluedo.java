@@ -1,6 +1,7 @@
 package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,17 +14,27 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+
 import com.cluedo.game.network.NetworkPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ViewportLayout;
+
 public class Cluedo implements Screen, GestureDetector.GestureListener{
     private GameClass game;
     private com.cluedo.game.network.ConnectionService connectionService;
-    private Player player;
+    public Player player;
     Rectangle piece;
 
     private List<Player> players;
@@ -43,8 +54,17 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     Notebook notebook;
     private Player currentPlayer;
 
+    Stage stage;
+
+    Viewport viewport = new ScreenViewport();
+
+    InputMultiplexer multiplexer;
+
     public Cluedo(final GameClass game) throws InterruptedException {
         this.game = game;
+
+        viewport.setScreenSize(1000,2000);
+
         players = new ArrayList<>();
         pieces = new ArrayList<>();
         //Get the Players of the Current Game
@@ -55,16 +75,27 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         //create gestureDetector
         gestureDetector = new GestureDetector(this);
-        Gdx.input.setInputProcessor(gestureDetector);
 
         //create camera
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 400, 800);
+        camera.setToOrtho(false, viewport.getScreenWidth(), viewport.getScreenHeight());
 
         //batch for the viewportNotebook method
         Notebookbatch = new SpriteBatch();
 
         getPlayers();
+
+
+        //set up stage and Multiplexer to handle Inputs
+        stage = new Stage(viewport);
+
+        multiplexer = new InputMultiplexer();
+
+        multiplexer.addProcessor(0,stage);
+        multiplexer.addProcessor(1,gestureDetector);
+
+        Gdx.input.setInputProcessor(multiplexer);
+
         notebook = new Notebook(currentPlayer);
 
         currentPlayer.setMyRoomCard();
@@ -74,6 +105,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         notebook.yourSuspectCard();
         notebook.yourRoomCards();
         notebook.yourWeaponCard();
+
     }
 
     private void SyncNetworkPlayersWithGamePlayers() {
@@ -144,6 +176,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         mapViewport();
         mapNotebook();
 
+        //Add Notebook-Buttons to stage so they listen to Inputevents
+        stage.addActor(notebook.getBtnAccusation());
+        stage.addActor(notebook.getBtnDice());
+        stage.addActor(notebook.getBtnHelp());
+
         game.batch.setProjectionMatrix(camera.combined);
 
         if(!Gdx.input.justTouched()) {
@@ -153,6 +190,9 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 e.printStackTrace();
             }
         }
+
+
+        //Gdx.app.log("Drawing Players", "Drawing Players");
 
         //Draw the players
         for (int i=0; i<players.size(); i++) {
@@ -300,7 +340,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     @Override
     public boolean longPress(float x, float y) {
-        return true;
+        return false;
     }
 
     @Override
