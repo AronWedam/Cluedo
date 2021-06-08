@@ -59,7 +59,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     private MainScreen mainScreen = new MainScreen();
     //private AccusationScreen accusationScreen = new AccusationScreen();
-    private RulesScreen rulesScreen = new RulesScreen(game);
+    private RulesScreen rulesScreen = new RulesScreen(game, mainScreen);
 
     Stage stage;
 
@@ -293,7 +293,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
                 break;
             case "Help":
-                mainScreen.setScreen(new RulesScreen(game));
+                mainScreen.setScreen(new RulesScreen(game, mainScreen));
                 /*
                 notebook.btnHelp.addListener(new ClickListener(){
                     @Override
