@@ -3,6 +3,7 @@ package com.cluedo.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.cluedo.game.network.ConnectionService;
 
@@ -191,24 +193,62 @@ public class Notebook {
         btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
                 (float) (getPane().getScaleY() / 0.45));
         btnFinishMove.center();
+        btnFinishMove.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.log("INFO","FINISH Clicked");
+                if (connectionService.getCurrentPlayer() != null && connectionService.getCurrentPlayer().getMaywalk()) {
+                    Thread finishMoveThread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            connectionService.FinishMove();
+                        }
+                    });
+                    finishMoveThread.start();
+                    try {
+                        finishMoveThread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         this.table.row();
 
         this.table.add(btnDice);
         btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
                 (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
+        btnDice.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.log("INFO", "DICE CLICKED");
+            }
+        });
         this.table.row();
 
         this.table.add(btnAccusation);
         btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
                 (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
+        btnAccusation.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.log("INFO", "ACCUSATION CLICKED");
+            }
+        });
         this.table.row();
 
         this.table.add(btnHelp);
         btnHelp.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
                 (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
+        btnHelp.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.log("INFO", "HELP CLICKED");
+            }
+        });
         this.table.row();
 
         pane.setActor(this.table);
@@ -298,6 +338,24 @@ public class Notebook {
 
     public ScrollPane getPane(){
         return pane;
+    }
+
+    public TextButton getBtnAccusation(){
+        return btnAccusation;
+    }
+
+    public TextButton getBtnHelp(){
+        return btnHelp;
+    }
+
+    public TextButton getBtnDice(){
+        return btnDice;
+    }
+
+    public TextButton getBtnFinishMove() {return btnFinishMove;}
+
+    public Table getTable(){
+        return table;
     }
 
 }

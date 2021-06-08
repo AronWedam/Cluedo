@@ -33,7 +33,8 @@ public class RulesScreen implements Screen {
     private ConnectionService connectionService;
     BitmapFont font = new BitmapFont();
 
-    public RulesScreen(GameClass game){
+    public RulesScreen(GameClass game, MainScreen mainScreen){
+        this.mainScreen = mainScreen;
         gameClass = game;
         connectionService = ConnectionService.GetInstance();
         atlas = new TextureAtlas("uiskin.atlas");
