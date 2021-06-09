@@ -65,8 +65,8 @@ public class DiceScreen implements Screen, InputProcessor {
         this.mainScreen = mainScreen;
         gameClass = game;
         connectionService = ConnectionService.GetInstance();
-        atlas = new TextureAtlas("uiskin.atlas");
-        skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
+        //atlas = new TextureAtlas("uiskin.atlas");
+        //skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
@@ -78,7 +78,7 @@ public class DiceScreen implements Screen, InputProcessor {
         camera.update();
 
         stage = new Stage(viewport, batch);
-        textureAtlas=new TextureAtlas("sprites.txt");
+        textureAtlas=new TextureAtlas(Gdx.files.internal("dice/diceSprite.atlas"));
 
         addSprites();
     }
@@ -101,8 +101,6 @@ public class DiceScreen implements Screen, InputProcessor {
         gameClass.font.draw(gameClass.batch, "Tap to roll", 230, 450);
 
         batch.end();
-
-
 
         if (Gdx.input.isTouched()) {
             diceAnimation();
@@ -161,7 +159,7 @@ public class DiceScreen implements Screen, InputProcessor {
         }
     }
     public void diceAnimation(){
-        textureAtlas=new TextureAtlas(Gdx.files.internal("dice/diceSprite.png"));
+        textureAtlas=new TextureAtlas(Gdx.files.internal("dice/diceSprite.atlas"));
 
         //need to pass amount of time per frame, using all of the regions available (dice sides 1-6)
         animation=new Animation(1/15f, textureAtlas.getRegions());
