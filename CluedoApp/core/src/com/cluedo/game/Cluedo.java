@@ -59,9 +59,10 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     Notebook notebook;
     private Player currentPlayer;
 
-    private MainScreen mainScreen = new MainScreen();
-    //private AccusationScreen accusationScreen = new AccusationScreen();
-    private RulesScreen rulesScreen = new RulesScreen(game, mainScreen);
+    private AccusationScreen accusationScreen;
+    private MainScreen mainScreen;
+    private RulesScreen rulesScreen;
+    private DiceScreen diceScreen;
     Stage stage;
 
     Viewport viewport = new ScreenViewport();
@@ -72,8 +73,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     Dice dice = new Dice(game);
 
-    public Cluedo(final GameClass game) throws InterruptedException {
+    public Cluedo(final GameClass game, MainScreen mainScreen) throws InterruptedException {
         this.game = game;
+        this.mainScreen = mainScreen;
+        accusationScreen = new AccusationScreen(mainScreen, game);
+        rulesScreen = new RulesScreen(game, mainScreen);
+        diceScreen = new DiceScreen(game, mainScreen);
 
         viewport.setScreenSize(1, 1);
 
@@ -301,37 +306,23 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 break;
             case "Accusation":
                 if(currentPlayer.checkIfPlayerIsInRoom(player.getX(),player.getY())) {
-                    /*
-                    notebook.btnAccusation.addListener(new ClickListener() {
-                        mainScreen.setScreen(new RulesScreen(gameClass, mainScreen));
-                        @Override
-                        public void clicked(InputEvent event, float x, float y) {
-                            ((Game)Gdx.app.getApplicationListener()).setScreen(new
-                                    AccusationScreen(mainScreen, game ));
-                        }
-                    });
-                    // notebook.btnAccusation.setDisabled(true);
-                     //mainScreen.setScreen((Screen) AccusationScreen);
-                    // notebook.btnAccusation.setDisabled(false);
-
-                     */
+                    notebook.btnAccusation.setDisabled(true);
+                    mainScreen.setScreen(accusationScreen);
+                    notebook.btnAccusation.setDisabled(false);
                 }
+
+                notebook.btnAccusation.setDisabled(true);
+                mainScreen.setScreen(accusationScreen);
+                notebook.btnAccusation.setDisabled(false);
                 break;
             case "Help":
-                //mainScreen.setScreen(new RulesScreen(game));
-                /*
-                notebook.btnHelp.addListener(new ClickListener(){
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        mainScreen.setScreen(new RulesScreen(game));
-                    }
-                });
-
-                 */
+                mainScreen.setScreen(rulesScreen);
                 break;
             case "Dice":
                 //TODO ADD DICE SCREENS AND WHATEVER IS NEEDED
-               // moves = dice.getDiceOneValue() + dice.getDiceTwoValue();
+                mainScreen.setScreen(diceScreen);
+
+                // moves = dice.getDiceOneValue() + dice.getDiceTwoValue();
                 moves = 6;
                 break;
             default:

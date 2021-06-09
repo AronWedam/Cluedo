@@ -30,8 +30,8 @@ public class AccusationScreen implements Screen {
     protected Stage stage;
     private Viewport viewport;
     private OrthographicCamera camera;
-    private TextureAtlas atlas;
-    protected Skin skin;
+    private TextureAtlas atlas = new TextureAtlas("uiskin.atlas");;
+    protected Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
     private MainScreen mainScreen;
     private GameClass gameClass;
     private ConnectionService connectionService;
@@ -80,8 +80,7 @@ public class AccusationScreen implements Screen {
 
         this.gameClass = game;
         connectionService = ConnectionService.GetInstance();
-        atlas = new TextureAtlas("uiskin.atlas");
-        skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
+
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
