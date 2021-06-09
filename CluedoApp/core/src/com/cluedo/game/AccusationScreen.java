@@ -58,9 +58,6 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
     private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
 
-//BEDRROOM
-    //GUESTROOM
-    //BATHROOM
 
     public AccusationScreen(MainScreen mainScreen, GameClass game, Murderer murderer){
         this.mainScreen = mainScreen;
