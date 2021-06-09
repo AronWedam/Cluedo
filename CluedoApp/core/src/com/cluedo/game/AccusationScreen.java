@@ -154,19 +154,6 @@ public class AccusationScreen implements Screen {
         mainTable.row();
 
 
-        /*
-        public final CheckBox cBRoomEntrance   =   new CheckBox("Entrance", skin);
-    public final CheckBox cBRoomGarden     =   new CheckBox("Garden", skin);
-    public final CheckBox cBRoomDining     =   new CheckBox("Dining", skin);
-    public final CheckBox cBRoomKitchen    =   new CheckBox("Kitchen", skin);
-    public final CheckBox cBRoomBallroom   =   new CheckBox("Ballroom", skin);
-    public final CheckBox cBRoomMusicroom  =   new CheckBox("Musicroom", skin);
-    public final CheckBox cBRoomGameroom   =   new CheckBox("Gameroom ", skin);
-    public final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
-    public final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
-    public final CheckBox cBRoomNEEDSName  =   new CheckBox("NEEDS NAME", skin);
-         */
-
         mainTable.add("What room was the person killed in").align(Align.center);
         mainTable.row().colspan(2);
         mainTable.add(""+'\n').align(Align.left);
@@ -246,13 +233,19 @@ public class AccusationScreen implements Screen {
 
     }
 
-    public boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon, CheckBox cBAccusedPerson){
+    public boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon, CheckBox cBAccusedPerson,
+                                         CheckBox cBAccusedRoom){
         if(cbAccusedWeapon.toString() == murderer.getMurdererWeaponString()){
             if(cBAccusedPerson.toString() == murderer.getMurdererSuspectString()){
-                //if()
+                if(cBAccusedRoom.toString() == murderer.getMurdererRoomString()){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
             }
-        }
-        return false;
+        }else return false;
     }
 
 
