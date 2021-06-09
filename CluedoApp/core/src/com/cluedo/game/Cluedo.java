@@ -67,6 +67,10 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     InputMultiplexer multiplexer;
 
+    private int moves = 6;
+
+    Dice dice = new Dice(game);
+
     public Cluedo(final GameClass game) throws InterruptedException {
         this.game = game;
 
@@ -208,7 +212,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         }
 
         //Single Touch enables player Movement for 1 Tile
-        if (Gdx.input.justTouched() && Gdx.input.getX(0) > Gdx.graphics.getWidth() / 3) {
+        if (Gdx.input.justTouched() && Gdx.input.getX(0) > Gdx.graphics.getWidth() / 3 && moves >= 0) {
             double x = Gdx.input.getX(0) - (Gdx.graphics.getWidth() / 3);
             double y = Gdx.input.getY(0);
 
@@ -225,28 +229,35 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     if (touchPos.x > player.getX() || touchPos.y > player.getY()) {
                         if (touchPos.x > player.getX()) {
                             player.setPos((int) player.getX() + 32, player.getY());
+                            moves = moves - 1;
                             if (touchPos.y > player.getY()) {
                                 player.setPos((int) player.getX(), player.getY() + 32);
+                                moves = moves - 1;
                             }
                         } else if (touchPos.y > player.getY()) {
                             player.setPos((int) player.getX(), player.getY() + 32);
+                            moves = moves - 1;
                         }
                     }
 
                     if (touchPos.x < player.getX() || touchPos.y < player.getY()) {
                         if (touchPos.x < player.getX()) {
                             player.setPos((int) player.getX() - 32, player.getY());
+                            moves = moves - 1;
                             if (touchPos.y < player.getY()) {
                                 player.setPos((int) player.getX(), player.getY() - 32);
+                                moves = moves - 1;
                             }
                         } else if (touchPos.y < player.getY()) {
                             player.setPos((int) player.getX(), player.getY() - 32);
+                            moves = moves - 1;
                         }
                     }
                 }
-            }
 
-        } else if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth() / 3) {
+
+        }
+        } if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth() / 3) {
             double y = Gdx.input.getY(0);
             int row = notebook.table.getRow((float) (Gdx.graphics.getHeight() - y));
             Gdx.app.log("Row", "Row: " + row);
@@ -297,10 +308,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
                 break;
             case "Accusation":
-               // notebook.btnAccusation.setDisabled(true);
-               // mainScreen.setScreen((Screen) accusationScreen);
-               // notebook.btnAccusation.setDisabled(false);
-
+                if(currentPlayer.checkIfPlayerIsInRoom(player.getX(),player.getY())) {
+                    // notebook.btnAccusation.setDisabled(true);
+                    // mainScreen.setScreen((Screen) accusationScreen);
+                    // notebook.btnAccusation.setDisabled(false);
+                }
                 break;
             case "Help":
                 mainScreen.setScreen(new RulesScreen(game, mainScreen));
@@ -316,6 +328,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 break;
             case "Dice":
                 //TODO ADD DICE SCREENS AND WHATEVER IS NEEDED
+               // moves = dice.getDiceOneValue() + dice.getDiceTwoValue();
+                moves = 6;
                 break;
             default:
                 break;
