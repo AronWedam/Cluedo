@@ -78,7 +78,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         this.mainScreen = mainScreen;
         accusationScreen = new AccusationScreen(mainScreen, game);
         rulesScreen = new RulesScreen(game, mainScreen);
-        diceScreen = new DiceScreen(game, mainScreen);
+        //diceScreen = new DiceScreen(game, mainScreen);
 
         viewport.setScreenSize(1, 1);
 
@@ -320,7 +320,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 break;
             case "Dice":
                 //TODO ADD DICE SCREENS AND WHATEVER IS NEEDED
-                mainScreen.setScreen(diceScreen);
+                //Uncomment this to open the DiceScreen when there are not errors
+                //mainScreen.setScreen(diceScreen);
 
                 // moves = dice.getDiceOneValue() + dice.getDiceTwoValue();
                 moves = 6;
