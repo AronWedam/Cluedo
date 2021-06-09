@@ -1,6 +1,7 @@
 package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -51,6 +52,7 @@ public class DiceScreen implements Screen, InputProcessor {
     private float elapsedTime = 0;
     Dice dice;
 
+
     //to store sprites
     final HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
 
@@ -88,7 +90,6 @@ public class DiceScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
         batch.begin();
 
         drawSprite("dice1", 40, 450);
@@ -101,7 +102,7 @@ public class DiceScreen implements Screen, InputProcessor {
         int dice2Value;
 
         //if Screen is touched, phone rotated,
-        if (Gdx.input.isTouched() || Gdx.input.getRotation()!=0) {
+        if (Gdx.input.isTouched() || Gdx.input.getRotation()!=0 || Gdx.input.getAzimuth()!=128 || Gdx.input.getPitch()!=-34 || Gdx.input.getRoll()!=0) {
             diceAnimation();
             dice1Value = dice.randomDiceValue();
             dice2Value = dice.randomDiceValue();
