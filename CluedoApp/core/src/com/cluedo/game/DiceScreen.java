@@ -22,7 +22,7 @@ import com.cluedo.game.network.ConnectionService;
 import java.util.HashMap;
 import java.util.Random;
 
-import sun.applet.Main;
+//import sun.applet.Main;
 
 //made with help of tutorial https://www.codeandweb.com/texturepacker/tutorials/libgdx-physics
 // and https://gamefromscratch.com/libgdx-tutorial-3b-simple-animation/

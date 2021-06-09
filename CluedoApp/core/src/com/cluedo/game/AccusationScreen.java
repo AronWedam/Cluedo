@@ -32,6 +32,7 @@ public class AccusationScreen implements Screen {
     private MainScreen mainScreen;
     private GameClass gameClass;
     private ConnectionService connectionService;
+    Murderer murderer;
 
 
     private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);

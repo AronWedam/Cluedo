@@ -390,11 +390,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomEntrance);
                 }
                 break;
-            case "Garden":
+            case "Bathroom":
                 if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomGarden);
+                    notebook.uncheckCheckBox(notebook.cBRoomBathroom);
                 } else {
-                    notebook.checkCheckBox(notebook.cBRoomGarden);
+                    notebook.checkCheckBox(notebook.cBRoomBathroom);
                 }
                 break;
             case "Dining":
@@ -411,11 +411,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomKitchen);
                 }
                 break;
-            case "Ballroom":
+            case "Bedroom":
                 if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomBallroom);
+                    notebook.uncheckCheckBox(notebook.cBRoomBedroom);
                 } else {
-                    notebook.checkCheckBox(notebook.cBRoomBallroom);
+                    notebook.checkCheckBox(notebook.cBRoomBedroom);
                 }
                 break;
             case "Musicroom":
@@ -425,11 +425,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomMusicroom);
                 }
                 break;
-            case "Gameroom":
+            case "Guestroom":
                 if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomGameroom);
+                    notebook.uncheckCheckBox(notebook.cBRoomGuest);
                 } else {
-                    notebook.checkCheckBox(notebook.cBRoomGameroom);
+                    notebook.checkCheckBox(notebook.cBRoomGuest);
                 }
                 break;
             case "Study":
@@ -444,13 +444,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.uncheckCheckBox(notebook.cBRoomLibrary);
                 } else {
                     notebook.checkCheckBox(notebook.cBRoomLibrary);
-                }
-                break;
-            case "NEEDS NAME":
-                if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomNEEDSName);
-                } else {
-                    notebook.checkCheckBox(notebook.cBRoomNEEDSName);
                 }
                 break;
             //ROOM
