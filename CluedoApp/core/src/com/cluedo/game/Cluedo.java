@@ -1,5 +1,6 @@
 package com.cluedo.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -300,9 +301,20 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 break;
             case "Accusation":
                 if(currentPlayer.checkIfPlayerIsInRoom(player.getX(),player.getY())) {
+                    /*
+                    notebook.btnAccusation.addListener(new ClickListener() {
+                        mainScreen.setScreen(new RulesScreen(gameClass, mainScreen));
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                    AccusationScreen(mainScreen, game ));
+                        }
+                    });
                     // notebook.btnAccusation.setDisabled(true);
-                    // mainScreen.setScreen((Screen) accusationScreen);
+                     //mainScreen.setScreen((Screen) AccusationScreen);
                     // notebook.btnAccusation.setDisabled(false);
+
+                     */
                 }
                 break;
             case "Help":
