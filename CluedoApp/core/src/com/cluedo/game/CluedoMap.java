@@ -305,10 +305,8 @@ public class CluedoMap {
         invalidtiles[193] = mapconstants[17][5];
         invalidtiles[194] = mapconstants[17][6];
         invalidtiles[195] = mapconstants[17][7];
-
+        invalidtiles[196] = mapconstants[18][6];
+        invalidtiles[197] = mapconstants[18][4];
+        invalidtiles[198] = mapconstants[17][4];
     }
-
-
-
-
 }

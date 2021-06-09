@@ -14,25 +14,16 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cluedo.game.network.NetworkPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.ViewportLayout;
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
     private GameClass game;
@@ -60,7 +51,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     private MainScreen mainScreen = new MainScreen();
     //private AccusationScreen accusationScreen = new AccusationScreen();
     private RulesScreen rulesScreen = new RulesScreen(game, mainScreen);
-
     Stage stage;
 
     Viewport viewport = new ScreenViewport();
@@ -182,17 +172,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         renderer.render();
         camera.update();
 
-        /*
-        //Add Notebook-Buttons to stage so they listen to Inputevents
-        stage.addActor(notebook.getBtnAccusation());
-        stage.addActor(notebook.getBtnDice());
-        stage.addActor(notebook.getBtnHelp());
-        stage.addActor(notebook.getBtnFinishMove());
-        stage.draw();
-        */
-
         mapViewport();
         mapNotebook();
+
+        //Add Notebook-Buttons to stage so they listen to Inputevents
+        //stage.addActor(notebook.getBtnAccusation());
+        //stage.addActor(notebook.getBtnDice());
+        //stage.addActor(notebook.getBtnFinishMove());
 
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -315,7 +301,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
                 break;
             case "Help":
-                mainScreen.setScreen(new RulesScreen(game, mainScreen));
+                //mainScreen.setScreen(new RulesScreen(game));
                 /*
                 notebook.btnHelp.addListener(new ClickListener(){
                     @Override
@@ -390,11 +376,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomEntrance);
                 }
                 break;
-            case "Garden":
+            case "Bathroom":
                 if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomGarden);
+                    notebook.uncheckCheckBox(notebook.cBRoomBathroom);
                 } else {
-                    notebook.checkCheckBox(notebook.cBRoomGarden);
+                    notebook.checkCheckBox(notebook.cBRoomBathroom);
                 }
                 break;
             case "Dining":
@@ -411,11 +397,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomKitchen);
                 }
                 break;
-            case "Ballroom":
+            case "Bedroom":
                 if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomBallroom);
+                    notebook.uncheckCheckBox(notebook.cBRoomBedroom);
                 } else {
-                    notebook.checkCheckBox(notebook.cBRoomBallroom);
+                    notebook.checkCheckBox(notebook.cBRoomBedroom);
                 }
                 break;
             case "Musicroom":
@@ -425,11 +411,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomMusicroom);
                 }
                 break;
-            case "Gameroom":
+            case "Guestroom":
                 if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomGameroom);
+                    notebook.uncheckCheckBox(notebook.cBRoomGuest);
                 } else {
-                    notebook.checkCheckBox(notebook.cBRoomGameroom);
+                    notebook.checkCheckBox(notebook.cBRoomGuest);
                 }
                 break;
             case "Study":
@@ -446,13 +432,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomLibrary);
                 }
                 break;
-            case "NEEDS NAME":
-                if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomNEEDSName);
-                } else {
-                    notebook.checkCheckBox(notebook.cBRoomNEEDSName);
-                }
-                break;
+
             //ROOM
             case "Knife":
                 if (notebook.isChecked) {
