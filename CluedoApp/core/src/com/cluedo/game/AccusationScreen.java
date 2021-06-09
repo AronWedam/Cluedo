@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -31,7 +32,6 @@ public class AccusationScreen implements Screen {
     private MainScreen mainScreen;
     private GameClass gameClass;
     private ConnectionService connectionService;
-    private final Murderer murderer;
 
 
     private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
@@ -41,31 +41,9 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
     private final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
 
-    private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
-    private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
-    private final CheckBox cBWeaponGun      =   new CheckBox("Gun", skin);
-    private final CheckBox cBWeaponPoison   =   new CheckBox("Poison", skin);
-    private final CheckBox cBWeaponPipe     =   new CheckBox("Pipe", skin);
-    private final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
 
-    private final CheckBox cBRoomEntrance   =   new CheckBox("Entrance", skin);
-    private final CheckBox cBRoomBedroom     =   new CheckBox("Bedroom", skin); //
-    private final CheckBox cBRoomDining     =   new CheckBox("Dining", skin);
-    private final CheckBox cBRoomKitchen    =   new CheckBox("Kitchen", skin);
-    private final CheckBox cBRoomGuest   =   new CheckBox("Guestroom", skin); //
-    private final CheckBox cBRoomMusicroom  =   new CheckBox("Musicroom", skin);
-    private final CheckBox cBRoomBathroom   =   new CheckBox("Bathroom ", skin); //
-    private final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
-    private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
-
-//BEDRROOM
-    //GUESTROOM
-    //BATHROOM
-
-    public AccusationScreen(MainScreen mainScreen, GameClass game, Murderer murderer){
-        this.mainScreen = mainScreen;
+    public AccusationScreen(GameClass game){
         this.gameClass = game;
-        this.murderer = murderer;
         connectionService = ConnectionService.GetInstance();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
@@ -81,7 +59,6 @@ public class AccusationScreen implements Screen {
 
         stage = new Stage(viewport, batch);
     }
-
     @Override
     public void show() {
         //Stage controls the input
@@ -94,13 +71,20 @@ public class AccusationScreen implements Screen {
 
         //Create Buttons
         TextButton mainBtn = new TextButton("Back to Main", skin);
-
+        TextButton exitBtn = new TextButton("Exit Game", skin);
 
         //If clicked go back to MainMenu
         mainBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 mainScreen.setScreen(new MenuScreen(mainScreen, gameClass));
+            }
+        });
+        //If clicked exit the game
+        exitBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
             }
         });
 
@@ -128,6 +112,7 @@ public class AccusationScreen implements Screen {
 
         mainTable.add(cBProfessorPlum);
         mainTable.row();
+
 
 
         mainTable.add("What weapon did they use").align(Align.center);
@@ -190,8 +175,10 @@ public class AccusationScreen implements Screen {
         mainTable.row();
 
 
+
         mainTable.add(mainBtn).size(100, 50).align(Align.left);
         mainTable.row().colspan(2);
+        mainTable.add(exitBtn).size(100, 50).align(Align.left);
 
         //Add table to stage
         stage.addActor(mainTable);
@@ -233,6 +220,7 @@ public class AccusationScreen implements Screen {
 
     }
 
+
     public boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon, CheckBox cBAccusedPerson,
                                          CheckBox cBAccusedRoom){
         if(cbAccusedWeapon.toString() == murderer.getMurdererWeaponString()){
@@ -247,6 +235,7 @@ public class AccusationScreen implements Screen {
             }
         }else return false;
     }
+
 
 
 }
