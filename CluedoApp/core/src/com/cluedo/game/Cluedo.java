@@ -121,6 +121,10 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
 
         notebook = Notebook.getInstance(currentPlayer);
+
+        Gdx.app.log("Room", connectionService.getRoom());
+        Gdx.app.log("Weapon", connectionService.getWeapon());
+        Gdx.app.log("Suspect", connectionService.getSuspect());
     }
 
     private void SyncNetworkPlayersWithGamePlayers() {
