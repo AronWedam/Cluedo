@@ -8,7 +8,7 @@ public class CluedoMap {
 
     public Vector2[] invalidtiles = new Vector2[200];
 
-    public Vector2[] roomTiles = new Vector2[15];
+    public Vector2[] roomTiles = new Vector2[55];
 
     public CluedoMap(){
         setup();
@@ -60,6 +60,45 @@ public class CluedoMap {
         roomTiles[11] = mapconstants[26][15];
         roomTiles[12] = mapconstants[22][11];
         roomTiles[13] = mapconstants[23][5];
+        roomTiles[14] = mapconstants[6][6];
+        roomTiles[15] = mapconstants[6][5];
+        roomTiles[16] = mapconstants[7][5];
+        roomTiles[17] = mapconstants[6][14];
+        roomTiles[18] = mapconstants[5][14];
+        roomTiles[19] = mapconstants[7][14];
+        roomTiles[20] = mapconstants[7][15];
+        roomTiles[21] = mapconstants[7][16];
+        roomTiles[22] = mapconstants[7][17];
+        roomTiles[23] = mapconstants[6][23];
+        roomTiles[24] = mapconstants[5][23];
+        roomTiles[25] = mapconstants[6][24];
+        roomTiles[26] = mapconstants[5][24];
+        roomTiles[27] = mapconstants[24][23];
+        roomTiles[28] = mapconstants[24][24];
+        roomTiles[29] = mapconstants[25][23];
+        roomTiles[30] = mapconstants[25][24];
+        roomTiles[31] = mapconstants[23][18];
+        roomTiles[32] = mapconstants[23][17];
+        roomTiles[33] = mapconstants[23][16];
+        roomTiles[34] = mapconstants[26][16];
+        roomTiles[35] = mapconstants[25][16];
+        roomTiles[36] = mapconstants[27][16];
+        roomTiles[37] = mapconstants[23][11];
+        roomTiles[38] = mapconstants[24][11];
+        roomTiles[39] = mapconstants[24][12];
+        roomTiles[40] = mapconstants[24][10];
+        roomTiles[41] = mapconstants[23][4];
+        roomTiles[42] = mapconstants[23][3];
+        roomTiles[43] = mapconstants[24][4];
+        roomTiles[44] = mapconstants[24][3];
+        roomTiles[45] = mapconstants[15][8];
+        roomTiles[46] = mapconstants[16][8];
+        roomTiles[47] = mapconstants[15][7];
+        roomTiles[48] = mapconstants[16][7];
+        roomTiles[49] = mapconstants[15][6];
+        roomTiles[50] = mapconstants[16][6];
+
+
 
         //left corner lower room
         invalidtiles[0] = mapconstants[8][0];
@@ -213,6 +252,60 @@ public class CluedoMap {
         invalidtiles[140] = mapconstants[2][12];
         invalidtiles[141] = mapconstants[1][12];
         invalidtiles[142] = mapconstants[0][12];
+        invalidtiles[143] = mapconstants[5][6];
+        invalidtiles[144] = mapconstants[5][5];
+        invalidtiles[145] = mapconstants[5][4];
+        invalidtiles[146] = mapconstants[6][4];
+        invalidtiles[147] = mapconstants[7][4];
+        invalidtiles[148] = mapconstants[4][14];
+        invalidtiles[149] = mapconstants[4][15];
+        invalidtiles[150] = mapconstants[5][15];
+        invalidtiles[151] = mapconstants[6][15];
+        invalidtiles[152] = mapconstants[6][16];
+        invalidtiles[153] = mapconstants[6][17];
+        invalidtiles[154] = mapconstants[4][23];
+        invalidtiles[155] = mapconstants[4][24];
+        invalidtiles[156] = mapconstants[4][25];
+        invalidtiles[157] = mapconstants[5][25];
+        invalidtiles[158] = mapconstants[6][25];
+        invalidtiles[159] = mapconstants[12][23];
+        invalidtiles[160] = mapconstants[13][23];
+        invalidtiles[161] = mapconstants[14][23];
+        invalidtiles[162] = mapconstants[15][23];
+        invalidtiles[163] = mapconstants[16][23];
+        invalidtiles[164] = mapconstants[17][23];
+        invalidtiles[165] = mapconstants[23][25];
+        invalidtiles[166] = mapconstants[24][25];
+        invalidtiles[167] = mapconstants[25][25];
+        invalidtiles[168] = mapconstants[26][25];
+        invalidtiles[169] = mapconstants[26][24];
+        invalidtiles[170] = mapconstants[26][23];
+        invalidtiles[171] = mapconstants[24][18];
+        invalidtiles[172] = mapconstants[24][17];
+        invalidtiles[173] = mapconstants[24][16];
+        invalidtiles[174] = mapconstants[25][17];
+        invalidtiles[175] = mapconstants[26][17];
+        invalidtiles[176] = mapconstants[27][17];
+        invalidtiles[177] = mapconstants[28][17];
+        invalidtiles[178] = mapconstants[28][16];
+        invalidtiles[179] = mapconstants[25][12];
+        invalidtiles[180] = mapconstants[25][11];
+        invalidtiles[181] = mapconstants[25][10];
+        invalidtiles[182] = mapconstants[25][9];
+        invalidtiles[183] = mapconstants[25][4];
+        invalidtiles[184] = mapconstants[25][3];
+        invalidtiles[185] = mapconstants[25][2];
+        invalidtiles[186] = mapconstants[24][2];
+        invalidtiles[187] = mapconstants[23][2];
+        invalidtiles[188] = mapconstants[14][7];
+        invalidtiles[189] = mapconstants[14][6];
+        invalidtiles[190] = mapconstants[14][5];
+        invalidtiles[191] = mapconstants[15][5];
+        invalidtiles[192] = mapconstants[16][5];
+        invalidtiles[193] = mapconstants[17][5];
+        invalidtiles[194] = mapconstants[17][6];
+        invalidtiles[195] = mapconstants[17][7];
+
     }
 
 

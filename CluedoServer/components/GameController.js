@@ -15,6 +15,46 @@ let playerImages = [
   'chars/Prof_Plum.png',
 ];
 
+let suspects = [
+  'MissScarlett',
+  'ColonelMustard',
+  'MrsWhite',
+  'Reverend',
+  'MrsPeacock',
+  'ProfessorPlum',
+];
+
+let rooms = [];
+
+let weapons = ['Knife', 'Rope', 'Gun', 'Poison', 'Pipe', 'Candle'];
+
+let spawnPositions = [
+  {
+    x: 10 * 32,
+    y: 0,
+  },
+  {
+    x: 21 * 32,
+    y: 0,
+  },
+  {
+    x: 0,
+    y: 10 * 32,
+  },
+  {
+    x: 0,
+    y: 21 * 32,
+  },
+  {
+    x: 21 * 32,
+    y: 28 * 32,
+  },
+  {
+    x: 28 * 32,
+    y: 7 * 32,
+  },
+];
+
 //Array of all current Games running
 let currentGame = undefined;
 let stopwatchRunning = false;
@@ -36,8 +76,8 @@ router.post('/register', function (req, res) {
   players.push({
     id: playerId,
     username: req.body.Username,
-    x: positionCounter * 32,
-    y: 0,
+    x: spawnPositions[playerImagesCounter].x,
+    y: spawnPositions[playerImagesCounter].y,
     playerImage: playerImages[playerImagesCounter],
     maywalk: firstPlayer,
   });
@@ -61,7 +101,6 @@ router.get('/checkGameState', function (req, res) {
     players.length <= 6 &&
     stopwatch.read() / 1000 >= 10
   ) {
-    console.log('here');
     currentGame = { gameId: uuidv4(), players: players };
     console.log(currentGame);
     res.status(200).json(currentGame);
@@ -115,6 +154,8 @@ router.post('/finishMove', function (req, res) {
 
   res.status(200).send();
 });
+
+router.post('/accuse', function (req, res) {});
 
 //Resetting the new Gamestate
 router.get('/reset', function (req, res) {
