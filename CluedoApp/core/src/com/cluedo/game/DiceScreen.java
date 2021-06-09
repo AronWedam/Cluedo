@@ -93,49 +93,48 @@ public class DiceScreen implements Screen, InputProcessor {
 
         drawSprite("dice1", 40, 450);
         drawSprite("dice6", 304, 450);
-        gameClass.font.draw(gameClass.batch, "Tap to roll", 230, 450);
+        gameClass.font.draw(gameClass.batch, "Tap or shake to roll", 230, 450);
 
         batch.end();
 
         int dice1Value;
         int dice2Value;
 
-        if (Gdx.input.isTouched()) {
+        //if Screen is touched, phone rotated,
+        if (Gdx.input.isTouched() || Gdx.input.getRotation()!=0) {
             diceAnimation();
             dice1Value = dice.randomDiceValue();
             dice2Value = dice.randomDiceValue();
 
             switch (dice1Value) {
                 case 1:
-                    drawSprite("dice1.png", 40, 450);
+                    drawSprite("dice1", 40, 450);
                 case 2:
-                    drawSprite("dice2.png", 40, 450);
+                    drawSprite("dice2", 40, 450);
                 case 3:
-                    drawSprite("dice3.png", 40, 450);
+                    drawSprite("dice3", 40, 450);
                 case 4:
-                    drawSprite("dice4.png", 40, 450);
+                    drawSprite("dice4", 40, 450);
                 case 5:
-                    drawSprite("dice5.png", 40, 450);
+                    drawSprite("dice5", 40, 450);
                 case 6:
-                    drawSprite("dice6.png", 40, 450);
-
+                    drawSprite("dice6", 40, 450);
             }
             switch (dice2Value) {
                 case 1:
-                    drawSprite("dice1.png", 304, 450);
+                    drawSprite("dice1", 304, 450);
                 case 2:
-                    drawSprite("dice2.png", 304, 450);
+                    drawSprite("dice2", 304, 450);
                 case 3:
-                    drawSprite("dice3.png", 304, 450);
+                    drawSprite("dice3", 304, 450);
                 case 4:
-                    drawSprite("dice4.png", 304, 450);
+                    drawSprite("dice4", 304, 450);
                 case 5:
-                    drawSprite("dice5.png", 304, 450);
+                    drawSprite("dice5", 304, 450);
                 case 6:
-                    drawSprite("dice6.png", 304, 450);
+                    drawSprite("dice6", 304, 450);
             }
         }
-
         stage.act();
         stage.draw();
     }
@@ -198,9 +197,6 @@ public class DiceScreen implements Screen, InputProcessor {
         textureAtlas.dispose();
         sprites.clear();
     }
-
-
-
 
     @Override
     public boolean keyDown(int keycode) {
