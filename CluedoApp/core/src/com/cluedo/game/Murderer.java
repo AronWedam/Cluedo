@@ -36,6 +36,8 @@ public class Murderer {
         return murdererWeaponCard.toString();
     }
 
+    public String getMurdererRoomString(){return murdererRoomCard.toString();}
+
     public Card getMurdererRoomCard() {
         return murdererRoomCard;
     }

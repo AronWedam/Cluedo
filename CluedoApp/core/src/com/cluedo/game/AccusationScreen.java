@@ -42,7 +42,27 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
 
 
-    public AccusationScreen(GameClass game){
+    private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
+    private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
+    private final CheckBox cBWeaponGun      =   new CheckBox("Gun", skin);
+    private final CheckBox cBWeaponPoison   =   new CheckBox("Poison", skin);
+    private final CheckBox cBWeaponPipe     =   new CheckBox("Pipe", skin);
+    private final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
+
+    private final CheckBox cBRoomEntrance   =   new CheckBox("Entrance", skin);
+    private final CheckBox cBRoomBedroom     =   new CheckBox("Bedroom", skin); //
+    private final CheckBox cBRoomDining     =   new CheckBox("Dining", skin);
+    private final CheckBox cBRoomKitchen    =   new CheckBox("Kitchen", skin);
+    private final CheckBox cBRoomGuest   =   new CheckBox("Guestroom", skin); //
+    private final CheckBox cBRoomMusicroom  =   new CheckBox("Musicroom", skin);
+    private final CheckBox cBRoomBathroom   =   new CheckBox("Bathroom ", skin); //
+    private final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
+    private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
+
+
+    public AccusationScreen(MainScreen mainScreen, GameClass game, Murderer murderer){
+        this.mainScreen = mainScreen;
+
         this.gameClass = game;
         connectionService = ConnectionService.GetInstance();
         atlas = new TextureAtlas("uiskin.atlas");
@@ -113,6 +133,67 @@ public class AccusationScreen implements Screen {
         mainTable.add(cBProfessorPlum);
         mainTable.row();
 
+
+
+        mainTable.add("What weapon did they use").align(Align.center);
+        mainTable.row().colspan(2);
+        mainTable.add(""+'\n').align(Align.left);
+        mainTable.row().colspan(2);
+
+        mainTable.add(cBWeaponKnife);
+        mainTable.row();
+
+        mainTable.add(cBWeaponRope);
+        mainTable.row();
+
+        mainTable.add(cBWeaponGun);
+        mainTable.row();
+
+        mainTable.add(cBWeaponPoison);
+        mainTable.row();
+
+        mainTable.add(cBWeaponPipe);
+        mainTable.row();
+
+        mainTable.add(cBWeaponCandle);
+        mainTable.row();
+
+
+        mainTable.add("What room was the person killed in").align(Align.center);
+        mainTable.row().colspan(2);
+        mainTable.add(""+'\n').align(Align.left);
+        mainTable.row().colspan(2);
+
+        mainTable.add(cBRoomEntrance);
+        mainTable.row();
+
+        mainTable.add(cBRoomBedroom);
+        mainTable.row();
+
+        mainTable.add(cBRoomDining);
+        mainTable.row();
+
+        mainTable.add(cBRoomKitchen);
+        mainTable.row();
+
+        mainTable.add(cBRoomGuest);
+        mainTable.row();
+
+        mainTable.add(cBRoomMusicroom);
+        mainTable.row();
+
+        mainTable.add(cBRoomBathroom);
+        mainTable.row();
+
+        mainTable.add(cBRoomStudy);
+        mainTable.row();
+
+        mainTable.add(cBRoomLibrary);
+        mainTable.row();
+
+        mainTable.add(cBRoomLibrary);
+        mainTable.row();
+
         mainTable.add(mainBtn).size(100, 50).align(Align.left);
         mainTable.row().colspan(2);
         mainTable.add(exitBtn).size(100, 50).align(Align.left);
@@ -156,4 +237,22 @@ public class AccusationScreen implements Screen {
     public void dispose() {
 
     }
+
+
+    public boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon, CheckBox cBAccusedPerson,
+                                         CheckBox cBAccusedRoom){
+        if(cbAccusedWeapon.toString() == murderer.getMurdererWeaponString()){
+            if(cBAccusedPerson.toString() == murderer.getMurdererSuspectString()){
+                if(cBAccusedRoom.toString() == murderer.getMurdererRoomString()){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else return false;
+    }
+
+
 }
