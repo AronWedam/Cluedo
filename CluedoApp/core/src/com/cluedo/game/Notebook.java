@@ -36,14 +36,13 @@ public class Notebook {
     public final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
     public final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
 
-
     public final CheckBox cBRoomEntrance   =   new CheckBox("Entrance", skin);
-    public final CheckBox cBRoomBedroom     =   new CheckBox("Bedroom", skin);
+    public final CheckBox cBRoomBedroom     =   new CheckBox("Bedroom", skin); //
     public final CheckBox cBRoomDining     =   new CheckBox("Dining", skin);
     public final CheckBox cBRoomKitchen    =   new CheckBox("Kitchen", skin);
-    public final CheckBox cBRoomGuest   =   new CheckBox("Guestroom", skin);
+    public final CheckBox cBRoomGuest   =   new CheckBox("Guestroom", skin); //
     public final CheckBox cBRoomMusicroom  =   new CheckBox("Musicroom", skin);
-    public final CheckBox cBRoomBathroom    =   new CheckBox("Bathroom ", skin);
+    public final CheckBox cBRoomBathroom   =   new CheckBox("Bathroom ", skin); //
     public final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
     public final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
 
@@ -158,8 +157,8 @@ public class Notebook {
                 (float) (getPane().getScaleY() / 0.25));
         this.table.row();
 
-        this.table.add(cBRoomGuest);
-        cBRoomGuest.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        this.table.add(cBRoomBedroom);
+        cBRoomBedroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
         this.table.add(cBRoomDining);
@@ -170,12 +169,12 @@ public class Notebook {
         cBRoomEntrance.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
-        this.table.add(cBRoomBathroom );
-        cBRoomBathroom .getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        this.table.add(cBRoomGuest);
+        cBRoomGuest.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
-        this.table.add(cBRoomBedroom);
-        cBRoomBedroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
+        this.table.add(cBRoomBathroom);
+        cBRoomBathroom.getLabel().setFontScale(CB_SCALING_X, CB_SCALING_Y);
         this.table.row();
 
         this.table.add(cBRoomKitchen);
@@ -195,20 +194,20 @@ public class Notebook {
         this.table.row();
 
         this.table.add(btnFinishMove);
-        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
-                (float) (getPane().getScaleY() / 0.6));
+        btnFinishMove.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
         btnFinishMove.center();
         this.table.row();
 
         this.table.add(btnDice);
-        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
-                (float) (getPane().getScaleY() / 0.6));
+        btnDice.getLabel().setFontScale((float) (getPane().getScaleX() / 0.45),
+                (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
         this.table.row();
 
         this.table.add(btnAccusation);
         btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
-                (float) (getPane().getScaleY() / 0.6));
+                (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
         this.table.row();
 
@@ -232,7 +231,7 @@ public class Notebook {
         }else if(value == 6){
             cardInHand(cBRoomMusicroom);
         }else if(value == 7){
-            cardInHand(cBRoomBathroom );
+            cardInHand(cBRoomBathroom);
         }else if(value == 8){
             cardInHand(cBRoomStudy);
         }else if(value == 9){

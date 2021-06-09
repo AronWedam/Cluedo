@@ -1,5 +1,6 @@
 package com.cluedo.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -17,9 +18,19 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import com.cluedo.game.network.NetworkPlayer;
 
 import java.util.ArrayList;
@@ -175,11 +186,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         mapViewport();
         mapNotebook();
 
-        //Add Notebook-Buttons to stage so they listen to Inputevents
-        //stage.addActor(notebook.getBtnAccusation());
-        //stage.addActor(notebook.getBtnDice());
-        //stage.addActor(notebook.getBtnFinishMove());
-
         game.batch.setProjectionMatrix(camera.combined);
 
         if (!Gdx.input.justTouched()) {
@@ -295,9 +301,20 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 break;
             case "Accusation":
                 if(currentPlayer.checkIfPlayerIsInRoom(player.getX(),player.getY())) {
+                    /*
+                    notebook.btnAccusation.addListener(new ClickListener() {
+                        mainScreen.setScreen(new RulesScreen(gameClass, mainScreen));
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                    AccusationScreen(mainScreen, game ));
+                        }
+                    });
                     // notebook.btnAccusation.setDisabled(true);
-                    // mainScreen.setScreen((Screen) accusationScreen);
+                     //mainScreen.setScreen((Screen) AccusationScreen);
                     // notebook.btnAccusation.setDisabled(false);
+
+                     */
                 }
                 break;
             case "Help":
@@ -432,7 +449,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomLibrary);
                 }
                 break;
-
             //ROOM
             case "Knife":
                 if (notebook.isChecked) {

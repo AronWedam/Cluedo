@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -17,6 +19,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cluedo.game.network.ConnectionService;
+
+import javax.swing.text.TabExpander;
 
 
 //TODO ACCUSATION AND HOW TO DO THAT
@@ -31,7 +35,18 @@ public class AccusationScreen implements Screen {
     private MainScreen mainScreen;
     private GameClass gameClass;
     private ConnectionService connectionService;
-    private final Murderer murderer;
+    Murderer murderer;
+    Table mainTable;
+
+    //my accusation
+    CheckBox accusedSuspect;
+    CheckBox accusedWeapon;
+    CheckBox accusedRoom;
+
+    //to see if every category was checked
+    boolean suspectChecked = false;
+    boolean weaponChecked = false;
+    boolean roomChecked = false;
 
 
     private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
@@ -40,6 +55,7 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBReverend       =   new CheckBox("Reverend", skin);
     private final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
     private final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
+
 
     private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
     private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
@@ -59,10 +75,10 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
 
 
-    public AccusationScreen(MainScreen mainScreen, GameClass game, Murderer murderer){
+    public AccusationScreen(MainScreen mainScreen, GameClass game){
         this.mainScreen = mainScreen;
+
         this.gameClass = game;
-        this.murderer = murderer;
         connectionService = ConnectionService.GetInstance();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
@@ -79,25 +95,33 @@ public class AccusationScreen implements Screen {
         stage = new Stage(viewport, batch);
     }
 
+
     @Override
     public void show() {
         //Stage controls the input
         Gdx.input.setInputProcessor(stage);
 
         //Create Table
-        Table mainTable = new Table(skin);
+        mainTable = new Table(skin);
         mainTable.setFillParent(true);
         mainTable.align(Align.top);
 
         //Create Buttons
         TextButton mainBtn = new TextButton("Back to Main", skin);
-
+        TextButton exitBtn = new TextButton("Exit Game", skin);
 
         //If clicked go back to MainMenu
         mainBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 mainScreen.setScreen(new MenuScreen(mainScreen, gameClass));
+            }
+        });
+        //If clicked exit the game
+        exitBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
             }
         });
 
@@ -125,6 +149,7 @@ public class AccusationScreen implements Screen {
 
         mainTable.add(cBProfessorPlum);
         mainTable.row();
+
 
 
         mainTable.add("What weapon did they use").align(Align.center);
@@ -186,9 +211,9 @@ public class AccusationScreen implements Screen {
         mainTable.add(cBRoomLibrary);
         mainTable.row();
 
-
         mainTable.add(mainBtn).size(100, 50).align(Align.left);
         mainTable.row().colspan(2);
+        mainTable.add(exitBtn).size(100, 50).align(Align.left);
 
         //Add table to stage
         stage.addActor(mainTable);
@@ -201,7 +226,165 @@ public class AccusationScreen implements Screen {
 
         stage.act();
         stage.draw();
+
+        double y = Gdx.input.getY(0);
+        int row = mainTable.getRow((float) (Gdx.graphics.getHeight() - y));
+        Gdx.app.log("Row", "Row: " + row);
+        if (Gdx.input.justTouched()){
+            if (row <= 30 && row >= 0) {
+                try {
+                    Actor actor = mainTable.getChild(row);
+                    Gdx.app.log("Class", actor.getClass().getName());
+
+                    if (actor instanceof CheckBox) {
+                        CheckBox myCheckBox = (CheckBox) actor;
+                        String clickedCheckbox = myCheckBox.getText().toString();
+                        if (row <= 6 && row >= 0) {
+                            checkedSuspect(clickedCheckbox);
+                        } else if (row > 6 && row <= 12) {
+                            checkedWeapon(clickedCheckbox);
+                        } else if (row > 12 && row <= 21) {
+                            checkedRoom(clickedCheckbox);
+                        }
+                    }
+
+                } catch (Exception ex) {
+                    Gdx.app.log("Exception", ex.getMessage());
+                }
+            }
+        }
+
+        if(suspectChecked && weaponChecked && roomChecked){
+            isActuallyTheMurderer(accusedSuspect, accusedWeapon, accusedRoom);
+        }
     }
+
+    private void checkedSuspect(String checkBox){
+        switch (checkBox) {
+            //PERSON
+            case "MissScarlett":
+                checkCheckBox(cBMissScarlett);
+                accusedSuspect = cBMissScarlett;
+                suspectChecked = true;
+                break;
+            case "ColonelMustard":
+                checkCheckBox(cBColonelMustard);
+                accusedSuspect = cBColonelMustard;
+                suspectChecked = true;
+                break;
+            case "MrsWhite":
+                checkCheckBox(cBMrsWhite);
+                accusedSuspect = cBMrsWhite;
+                suspectChecked = true;
+                break;
+            case "Reverend":
+                checkCheckBox(cBReverend);
+                accusedSuspect = cBReverend;
+                suspectChecked = true;
+                break;
+            case "MrsPeacock":
+                checkCheckBox(cBMrsPeacock);
+                accusedSuspect = cBMrsPeacock;
+                suspectChecked = true;
+                break;
+            case "ProfessorPlum":
+                checkCheckBox(cBProfessorPlum);
+                accusedSuspect = cBProfessorPlum;
+                suspectChecked = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    //here
+    private void checkedWeapon(String checkBox){
+        switch (checkBox) {
+            case "Knife":
+                checkCheckBox(cBWeaponKnife);
+                accusedWeapon = cBWeaponKnife;
+                weaponChecked = true;
+                break;
+            case "Rope":
+                checkCheckBox(cBWeaponRope);
+                accusedWeapon = cBWeaponRope;
+                weaponChecked = true;
+                break;
+            case "Gun":
+                checkCheckBox(cBWeaponGun);
+                accusedWeapon = cBWeaponGun;
+                weaponChecked = true;
+                break;
+            case "Poison":
+                checkCheckBox(cBWeaponPoison);
+                accusedWeapon = cBWeaponPoison;
+                weaponChecked = true;
+                break;
+            case "Pipe":
+                checkCheckBox(cBWeaponPipe);
+                accusedWeapon = cBWeaponPipe;
+                weaponChecked = true;
+                break;
+            case "Candle":
+                checkCheckBox(cBWeaponCandle);
+                accusedWeapon = cBWeaponCandle;
+                weaponChecked = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void checkedRoom(String checkBox){
+        switch (checkBox) {
+            case "Entrance":
+                checkCheckBox(cBRoomEntrance);
+                accusedRoom = cBRoomEntrance;
+                roomChecked = true;
+                break;
+            case "Bathroom":
+                checkCheckBox(cBRoomBathroom);
+                accusedRoom = cBRoomBathroom;
+                roomChecked = true;
+                break;
+            case "Dining":
+                checkCheckBox(cBRoomDining);
+                accusedRoom = cBRoomDining;
+                roomChecked = true;
+                break;
+            case "Kitchen":
+                checkCheckBox(cBRoomKitchen);
+                accusedRoom = cBRoomKitchen;
+                roomChecked = true;
+                break;
+            case "Bedroom":
+                checkCheckBox(cBRoomBedroom);
+                accusedRoom = cBRoomBedroom;
+                roomChecked = true;
+                break;
+            case "Musicroom":
+                checkCheckBox(cBRoomMusicroom);
+                accusedRoom = cBRoomMusicroom;
+                roomChecked = true;
+                break;
+            case "Guestroom":
+                checkCheckBox(cBRoomGuest);
+                accusedRoom = cBRoomGuest;
+                roomChecked = true;
+                break;
+            case "Study":
+                checkCheckBox(cBRoomStudy);
+                accusedRoom = cBRoomStudy;
+                roomChecked = true;
+                break;
+            case "Library":
+                checkCheckBox(cBRoomLibrary);
+                accusedRoom = cBRoomLibrary;
+                roomChecked = true;
+                break;
+        }
+    }
+
 
     @Override
     public void resize(int width, int height) {
@@ -230,15 +413,17 @@ public class AccusationScreen implements Screen {
 
     }
 
+    private void checkCheckBox(CheckBox checkBox){
+        checkBox.setDisabled(true);
+        checkBox.setChecked(true);
+    }
+
+
     public boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon, CheckBox cBAccusedPerson,
                                          CheckBox cBAccusedRoom){
         if(cbAccusedWeapon.toString() == murderer.getMurdererWeaponString()){
             if(cBAccusedPerson.toString() == murderer.getMurdererSuspectString()){
-                if(cBAccusedRoom.toString() == murderer.getMurdererRoomString()){
-                    return true;
-                }else{
-                    return false;
-                }
+                return cBAccusedRoom.toString() == murderer.getMurdererRoomString();
             }else{
                 return false;
             }
