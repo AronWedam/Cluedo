@@ -1,5 +1,6 @@
 package com.cluedo.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -66,6 +67,10 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     Viewport viewport = new ScreenViewport();
 
     InputMultiplexer multiplexer;
+
+    private int moves = 6;
+
+    Dice dice = new Dice(game);
 
     public Cluedo(final GameClass game) throws InterruptedException {
         this.game = game;
@@ -208,7 +213,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         }
 
         //Single Touch enables player Movement for 1 Tile
-        if (Gdx.input.justTouched() && Gdx.input.getX(0) > Gdx.graphics.getWidth() / 3) {
+        if (Gdx.input.justTouched() && Gdx.input.getX(0) > Gdx.graphics.getWidth() / 3 && moves >= 0) {
             double x = Gdx.input.getX(0) - (Gdx.graphics.getWidth() / 3);
             double y = Gdx.input.getY(0);
 
@@ -225,28 +230,35 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     if (touchPos.x > player.getX() || touchPos.y > player.getY()) {
                         if (touchPos.x > player.getX()) {
                             player.setPos((int) player.getX() + 32, player.getY());
+                            moves = moves - 1;
                             if (touchPos.y > player.getY()) {
                                 player.setPos((int) player.getX(), player.getY() + 32);
+                                moves = moves - 1;
                             }
                         } else if (touchPos.y > player.getY()) {
                             player.setPos((int) player.getX(), player.getY() + 32);
+                            moves = moves - 1;
                         }
                     }
 
                     if (touchPos.x < player.getX() || touchPos.y < player.getY()) {
                         if (touchPos.x < player.getX()) {
                             player.setPos((int) player.getX() - 32, player.getY());
+                            moves = moves - 1;
                             if (touchPos.y < player.getY()) {
                                 player.setPos((int) player.getX(), player.getY() - 32);
+                                moves = moves - 1;
                             }
                         } else if (touchPos.y < player.getY()) {
                             player.setPos((int) player.getX(), player.getY() - 32);
+                            moves = moves - 1;
                         }
                     }
                 }
-            }
 
-        } else if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth() / 3) {
+
+        }
+        } if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth() / 3) {
             double y = Gdx.input.getY(0);
             int row = notebook.table.getRow((float) (Gdx.graphics.getHeight() - y));
             Gdx.app.log("Row", "Row: " + row);
@@ -297,10 +309,22 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
                 break;
             case "Accusation":
-               // notebook.btnAccusation.setDisabled(true);
-               // mainScreen.setScreen((Screen) accusationScreen);
-               // notebook.btnAccusation.setDisabled(false);
+                if(currentPlayer.checkIfPlayerIsInRoom(player.getX(),player.getY())) {
+                    /*
+                    notebook.btnAccusation.addListener(new ClickListener() {
+                        mainScreen.setScreen(new RulesScreen(gameClass, mainScreen));
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            ((Game)Gdx.app.getApplicationListener()).setScreen(new
+                                    AccusationScreen(mainScreen, game ));
+                        }
+                    });
+                    // notebook.btnAccusation.setDisabled(true);
+                     //mainScreen.setScreen((Screen) AccusationScreen);
+                    // notebook.btnAccusation.setDisabled(false);
 
+                     */
+                }
                 break;
             case "Help":
                 mainScreen.setScreen(new RulesScreen(game, mainScreen));
@@ -316,6 +340,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 break;
             case "Dice":
                 //TODO ADD DICE SCREENS AND WHATEVER IS NEEDED
+               // moves = dice.getDiceOneValue() + dice.getDiceTwoValue();
+                moves = 6;
                 break;
             default:
                 break;
@@ -376,11 +402,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomEntrance);
                 }
                 break;
-            case "Garden":
+            case "Bathroom":
                 if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomGarden);
+                    notebook.uncheckCheckBox(notebook.cBRoomBathroom);
                 } else {
-                    notebook.checkCheckBox(notebook.cBRoomGarden);
+                    notebook.checkCheckBox(notebook.cBRoomBathroom);
                 }
                 break;
             case "Dining":
@@ -397,11 +423,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomKitchen);
                 }
                 break;
-            case "Ballroom":
+            case "Bedroom":
                 if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomBallroom);
+                    notebook.uncheckCheckBox(notebook.cBRoomBedroom);
                 } else {
-                    notebook.checkCheckBox(notebook.cBRoomBallroom);
+                    notebook.checkCheckBox(notebook.cBRoomBedroom);
                 }
                 break;
             case "Musicroom":
@@ -411,11 +437,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.checkCheckBox(notebook.cBRoomMusicroom);
                 }
                 break;
-            case "Gameroom":
+            case "Guestroom":
                 if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomGameroom);
+                    notebook.uncheckCheckBox(notebook.cBRoomGuest);
                 } else {
-                    notebook.checkCheckBox(notebook.cBRoomGameroom);
+                    notebook.checkCheckBox(notebook.cBRoomGuest);
                 }
                 break;
             case "Study":
@@ -430,13 +456,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     notebook.uncheckCheckBox(notebook.cBRoomLibrary);
                 } else {
                     notebook.checkCheckBox(notebook.cBRoomLibrary);
-                }
-                break;
-            case "NEEDS NAME":
-                if (notebook.isChecked) {
-                    notebook.uncheckCheckBox(notebook.cBRoomNEEDSName);
-                } else {
-                    notebook.checkCheckBox(notebook.cBRoomNEEDSName);
                 }
                 break;
             //ROOM

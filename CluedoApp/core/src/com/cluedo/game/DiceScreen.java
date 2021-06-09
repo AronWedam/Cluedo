@@ -22,6 +22,8 @@ import com.cluedo.game.network.ConnectionService;
 import java.util.HashMap;
 import java.util.Random;
 
+//import sun.applet.Main;
+
 //made with help of tutorial https://www.codeandweb.com/texturepacker/tutorials/libgdx-physics
 // and https://gamefromscratch.com/libgdx-tutorial-3b-simple-animation/
 
@@ -51,12 +53,16 @@ public class DiceScreen implements Screen, InputProcessor {
     private float elapsedTime = 0;
     Dice dice;
 
+    private int dice1Value;
+    private int dice2Value;
+
     //to store sprites
     final HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
 
 
 
-    public DiceScreen(GameClass game){
+    public DiceScreen(GameClass game, MainScreen mainScreen){
+        this.mainScreen = mainScreen;
         gameClass = game;
         connectionService = ConnectionService.GetInstance();
         atlas = new TextureAtlas("uiskin.atlas");
@@ -96,8 +102,7 @@ public class DiceScreen implements Screen, InputProcessor {
 
         batch.end();
 
-        int dice1Value;
-        int dice2Value;
+
 
         if (Gdx.input.isTouched()) {
             diceAnimation();
@@ -199,7 +204,13 @@ public class DiceScreen implements Screen, InputProcessor {
     }
 
 
+    public int getDice1Value() {
+        return dice1Value;
+    }
 
+    public int getDice2Value() {
+        return dice2Value;
+    }
 
     @Override
     public boolean keyDown(int keycode) {
