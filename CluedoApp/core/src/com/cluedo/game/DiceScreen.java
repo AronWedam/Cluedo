@@ -75,7 +75,7 @@ public class DiceScreen implements Screen, InputProcessor {
         camera.update();
 
         stage = new Stage(viewport, batch);
-        textureAtlas=new TextureAtlas("sprites.txt");
+        textureAtlas=new TextureAtlas("diceSprite.txt");
 
         addSprites();
     }
