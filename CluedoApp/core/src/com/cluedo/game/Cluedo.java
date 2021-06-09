@@ -15,12 +15,15 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -32,8 +35,6 @@ import com.cluedo.game.network.NetworkPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.ViewportLayout;
 
 public class Cluedo implements Screen, GestureDetector.GestureListener{
     private GameClass game;
@@ -61,7 +62,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     private MainScreen mainScreen = new MainScreen();
     //private AccusationScreen accusationScreen = new AccusationScreen();
     private RulesScreen rulesScreen = new RulesScreen(game, mainScreen);
-
     Stage stage;
 
     Viewport viewport = new ScreenViewport();
@@ -182,15 +182,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         renderer.setView(camera);
         renderer.render();
         camera.update();
-
-        /*
-        //Add Notebook-Buttons to stage so they listen to Inputevents
-        stage.addActor(notebook.getBtnAccusation());
-        stage.addActor(notebook.getBtnDice());
-        stage.addActor(notebook.getBtnHelp());
-        stage.addActor(notebook.getBtnFinishMove());
-        stage.draw();
-        */
 
         mapViewport();
         mapNotebook();
@@ -327,7 +318,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
                 break;
             case "Help":
-                mainScreen.setScreen(new RulesScreen(game, mainScreen));
+                //mainScreen.setScreen(new RulesScreen(game));
                 /*
                 notebook.btnHelp.addListener(new ClickListener(){
                     @Override
