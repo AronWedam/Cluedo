@@ -55,7 +55,6 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
     private final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
 
-
     private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
     private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
     private final CheckBox cBWeaponGun      =   new CheckBox("Gun", skin);
@@ -141,7 +140,6 @@ public class AccusationScreen implements Screen {
 
         mainTable.add(cBProfessorPlum);
         mainTable.row();
-
 
 
         mainTable.add("What weapon did they use").align(Align.center);
