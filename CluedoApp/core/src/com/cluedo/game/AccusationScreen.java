@@ -289,6 +289,7 @@ public class AccusationScreen implements Screen {
         }
     }
 
+    //here
     private void checkedWeapon(String checkBox){
         switch (checkBox) {
             case "Knife":
@@ -414,11 +415,7 @@ public class AccusationScreen implements Screen {
                                          CheckBox cBAccusedRoom){
         if(cbAccusedWeapon.toString() == murderer.getMurdererWeaponString()){
             if(cBAccusedPerson.toString() == murderer.getMurdererSuspectString()){
-                if(cBAccusedRoom.toString() == murderer.getMurdererRoomString()){
-                    return true;
-                }else{
-                    return false;
-                }
+                return cBAccusedRoom.toString() == murderer.getMurdererRoomString();
             }else{
                 return false;
             }
