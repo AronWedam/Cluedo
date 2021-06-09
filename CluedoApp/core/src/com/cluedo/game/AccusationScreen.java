@@ -37,9 +37,16 @@ public class AccusationScreen implements Screen {
     private ConnectionService connectionService;
     Murderer murderer;
     Table mainTable;
-    String accusedSuspect;
-    String accusedWeapon;
-    String accusedRoom;
+
+    //my accusation
+    CheckBox accusedSuspect;
+    CheckBox accusedWeapon;
+    CheckBox accusedRoom;
+
+    //to see if every category was checked
+    boolean suspectChecked = false;
+    boolean weaponChecked = false;
+    boolean roomChecked = false;
 
 
     private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
@@ -223,135 +230,158 @@ public class AccusationScreen implements Screen {
         double y = Gdx.input.getY(0);
         int row = mainTable.getRow((float) (Gdx.graphics.getHeight() - y));
         Gdx.app.log("Row", "Row: " + row);
+        if (Gdx.input.justTouched()){
+            if (row <= 30 && row >= 0) {
+                try {
+                    Actor actor = mainTable.getChild(row);
+                    Gdx.app.log("Class", actor.getClass().getName());
 
-        if (row <= 30 && row >= 0) {
-            try {
-                Actor actor = mainTable.getChild(row);
-                Gdx.app.log("Class", actor.getClass().getName());
-
-                if (actor instanceof CheckBox) {
-                    CheckBox myCheckBox = (CheckBox) actor;
-                    String clickedCheckbox = myCheckBox.getText().toString();
-                    if (row <= 6 && row >= 0) {
-                        accusedSuspect = checkedSuspect(clickedCheckbox);
-                    } else if (row > 6 && row <= 12) {
-                        accusedWeapon = checkedWeapon(clickedCheckbox);
-                    }else if(row > 12 && row <= 21){
-                        accusedRoom = checkedRoom(clickedCheckbox);
+                    if (actor instanceof CheckBox) {
+                        CheckBox myCheckBox = (CheckBox) actor;
+                        String clickedCheckbox = myCheckBox.getText().toString();
+                        if (row <= 6 && row >= 0) {
+                            checkedSuspect(clickedCheckbox);
+                        } else if (row > 6 && row <= 12) {
+                            checkedWeapon(clickedCheckbox);
+                        } else if (row > 12 && row <= 21) {
+                            checkedRoom(clickedCheckbox);
+                        }
                     }
-                }
 
-            } catch (Exception ex) {
-                Gdx.app.log("Exception", ex.getMessage());
+                } catch (Exception ex) {
+                    Gdx.app.log("Exception", ex.getMessage());
+                }
             }
+        }
+
+        if(suspectChecked && weaponChecked && roomChecked){
+            isActuallyTheMurderer(accusedSuspect, accusedWeapon, accusedRoom);
         }
     }
 
-    private String checkedSuspect(String checkBox){
+    private void checkedSuspect(String checkBox){
         switch (checkBox) {
             //PERSON
             case "MissScarlett":
-                    checkCheckBox(cBMissScarlett);
-                    accusedSuspect = cBMissScarlett.getText().toString();
+                checkCheckBox(cBMissScarlett);
+                accusedSuspect = cBMissScarlett;
+                suspectChecked = true;
                 break;
             case "ColonelMustard":
                 checkCheckBox(cBColonelMustard);
-                accusedSuspect = cBColonelMustard.getText().toString();
+                accusedSuspect = cBColonelMustard;
+                suspectChecked = true;
                 break;
             case "MrsWhite":
                 checkCheckBox(cBMrsWhite);
-                accusedSuspect = cBMrsWhite.getText().toString();
+                accusedSuspect = cBMrsWhite;
+                suspectChecked = true;
                 break;
             case "Reverend":
                 checkCheckBox(cBReverend);
-                accusedSuspect = cBReverend.getText().toString();
+                accusedSuspect = cBReverend;
+                suspectChecked = true;
                 break;
             case "MrsPeacock":
                 checkCheckBox(cBMrsPeacock);
-                accusedSuspect = cBMrsPeacock.getText().toString();
+                accusedSuspect = cBMrsPeacock;
+                suspectChecked = true;
                 break;
             case "ProfessorPlum":
                 checkCheckBox(cBProfessorPlum);
-                accusedSuspect = cBProfessorPlum.getText().toString();
+                accusedSuspect = cBProfessorPlum;
+                suspectChecked = true;
                 break;
             default:
                 break;
         }
-        return accusedSuspect;
     }
 
-    private String checkedWeapon(String checkBox){
+    private void checkedWeapon(String checkBox){
         switch (checkBox) {
             case "Knife":
                 checkCheckBox(cBWeaponKnife);
-                accusedWeapon = cBWeaponKnife.getText().toString();
+                accusedWeapon = cBWeaponKnife;
+                weaponChecked = true;
                 break;
             case "Rope":
                 checkCheckBox(cBWeaponRope);
-                accusedWeapon = cBWeaponRope.getText().toString();
+                accusedWeapon = cBWeaponRope;
+                weaponChecked = true;
                 break;
             case "Gun":
                 checkCheckBox(cBWeaponGun);
-                accusedWeapon = cBWeaponGun.getText().toString();
+                accusedWeapon = cBWeaponGun;
+                weaponChecked = true;
                 break;
             case "Poison":
                 checkCheckBox(cBWeaponPoison);
-                accusedWeapon = cBWeaponPoison.getText().toString();
+                accusedWeapon = cBWeaponPoison;
+                weaponChecked = true;
                 break;
             case "Pipe":
                 checkCheckBox(cBWeaponPipe);
-                accusedWeapon = cBWeaponPipe.getText().toString();
+                accusedWeapon = cBWeaponPipe;
+                weaponChecked = true;
                 break;
             case "Candle":
                 checkCheckBox(cBWeaponCandle);
-                accusedWeapon = cBWeaponCandle.getText().toString();
+                accusedWeapon = cBWeaponCandle;
+                weaponChecked = true;
                 break;
             default:
                 break;
         }
-        return accusedWeapon;
     }
 
-    private String checkedRoom(String checkBox){
+    private void checkedRoom(String checkBox){
         switch (checkBox) {
             case "Entrance":
                 checkCheckBox(cBRoomEntrance);
-                accusedRoom = cBRoomEntrance.getText().toString();
+                accusedRoom = cBRoomEntrance;
+                roomChecked = true;
                 break;
             case "Bathroom":
                 checkCheckBox(cBRoomBathroom);
-                accusedRoom = cBRoomBathroom.getText().toString();
+                accusedRoom = cBRoomBathroom;
+                roomChecked = true;
                 break;
             case "Dining":
                 checkCheckBox(cBRoomDining);
-                accusedRoom = cBRoomDining.getText().toString();
+                accusedRoom = cBRoomDining;
+                roomChecked = true;
                 break;
             case "Kitchen":
                 checkCheckBox(cBRoomKitchen);
-                accusedRoom = cBRoomKitchen.getText().toString();
+                accusedRoom = cBRoomKitchen;
+                roomChecked = true;
                 break;
             case "Bedroom":
                 checkCheckBox(cBRoomBedroom);
-                accusedRoom = cBRoomBedroom.getText().toString();
+                accusedRoom = cBRoomBedroom;
+                roomChecked = true;
                 break;
             case "Musicroom":
                 checkCheckBox(cBRoomMusicroom);
-                accusedRoom = cBRoomMusicroom.getText().toString();
+                accusedRoom = cBRoomMusicroom;
+                roomChecked = true;
                 break;
             case "Guestroom":
                 checkCheckBox(cBRoomGuest);
-                accusedRoom = cBRoomGuest.getText().toString();
+                accusedRoom = cBRoomGuest;
+                roomChecked = true;
                 break;
             case "Study":
                 checkCheckBox(cBRoomStudy);
-                accusedRoom = cBRoomStudy.getText().toString();
+                accusedRoom = cBRoomStudy;
+                roomChecked = true;
                 break;
             case "Library":
                 checkCheckBox(cBRoomLibrary);
-                accusedRoom = cBRoomLibrary.getText().toString();
+                accusedRoom = cBRoomLibrary;
+                roomChecked = true;
                 break;
         }
-        return accusedRoom;
     }
 
 
