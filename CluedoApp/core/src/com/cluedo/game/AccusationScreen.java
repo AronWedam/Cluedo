@@ -32,6 +32,7 @@ public class AccusationScreen implements Screen {
     private MainScreen mainScreen;
     private GameClass gameClass;
     private ConnectionService connectionService;
+    private final Murderer murderer;
 
 
     private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
@@ -41,9 +42,31 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
     private final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
 
+    private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
+    private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
+    private final CheckBox cBWeaponGun      =   new CheckBox("Gun", skin);
+    private final CheckBox cBWeaponPoison   =   new CheckBox("Poison", skin);
+    private final CheckBox cBWeaponPipe     =   new CheckBox("Pipe", skin);
+    private final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
 
-    public AccusationScreen(GameClass game){
+    private final CheckBox cBRoomEntrance   =   new CheckBox("Entrance", skin);
+    private final CheckBox cBRoomBedroom     =   new CheckBox("Bedroom", skin); //
+    private final CheckBox cBRoomDining     =   new CheckBox("Dining", skin);
+    private final CheckBox cBRoomKitchen    =   new CheckBox("Kitchen", skin);
+    private final CheckBox cBRoomGuest   =   new CheckBox("Guestroom", skin); //
+    private final CheckBox cBRoomMusicroom  =   new CheckBox("Musicroom", skin);
+    private final CheckBox cBRoomBathroom   =   new CheckBox("Bathroom ", skin); //
+    private final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
+    private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
+
+//BEDRROOM
+    //GUESTROOM
+    //BATHROOM
+
+    public AccusationScreen(MainScreen mainScreen, GameClass game, Murderer murderer){
+        this.mainScreen = mainScreen;
         this.gameClass = game;
+        this.murderer = murderer;
         connectionService = ConnectionService.GetInstance();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
