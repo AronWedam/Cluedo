@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -18,6 +19,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cluedo.game.network.ConnectionService;
+
+import javax.swing.text.TabExpander;
 
 
 //TODO ACCUSATION AND HOW TO DO THAT
@@ -33,6 +36,10 @@ public class AccusationScreen implements Screen {
     private GameClass gameClass;
     private ConnectionService connectionService;
     Murderer murderer;
+    Table mainTable;
+    String accusedSuspect;
+    String accusedWeapon;
+    String accusedRoom;
 
 
     private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
@@ -61,7 +68,7 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
 
 
-    public AccusationScreen(MainScreen mainScreen, GameClass game, Murderer murderer){
+    public AccusationScreen(MainScreen mainScreen, GameClass game){
         this.mainScreen = mainScreen;
 
         this.gameClass = game;
@@ -80,13 +87,15 @@ public class AccusationScreen implements Screen {
 
         stage = new Stage(viewport, batch);
     }
+
+
     @Override
     public void show() {
         //Stage controls the input
         Gdx.input.setInputProcessor(stage);
 
         //Create Table
-        Table mainTable = new Table(skin);
+        mainTable = new Table(skin);
         mainTable.setFillParent(true);
         mainTable.align(Align.top);
 
@@ -210,7 +219,141 @@ public class AccusationScreen implements Screen {
 
         stage.act();
         stage.draw();
+
+        double y = Gdx.input.getY(0);
+        int row = mainTable.getRow((float) (Gdx.graphics.getHeight() - y));
+        Gdx.app.log("Row", "Row: " + row);
+
+        if (row <= 30 && row >= 0) {
+            try {
+                Actor actor = mainTable.getChild(row);
+                Gdx.app.log("Class", actor.getClass().getName());
+
+                if (actor instanceof CheckBox) {
+                    CheckBox myCheckBox = (CheckBox) actor;
+                    String clickedCheckbox = myCheckBox.getText().toString();
+                    if (row <= 6 && row >= 0) {
+                        accusedSuspect = checkedSuspect(clickedCheckbox);
+                    } else if (row > 6 && row <= 12) {
+                        accusedWeapon = checkedWeapon(clickedCheckbox);
+                    }else if(row > 12 && row <= 21){
+                        accusedRoom = checkedRoom(clickedCheckbox);
+                    }
+                }
+
+            } catch (Exception ex) {
+                Gdx.app.log("Exception", ex.getMessage());
+            }
+        }
     }
+
+    private String checkedSuspect(String checkBox){
+        switch (checkBox) {
+            //PERSON
+            case "MissScarlett":
+                    checkCheckBox(cBMissScarlett);
+                    accusedSuspect = cBMissScarlett.getText().toString();
+                break;
+            case "ColonelMustard":
+                checkCheckBox(cBColonelMustard);
+                accusedSuspect = cBColonelMustard.getText().toString();
+                break;
+            case "MrsWhite":
+                checkCheckBox(cBMrsWhite);
+                accusedSuspect = cBMrsWhite.getText().toString();
+                break;
+            case "Reverend":
+                checkCheckBox(cBReverend);
+                accusedSuspect = cBReverend.getText().toString();
+                break;
+            case "MrsPeacock":
+                checkCheckBox(cBMrsPeacock);
+                accusedSuspect = cBMrsPeacock.getText().toString();
+                break;
+            case "ProfessorPlum":
+                checkCheckBox(cBProfessorPlum);
+                accusedSuspect = cBProfessorPlum.getText().toString();
+                break;
+            default:
+                break;
+        }
+        return accusedSuspect;
+    }
+
+    private String checkedWeapon(String checkBox){
+        switch (checkBox) {
+            case "Knife":
+                checkCheckBox(cBWeaponKnife);
+                accusedWeapon = cBWeaponKnife.getText().toString();
+                break;
+            case "Rope":
+                checkCheckBox(cBWeaponRope);
+                accusedWeapon = cBWeaponRope.getText().toString();
+                break;
+            case "Gun":
+                checkCheckBox(cBWeaponGun);
+                accusedWeapon = cBWeaponGun.getText().toString();
+                break;
+            case "Poison":
+                checkCheckBox(cBWeaponPoison);
+                accusedWeapon = cBWeaponPoison.getText().toString();
+                break;
+            case "Pipe":
+                checkCheckBox(cBWeaponPipe);
+                accusedWeapon = cBWeaponPipe.getText().toString();
+                break;
+            case "Candle":
+                checkCheckBox(cBWeaponCandle);
+                accusedWeapon = cBWeaponCandle.getText().toString();
+                break;
+            default:
+                break;
+        }
+        return accusedWeapon;
+    }
+
+    private String checkedRoom(String checkBox){
+        switch (checkBox) {
+            case "Entrance":
+                checkCheckBox(cBRoomEntrance);
+                accusedRoom = cBRoomEntrance.getText().toString();
+                break;
+            case "Bathroom":
+                checkCheckBox(cBRoomBathroom);
+                accusedRoom = cBRoomBathroom.getText().toString();
+                break;
+            case "Dining":
+                checkCheckBox(cBRoomDining);
+                accusedRoom = cBRoomDining.getText().toString();
+                break;
+            case "Kitchen":
+                checkCheckBox(cBRoomKitchen);
+                accusedRoom = cBRoomKitchen.getText().toString();
+                break;
+            case "Bedroom":
+                checkCheckBox(cBRoomBedroom);
+                accusedRoom = cBRoomBedroom.getText().toString();
+                break;
+            case "Musicroom":
+                checkCheckBox(cBRoomMusicroom);
+                accusedRoom = cBRoomMusicroom.getText().toString();
+                break;
+            case "Guestroom":
+                checkCheckBox(cBRoomGuest);
+                accusedRoom = cBRoomGuest.getText().toString();
+                break;
+            case "Study":
+                checkCheckBox(cBRoomStudy);
+                accusedRoom = cBRoomStudy.getText().toString();
+                break;
+            case "Library":
+                checkCheckBox(cBRoomLibrary);
+                accusedRoom = cBRoomLibrary.getText().toString();
+                break;
+        }
+        return accusedRoom;
+    }
+
 
     @Override
     public void resize(int width, int height) {
@@ -237,6 +380,11 @@ public class AccusationScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    private void checkCheckBox(CheckBox checkBox){
+        checkBox.setDisabled(true);
+        checkBox.setChecked(true);
     }
 
 
