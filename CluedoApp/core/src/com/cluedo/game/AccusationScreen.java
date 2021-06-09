@@ -32,7 +32,6 @@ public class AccusationScreen implements Screen {
     private MainScreen mainScreen;
     private GameClass gameClass;
     private ConnectionService connectionService;
-    private final Murderer murderer;
 
 
     private final CheckBox cBMissScarlett   =   new CheckBox("MissScarlett", skin);
@@ -41,6 +40,7 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBReverend       =   new CheckBox("Reverend", skin);
     private final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
     private final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
+
 
     private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
     private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
@@ -59,14 +59,11 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBRoomStudy      =   new CheckBox("Study", skin);
     private final CheckBox cBRoomLibrary    =   new CheckBox("Library", skin);
 
-//BEDRROOM
-    //GUESTROOM
-    //BATHROOM
 
     public AccusationScreen(MainScreen mainScreen, GameClass game, Murderer murderer){
         this.mainScreen = mainScreen;
+
         this.gameClass = game;
-        this.murderer = murderer;
         connectionService = ConnectionService.GetInstance();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
@@ -197,8 +194,6 @@ public class AccusationScreen implements Screen {
         mainTable.add(cBRoomLibrary);
         mainTable.row();
 
-
-
         mainTable.add(mainBtn).size(100, 50).align(Align.left);
         mainTable.row().colspan(2);
         mainTable.add(exitBtn).size(100, 50).align(Align.left);
@@ -258,7 +253,6 @@ public class AccusationScreen implements Screen {
             }
         }else return false;
     }
-
 
 
 }
