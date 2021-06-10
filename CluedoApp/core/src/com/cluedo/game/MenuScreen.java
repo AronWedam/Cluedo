@@ -31,6 +31,7 @@ public class MenuScreen implements Screen{
     private MainScreen mainScreen;
     private GameClass gameClass;
     private ConnectionService connectionService;
+    private DiceScreenNew diceScreenNew;
 
     public MenuScreen(MainScreen mainScreen, GameClass game){
         gameClass = game;
@@ -69,6 +70,8 @@ public class MenuScreen implements Screen{
         TextButton exitBtn = new TextButton("Exit Game", skin);
         final TextField textFieldUsername = new TextField("", skin);
         textFieldUsername.setSize(250, 50);
+        TextButton diceBtn = new TextButton("Test dice", skin);
+
 
         //Add listeners to buttons
         startBtn.addListener(new ClickListener(){
@@ -136,12 +139,12 @@ public class MenuScreen implements Screen{
                 mainScreen.setScreen(new RulesScreen(gameClass, mainScreen));
             }
         });
-        /*diceBtn.addListener(new ClickListener(){
+        diceBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                mainScreen.setScreen(new DiceScreen(gameClass));
+                mainScreen.setScreen(new DiceScreenNew(gameClass, mainScreen));
             }
-        });*/
+        });
 
         //Add Buttons to the table
         mainTable.add("Please enter a username to start the game!").align(Align.center);
@@ -150,7 +153,7 @@ public class MenuScreen implements Screen{
         mainTable.add(startBtn).size(100, 50);
         mainTable.row().colspan(2);
         mainTable.add(rulesBtn).size(100,50).align(Align.left);
-        //mainTable.add(diceBtn).size(100,50).align(Align.left);
+        mainTable.add(diceBtn).size(100,50).align(Align.left);
         //mainTable.add(optionsBtn).size(100, 50).align(Align.left);
         mainTable.add(exitBtn).size(100, 50).align(Align.left);
 

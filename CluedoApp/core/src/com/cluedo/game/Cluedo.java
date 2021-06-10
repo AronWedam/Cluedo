@@ -327,6 +327,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 //Uncomment this to open the DiceScreen when there are not errors
                 //mainScreen.setScreen(diceScreen);
 
+
                 // moves = dice.getDiceOneValue() + dice.getDiceTwoValue();
                 moves = 6;
                 break;
