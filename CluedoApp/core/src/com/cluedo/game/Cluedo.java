@@ -157,6 +157,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         });
         GetGameThread.start();
         GetGameThread.join();
+
+        if (connectionService.isGameOver()) {
+            mainScreen.setScreen(new GameOverScreen());
+        }
+
         SyncNetworkPlayersWithGamePlayers();
     }
 

@@ -451,14 +451,12 @@ public class AccusationScreen implements Screen {
 
     public boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon, CheckBox cBAccusedPerson,
                                          CheckBox cBAccusedRoom){
-        if(cbAccusedWeapon.toString() == murderer.getMurdererWeaponString()){
-            if(cBAccusedPerson.toString() == murderer.getMurdererSuspectString()){
-                return cBAccusedRoom.toString() == murderer.getMurdererRoomString();
-            }else{
-                return false;
+        if(cbAccusedWeapon.toString().equals(connectionService.getWeapon())){
+            if(cBAccusedPerson.toString().equals(connectionService.getSuspect())){
+                return cBAccusedRoom.toString().equals(connectionService.getRoom());
             }
-        }else return false;
+        }
+
+        return false;
     }
-
-
 }
