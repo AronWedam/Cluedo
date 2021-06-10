@@ -34,6 +34,7 @@ public class AccusationScreen implements Screen {
     private ConnectionService connectionService;
     Murderer murderer;
     Table mainTable;
+    Cluedo cluedo;
 
     //my accusation
     CheckBox accusedSuspect;
@@ -104,8 +105,7 @@ public class AccusationScreen implements Screen {
 
         //Create Buttons
         TextButton mainBtn = new TextButton("Back to Main", skin);
-        TextButton makeAccusationBtn = new TextButton("Accusation", skin);
-
+        final TextButton makeAccusationBtn = new TextButton("Accusation", skin);
 
 
         //Add Text and Buttons to the table
@@ -205,11 +205,21 @@ public class AccusationScreen implements Screen {
         //Add table to stage
         stage.addActor(mainTable);
 
-        //If clicked go back to MainMenu
+        //If clicked go back to CluedoGame
         mainBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                mainScreen.setScreen(new MenuScreen(mainScreen, gameClass));
+                //mainScreen.backpressed=true;
+                //mainScreen.setScreen();
+                //Gdx.input.setCatchBackKey(true);
+
+                //NOT WORKING CORRECT BECAUSE YOU GET NEW GREEN INPUT
+                try {
+                    mainScreen.setScreen(new Cluedo(gameClass, mainScreen));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //mainScreen.setScreen(cluedo);
             }
         });
 
@@ -220,7 +230,9 @@ public class AccusationScreen implements Screen {
                 if(suspectChecked && weaponChecked && roomChecked){
                     if(isActuallyTheMurderer(accusedWeapon, accusedSuspect,
                             accusedRoom)){
-                        //TODO if somebody made a right accusation
+                        //TODO that it displays for everybody
+                        mainScreen.setScreen(new GameOverScreen());
+                        makeAccusationBtn.setDisabled(false);
                         Gdx.app.log("TRUE", "TRUE");
                     }else {
                         //TODO if somebody made a wrong accusation
@@ -244,20 +256,19 @@ public class AccusationScreen implements Screen {
         double y = Gdx.input.getY(0);
         int row = mainTable.getRow((float) (Gdx.graphics.getHeight() - y));
         Gdx.app.log("Row", "Row: " + row);
-        if (Gdx.input.justTouched()){
+        if (Gdx.input.justTouched()){       //if this is not here it goes into the second if, but then it is a loop
             if (row <= 30 && row >= 0) {
                 try {
                     Actor actor = mainTable.getChild(row);
                     Gdx.app.log("Class", actor.getClass().getName());
-
                     if (actor instanceof CheckBox) {
                         CheckBox myCheckBox = (CheckBox) actor;
                         String clickedCheckbox = myCheckBox.getText().toString();
-                        if (row <= 6 && row >= 0) {
+                        if (row <= 13 && row >= 7) {
                             if(!suspectChecked)     checkedSuspect(clickedCheckbox);
-                        } else if (row > 6 && row <= 12) {
+                        } else if (row > 13 && row <= 19) {
                             if(!weaponChecked)      checkedWeapon(clickedCheckbox);
-                        } else if (row > 12 && row <= 21) {
+                        } else if (row > 19 && row <= 29) {
                             if(!roomChecked)        checkedRoom(clickedCheckbox);
                         }
                     }
