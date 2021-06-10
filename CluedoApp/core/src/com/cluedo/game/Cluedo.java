@@ -62,24 +62,18 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     private AccusationScreen accusationScreen;
     private MainScreen mainScreen;
     private RulesScreen rulesScreen;
-    private DiceScreen diceScreen;
     Stage stage;
 
     Viewport viewport = new ScreenViewport();
 
     InputMultiplexer multiplexer;
-
     private int moves = 6;
-
-    Dice dice = new Dice(game);
 
     public Cluedo(final GameClass game, MainScreen mainScreen) throws InterruptedException {
         this.game = game;
         this.mainScreen = mainScreen;
         accusationScreen = new AccusationScreen(mainScreen, game);
         rulesScreen = new RulesScreen(game, mainScreen);
-        //diceScreen = new DiceScreen(game, mainScreen);
-
         viewport.setScreenSize(1, 1);
 
         players = new ArrayList<>();
@@ -323,13 +317,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 mainScreen.setScreen(rulesScreen);
                 break;
             case "Dice":
-                //TODO ADD DICE SCREENS AND WHATEVER IS NEEDED
-                //Uncomment this to open the DiceScreen when there are not errors
-                //mainScreen.setScreen(diceScreen);
-
-
-                // moves = dice.getDiceOneValue() + dice.getDiceTwoValue();
-                moves = 6;
+                mainScreen.setScreen(new DiceScreenNew(game, mainScreen, this));
                 break;
             default:
                 break;
