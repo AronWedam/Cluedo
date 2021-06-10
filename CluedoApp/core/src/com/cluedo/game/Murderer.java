@@ -9,7 +9,6 @@ public class Murderer {
     private final Card murdererRoomCard;
 
     public Murderer() {
-        this.player = player;
 
         player.setMyWeaponCard();
         player.setMySuspectCard();
@@ -33,7 +32,7 @@ public class Murderer {
     }
 
     public String getMurdererSuspectString(){
-        return murdererWeaponCard.toString();
+        return murdererSuspectCard.toString();
     }
 
     public String getMurdererRoomString(){return murdererRoomCard.toString();}
