@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -115,21 +116,75 @@ public class AccusationScreen implements Screen {
         mainTable.row().align(Align.left);
 
         mainTable.add(cBMissScarlett).align(Align.left);
+        cBMissScarlett.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!suspectChecked){
+                    suspectChecked = true;
+                    accusedSuspect = cBMissScarlett;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBColonelMustard).align(Align.left);
+        cBColonelMustard.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!suspectChecked){
+                    suspectChecked = true;
+                    accusedSuspect = cBColonelMustard;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBMrsWhite).align(Align.left);
+        cBMrsWhite.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!suspectChecked){
+                    suspectChecked = true;
+                    accusedSuspect = cBMrsWhite;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBReverend).align(Align.left);
+        cBReverend.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!suspectChecked){
+                    suspectChecked = true;
+                    accusedSuspect = cBReverend;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBMrsPeacock).align(Align.left);
+        cBMrsPeacock.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!suspectChecked){
+                    suspectChecked = true;
+                    accusedSuspect = cBMrsPeacock;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBProfessorPlum).align(Align.left);
+        cBProfessorPlum.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!suspectChecked){
+                    suspectChecked = true;
+                    accusedSuspect = cBProfessorPlum;
+                }
+            }
+        });
         mainTable.row();
 
 
@@ -140,21 +195,75 @@ public class AccusationScreen implements Screen {
         mainTable.row().align(Align.left);
 
         mainTable.add(cBWeaponKnife).align(Align.left);
+        cBWeaponKnife.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!weaponChecked){
+                    weaponChecked = true;
+                    accusedWeapon = cBWeaponKnife;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBWeaponRope).align(Align.left);
+        cBWeaponRope.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!weaponChecked){
+                    weaponChecked = true;
+                    accusedWeapon = cBWeaponRope;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBWeaponGun).align(Align.left);
+        cBWeaponGun.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!weaponChecked){
+                    weaponChecked = true;
+                    accusedWeapon = cBWeaponGun;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBWeaponPoison).align(Align.left);
+        cBWeaponPoison.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!weaponChecked){
+                    weaponChecked = true;
+                    accusedWeapon = cBWeaponPoison;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBWeaponPipe).align(Align.left);
+        cBWeaponPipe.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!weaponChecked){
+                    weaponChecked = true;
+                    accusedWeapon = cBWeaponPipe;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBWeaponCandle).align(Align.left);
+        cBWeaponCandle.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!weaponChecked){
+                    weaponChecked = true;
+                    accusedWeapon = cBWeaponCandle;
+                }
+            }
+        });
         mainTable.row();
 
 
@@ -165,34 +274,113 @@ public class AccusationScreen implements Screen {
         mainTable.row().align(Align.left);
 
         mainTable.add(cBRoomEntrance).align(Align.left);
+        cBRoomEntrance.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!roomChecked){
+                    roomChecked = true;
+                    accusedRoom = cBRoomEntrance;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBRoomBedroom).align(Align.left);
+        cBRoomBedroom.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!roomChecked){
+                    roomChecked = true;
+                    accusedRoom = cBRoomBedroom;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBRoomDining).align(Align.left);
+        cBRoomDining.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!roomChecked){
+                    roomChecked = true;
+                    accusedRoom = cBRoomDining;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBRoomKitchen).align(Align.left);
+        cBRoomKitchen.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!roomChecked){
+                    roomChecked = true;
+                    accusedRoom = cBRoomKitchen;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBRoomGuest).align(Align.left);
+        cBRoomGuest.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!roomChecked){
+                    roomChecked = true;
+                    accusedRoom = cBRoomGuest;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBRoomMusicroom).align(Align.left);
+        cBRoomMusicroom.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!roomChecked){
+                    roomChecked = true;
+                    accusedRoom = cBRoomMusicroom;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBRoomBathroom).align(Align.left);
+        cBRoomBathroom.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!roomChecked){
+                    roomChecked = true;
+                    accusedRoom = cBRoomBathroom;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBRoomStudy).align(Align.left);
+        cBRoomStudy.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!roomChecked){
+                    roomChecked = true;
+                    accusedRoom = cBRoomStudy;
+                }
+            }
+        });
         mainTable.row();
 
         mainTable.add(cBRoomLibrary).align(Align.left);
+        cBRoomLibrary.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!roomChecked){
+                    roomChecked = true;
+                    accusedRoom = cBRoomLibrary;
+                }
+            }
+        });
         mainTable.row();
 
-        mainTable.add(cBRoomLibrary).align(Align.left);
-        mainTable.row();
 
         mainTable.add("").align(Align.left);
         mainTable.add("").align(Align.left);
@@ -230,6 +418,12 @@ public class AccusationScreen implements Screen {
                 if(suspectChecked && weaponChecked && roomChecked){
                     if(isActuallyTheMurderer(accusedWeapon, accusedSuspect,
                             accusedRoom)){
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                connectionService.FinishGame();
+                            }
+                        }).start();
                         //TODO that it displays for everybody
                         mainScreen.setScreen(new GameOverScreen());
                         makeAccusationBtn.setDisabled(false);
@@ -238,7 +432,7 @@ public class AccusationScreen implements Screen {
                         //TODO if somebody made a wrong accusation
                         Gdx.graphics.setTitle("Your accusation was not correct");
                         Gdx.app.log("WRONG", "WRONG");
-                        Gdx.app.exit(); //should the person be excluded or not?
+                        //Gdx.app.exit(); //should the person be excluded or not?
                     }
                 }
             }
@@ -253,6 +447,7 @@ public class AccusationScreen implements Screen {
         stage.act();
         stage.draw();
 
+        /*
         double y = Gdx.input.getY(0);
         int row = mainTable.getRow((float) (Gdx.graphics.getHeight() - y));
         Gdx.app.log("Row", "Row: " + row);
@@ -261,7 +456,7 @@ public class AccusationScreen implements Screen {
                 try {
                     Actor actor = mainTable.getChild(row);
                     Gdx.app.log("Class", actor.getClass().getName());
-                    if (actor instanceof CheckBox) {
+                    if (actor instanceof Label) {
                         CheckBox myCheckBox = (CheckBox) actor;
                         String clickedCheckbox = myCheckBox.getText().toString();
                         if (row <= 13 && row >= 7) {
@@ -277,9 +472,14 @@ public class AccusationScreen implements Screen {
                     Gdx.app.log("Exception", ex.getMessage());
                 }
             }
+
+
         }
 
+         */
+
     }
+    /*
 
     private void checkedSuspect(String checkBox){
         if(!suspectChecked) {
@@ -415,6 +615,8 @@ public class AccusationScreen implements Screen {
         }
     }
 
+     */
+
 
     @Override
     public void resize(int width, int height) {
@@ -443,17 +645,24 @@ public class AccusationScreen implements Screen {
 
     }
 
+    /*
     private void checkCheckBox(CheckBox checkBox){
         checkBox.setDisabled(true);
         checkBox.setChecked(true);
     }
 
+     */
+
+
 
     public boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon, CheckBox cBAccusedPerson,
                                          CheckBox cBAccusedRoom){
-        if(cbAccusedWeapon.toString().equals(connectionService.getWeapon())){
-            if(cBAccusedPerson.toString().equals(connectionService.getSuspect())){
-                return cBAccusedRoom.toString().equals(connectionService.getRoom());
+        String weapon = cbAccusedWeapon.toString().split(" ")[1];
+        String person = cBAccusedPerson.toString().split(" ")[1];
+        String room = cBAccusedRoom.toString().split(" ")[1];
+        if(weapon.equals(connectionService.getWeapon())){
+            if(person.equals(connectionService.getSuspect())){
+                return room.equals(connectionService.getRoom());
             }
         }
 

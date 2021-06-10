@@ -71,8 +71,7 @@ public class GameOverScreen implements Screen {
         //Add Text and Buttons to the table
         mainTable.add("GAME OVER").align(Align.center);
         mainTable.row().colspan(2);
-        mainTable.add("A correct accustation was pronounced. "+'\n' + "The murderer was " + murderer.getMurdererSuspectString() +
-                " in " + murderer.getMurdererRoomString() + " with " + murderer.getMurdererWeaponString()).align(Align.left);
+        mainTable.add("A correct accusation was pronounced.").align(Align.left);
         mainTable.row().colspan(2);
 
 
