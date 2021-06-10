@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -230,6 +231,12 @@ public class AccusationScreen implements Screen {
                 if(suspectChecked && weaponChecked && roomChecked){
                     if(isActuallyTheMurderer(accusedWeapon, accusedSuspect,
                             accusedRoom)){
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                connectionService.FinishGame();
+                            }
+                        }).start();
                         //TODO that it displays for everybody
                         mainScreen.setScreen(new GameOverScreen());
                         makeAccusationBtn.setDisabled(false);
@@ -261,7 +268,7 @@ public class AccusationScreen implements Screen {
                 try {
                     Actor actor = mainTable.getChild(row);
                     Gdx.app.log("Class", actor.getClass().getName());
-                    if (actor instanceof CheckBox) {
+                    if (actor instanceof Label) {
                         CheckBox myCheckBox = (CheckBox) actor;
                         String clickedCheckbox = myCheckBox.getText().toString();
                         if (row <= 13 && row >= 7) {
