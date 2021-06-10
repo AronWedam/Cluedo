@@ -19,11 +19,14 @@ public class Player {
     private static Card myWeaponCard;
     private static Card myRoomCard;
 
-    public Player(Texture texture, CluedoMap cluedoMap, int x, int y){
+    private Cluedo cluedo;
+
+    public Player(Texture texture, CluedoMap cluedoMap, int x, int y, Cluedo cluedo){
         this.texture = texture;
         this.cluedoMap = cluedoMap;
         this.x = x;
         this.y = y;
+        this.cluedo = cluedo;
 
         connectionService = ConnectionService.GetInstance();
     }
@@ -39,6 +42,7 @@ public class Player {
 
     //Set Player position
     public void setPos(int x, int y){
+        Gdx.app.log("Here", "here");
         Boolean maywalk = false;
 
         Thread GetGameThread = new Thread(new Runnable() {

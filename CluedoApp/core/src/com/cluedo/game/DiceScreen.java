@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class DiceScreenNew implements Screen {
+public class DiceScreen implements Screen {
     private SpriteBatch batch;
     protected Stage stage;
 
@@ -51,7 +51,7 @@ public class DiceScreenNew implements Screen {
     private Toast toast;
     private GameClass game;
 
-    public DiceScreenNew(GameClass game, MainScreen mainScreen, Cluedo cluedo){
+    public DiceScreen(GameClass game, MainScreen mainScreen, Cluedo cluedo){
         this.mainScreen = mainScreen;
         this.cludeo = cluedo;
         this.game = game;
@@ -143,10 +143,13 @@ public class DiceScreenNew implements Screen {
             Random rand = new Random();
             dice1Value = rand.nextInt(6);
             dice2Value = rand.nextInt(6);
+            dice1Value++;
+            dice2Value++;
             int diceValue = dice1Value + dice2Value;
-            currentDice1 = diceList.get(dice1Value);
-            currentDice2 = diceList.get(dice2Value);
+            currentDice1 = diceList.get(dice1Value-1);
+            currentDice2 = diceList.get(dice2Value-1);
             toast = toastFactory.create("You rolled the value: " + diceValue, Toast.Length.LONG);
+            cludeo.setMoves(diceValue);
             didAlreadyRoll = true;
         }
     }
