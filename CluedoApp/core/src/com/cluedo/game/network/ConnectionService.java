@@ -197,6 +197,22 @@ public class ConnectionService {
         return ServerErrorCode;
     }
 
+    public int FinishGame() {
+        try {
+            Request request = new Request.Builder()
+                    .url(Url + "finishGame")
+                    .get()
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            return response.code();
+        } catch (Exception ex) {
+            Gdx.app.log("Get Game Error", ex.getMessage());
+        }
+
+        return ServerErrorCode;
+    }
+
     private void GetPlayersOfJsonObject(String responseBody) throws IOException {
         List<NetworkPlayer> tempPlayers = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(responseBody);
