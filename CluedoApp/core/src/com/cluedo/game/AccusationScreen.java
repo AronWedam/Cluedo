@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -23,8 +22,6 @@ import com.cluedo.game.network.ConnectionService;
 import javax.swing.text.TabExpander;
 
 
-//TODO ACCUSATION AND HOW TO DO THAT
-
 public class AccusationScreen implements Screen {
     private SpriteBatch batch;
     protected Stage stage;
@@ -37,6 +34,7 @@ public class AccusationScreen implements Screen {
     private ConnectionService connectionService;
     Murderer murderer;
     Table mainTable;
+    Cluedo cluedo;
 
     //my accusation
     CheckBox accusedSuspect;
@@ -55,7 +53,6 @@ public class AccusationScreen implements Screen {
     private final CheckBox cBReverend       =   new CheckBox("Reverend", skin);
     private final CheckBox cBMrsPeacock     =   new CheckBox("MrsPeacock", skin);
     private final CheckBox cBProfessorPlum  =   new CheckBox("ProfessorPlum", skin);
-
 
     private final CheckBox cBWeaponKnife    =   new CheckBox("Knife", skin);
     private final CheckBox cBWeaponRope     =   new CheckBox("Rope", skin);
@@ -95,6 +92,7 @@ public class AccusationScreen implements Screen {
     }
 
 
+
     @Override
     public void show() {
         //Stage controls the input
@@ -107,115 +105,144 @@ public class AccusationScreen implements Screen {
 
         //Create Buttons
         TextButton mainBtn = new TextButton("Back to Main", skin);
-        TextButton exitBtn = new TextButton("Exit Game", skin);
-
-        //If clicked go back to MainMenu
-        mainBtn.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                mainScreen.setScreen(new MenuScreen(mainScreen, gameClass));
-            }
-        });
-        //If clicked exit the game
-        exitBtn.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
+        final TextButton makeAccusationBtn = new TextButton("Accusation", skin);
 
 
         //Add Text and Buttons to the table
-        mainTable.add("Who do you want to accuse").align(Align.center);
-        mainTable.row().colspan(2);
-        mainTable.add(""+'\n').align(Align.left);
-        mainTable.row().colspan(2);
+        mainTable.add("Who do you want to accuse").align(Align.left);
+        mainTable.row().align(Align.left); //+'\n'  colspan(2).
+        mainTable.add("").align(Align.left);
+        mainTable.row().align(Align.left);
 
-        mainTable.add(cBMissScarlett);
+        mainTable.add(cBMissScarlett).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBColonelMustard);
+        mainTable.add(cBColonelMustard).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBMrsWhite);
+        mainTable.add(cBMrsWhite).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBReverend);
+        mainTable.add(cBReverend).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBMrsPeacock);
+        mainTable.add(cBMrsPeacock).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBProfessorPlum);
-        mainTable.row();
-
-
-
-        mainTable.add("What weapon did they use").align(Align.center);
-        mainTable.row().colspan(2);
-        mainTable.add(""+'\n').align(Align.left);
-        mainTable.row().colspan(2);
-
-        mainTable.add(cBWeaponKnife);
-        mainTable.row();
-
-        mainTable.add(cBWeaponRope);
-        mainTable.row();
-
-        mainTable.add(cBWeaponGun);
-        mainTable.row();
-
-        mainTable.add(cBWeaponPoison);
-        mainTable.row();
-
-        mainTable.add(cBWeaponPipe);
-        mainTable.row();
-
-        mainTable.add(cBWeaponCandle);
+        mainTable.add(cBProfessorPlum).align(Align.left);
         mainTable.row();
 
 
-        mainTable.add("What room was the person killed in").align(Align.center);
-        mainTable.row().colspan(2);
-        mainTable.add(""+'\n').align(Align.left);
-        mainTable.row().colspan(2);
+        mainTable.add("").align(Align.left);
+        mainTable.add("What weapon did they use").align(Align.left);
+        mainTable.row().align(Align.left);
+        mainTable.add("").align(Align.left);
+        mainTable.row().align(Align.left);
 
-        mainTable.add(cBRoomEntrance);
+        mainTable.add(cBWeaponKnife).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBRoomBedroom);
+        mainTable.add(cBWeaponRope).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBRoomDining);
+        mainTable.add(cBWeaponGun).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBRoomKitchen);
+        mainTable.add(cBWeaponPoison).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBRoomGuest);
+        mainTable.add(cBWeaponPipe).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBRoomMusicroom);
+        mainTable.add(cBWeaponCandle).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBRoomBathroom);
+
+        mainTable.add("").align(Align.left);
+        mainTable.add("What room was the person killed in").align(Align.left);
+        mainTable.row().align(Align.left);
+        mainTable.add("").align(Align.left);
+        mainTable.row().align(Align.left);
+
+        mainTable.add(cBRoomEntrance).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBRoomStudy);
+        mainTable.add(cBRoomBedroom).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBRoomLibrary);
+        mainTable.add(cBRoomDining).align(Align.left);
         mainTable.row();
 
-        mainTable.add(cBRoomLibrary);
+        mainTable.add(cBRoomKitchen).align(Align.left);
         mainTable.row();
 
+        mainTable.add(cBRoomGuest).align(Align.left);
+        mainTable.row();
+
+        mainTable.add(cBRoomMusicroom).align(Align.left);
+        mainTable.row();
+
+        mainTable.add(cBRoomBathroom).align(Align.left);
+        mainTable.row();
+
+        mainTable.add(cBRoomStudy).align(Align.left);
+        mainTable.row();
+
+        mainTable.add(cBRoomLibrary).align(Align.left);
+        mainTable.row();
+
+        mainTable.add(cBRoomLibrary).align(Align.left);
+        mainTable.row();
+
+        mainTable.add("").align(Align.left);
+        mainTable.add("").align(Align.left);
+        mainTable.add(makeAccusationBtn).size(100, 50).align(Align.left);
+        mainTable.row();
         mainTable.add(mainBtn).size(100, 50).align(Align.left);
-        mainTable.row().colspan(2);
-        mainTable.add(exitBtn).size(100, 50).align(Align.left);
+
+
 
         //Add table to stage
         stage.addActor(mainTable);
+
+        //If clicked go back to CluedoGame
+        mainBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //mainScreen.backpressed=true;
+                //mainScreen.setScreen();
+                //Gdx.input.setCatchBackKey(true);
+
+                //NOT WORKING CORRECT BECAUSE YOU GET NEW GREEN INPUT
+                try {
+                    mainScreen.setScreen(new Cluedo(gameClass, mainScreen));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //mainScreen.setScreen(cluedo);
+            }
+        });
+
+        //If clicked exit the game
+        makeAccusationBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(suspectChecked && weaponChecked && roomChecked){
+                    if(isActuallyTheMurderer(accusedWeapon, accusedSuspect,
+                            accusedRoom)){
+                        //TODO that it displays for everybody
+                        mainScreen.setScreen(new GameOverScreen());
+                        makeAccusationBtn.setDisabled(false);
+                        Gdx.app.log("TRUE", "TRUE");
+                    }else {
+                        //TODO if somebody made a wrong accusation
+                        Gdx.graphics.setTitle("Your accusation was not correct");
+                        Gdx.app.log("WRONG", "WRONG");
+                        Gdx.app.exit(); //should the person be excluded or not?
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -229,21 +256,20 @@ public class AccusationScreen implements Screen {
         double y = Gdx.input.getY(0);
         int row = mainTable.getRow((float) (Gdx.graphics.getHeight() - y));
         Gdx.app.log("Row", "Row: " + row);
-        if (Gdx.input.justTouched()){
+        if (Gdx.input.justTouched()){       //if this is not here it goes into the second if, but then it is a loop
             if (row <= 30 && row >= 0) {
                 try {
                     Actor actor = mainTable.getChild(row);
                     Gdx.app.log("Class", actor.getClass().getName());
-
                     if (actor instanceof CheckBox) {
                         CheckBox myCheckBox = (CheckBox) actor;
                         String clickedCheckbox = myCheckBox.getText().toString();
-                        if (row <= 6 && row >= 0) {
-                            checkedSuspect(clickedCheckbox);
-                        } else if (row > 6 && row <= 12) {
-                            checkedWeapon(clickedCheckbox);
-                        } else if (row > 12 && row <= 21) {
-                            checkedRoom(clickedCheckbox);
+                        if (row <= 13 && row >= 7) {
+                            if(!suspectChecked)     checkedSuspect(clickedCheckbox);
+                        } else if (row > 13 && row <= 19) {
+                            if(!weaponChecked)      checkedWeapon(clickedCheckbox);
+                        } else if (row > 19 && row <= 29) {
+                            if(!roomChecked)        checkedRoom(clickedCheckbox);
                         }
                     }
 
@@ -253,134 +279,139 @@ public class AccusationScreen implements Screen {
             }
         }
 
-        if(suspectChecked && weaponChecked && roomChecked){
-            isActuallyTheMurderer(accusedSuspect, accusedWeapon, accusedRoom);
-        }
     }
 
     private void checkedSuspect(String checkBox){
-        switch (checkBox) {
-            //PERSON
-            case "MissScarlett":
-                checkCheckBox(cBMissScarlett);
-                accusedSuspect = cBMissScarlett;
-                suspectChecked = true;
-                break;
-            case "ColonelMustard":
-                checkCheckBox(cBColonelMustard);
-                accusedSuspect = cBColonelMustard;
-                suspectChecked = true;
-                break;
-            case "MrsWhite":
-                checkCheckBox(cBMrsWhite);
-                accusedSuspect = cBMrsWhite;
-                suspectChecked = true;
-                break;
-            case "Reverend":
-                checkCheckBox(cBReverend);
-                accusedSuspect = cBReverend;
-                suspectChecked = true;
-                break;
-            case "MrsPeacock":
-                checkCheckBox(cBMrsPeacock);
-                accusedSuspect = cBMrsPeacock;
-                suspectChecked = true;
-                break;
-            case "ProfessorPlum":
-                checkCheckBox(cBProfessorPlum);
-                accusedSuspect = cBProfessorPlum;
-                suspectChecked = true;
-                break;
-            default:
-                break;
+        if(!suspectChecked) {
+            switch (checkBox) {
+                //PERSON
+                case "MissScarlett":
+                    suspectChecked = true;
+                    checkCheckBox(cBMissScarlett);
+                    accusedSuspect = cBMissScarlett;
+                    break;
+                case "ColonelMustard":
+                    suspectChecked = true;
+                    checkCheckBox(cBColonelMustard);
+                    accusedSuspect = cBColonelMustard;
+                    break;
+                case "MrsWhite":
+                    suspectChecked = true;
+                    checkCheckBox(cBMrsWhite);
+                    accusedSuspect = cBMrsWhite;
+                    break;
+                case "Reverend":
+                    suspectChecked = true;
+                    checkCheckBox(cBReverend);
+                    accusedSuspect = cBReverend;
+                    break;
+                case "MrsPeacock":
+                    suspectChecked = true;
+                    checkCheckBox(cBMrsPeacock);
+                    accusedSuspect = cBMrsPeacock;
+                    break;
+                case "ProfessorPlum":
+                    suspectChecked = true;
+                    checkCheckBox(cBProfessorPlum);
+                    accusedSuspect = cBProfessorPlum;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     //here
     private void checkedWeapon(String checkBox){
-        switch (checkBox) {
-            case "Knife":
-                checkCheckBox(cBWeaponKnife);
-                accusedWeapon = cBWeaponKnife;
-                weaponChecked = true;
-                break;
-            case "Rope":
-                checkCheckBox(cBWeaponRope);
-                accusedWeapon = cBWeaponRope;
-                weaponChecked = true;
-                break;
-            case "Gun":
-                checkCheckBox(cBWeaponGun);
-                accusedWeapon = cBWeaponGun;
-                weaponChecked = true;
-                break;
-            case "Poison":
-                checkCheckBox(cBWeaponPoison);
-                accusedWeapon = cBWeaponPoison;
-                weaponChecked = true;
-                break;
-            case "Pipe":
-                checkCheckBox(cBWeaponPipe);
-                accusedWeapon = cBWeaponPipe;
-                weaponChecked = true;
-                break;
-            case "Candle":
-                checkCheckBox(cBWeaponCandle);
-                accusedWeapon = cBWeaponCandle;
-                weaponChecked = true;
-                break;
-            default:
-                break;
+        if(!weaponChecked) {
+            switch (checkBox) {
+                case "Knife":
+                    weaponChecked = true;
+                    checkCheckBox(cBWeaponKnife);
+                    accusedWeapon = cBWeaponKnife;
+                    break;
+                case "Rope":
+                    weaponChecked = true;
+                    checkCheckBox(cBWeaponRope);
+                    accusedWeapon = cBWeaponRope;
+                    break;
+                case "Gun":
+                    weaponChecked = true;
+                    checkCheckBox(cBWeaponGun);
+                    accusedWeapon = cBWeaponGun;
+                    break;
+                case "Poison":
+                    weaponChecked = true;
+                    checkCheckBox(cBWeaponPoison);
+                    accusedWeapon = cBWeaponPoison;
+                    break;
+                case "Pipe":
+                    weaponChecked = true;
+                    checkCheckBox(cBWeaponPipe);
+                    accusedWeapon = cBWeaponPipe;
+                    break;
+                case "Candle":
+                    weaponChecked = true;
+                    checkCheckBox(cBWeaponCandle);
+                    accusedWeapon = cBWeaponCandle;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     private void checkedRoom(String checkBox){
-        switch (checkBox) {
-            case "Entrance":
-                checkCheckBox(cBRoomEntrance);
-                accusedRoom = cBRoomEntrance;
-                roomChecked = true;
-                break;
-            case "Bathroom":
-                checkCheckBox(cBRoomBathroom);
-                accusedRoom = cBRoomBathroom;
-                roomChecked = true;
-                break;
-            case "Dining":
-                checkCheckBox(cBRoomDining);
-                accusedRoom = cBRoomDining;
-                roomChecked = true;
-                break;
-            case "Kitchen":
-                checkCheckBox(cBRoomKitchen);
-                accusedRoom = cBRoomKitchen;
-                roomChecked = true;
-                break;
-            case "Bedroom":
-                checkCheckBox(cBRoomBedroom);
-                accusedRoom = cBRoomBedroom;
-                roomChecked = true;
-                break;
-            case "Musicroom":
-                checkCheckBox(cBRoomMusicroom);
-                accusedRoom = cBRoomMusicroom;
-                roomChecked = true;
-                break;
-            case "Guestroom":
-                checkCheckBox(cBRoomGuest);
-                accusedRoom = cBRoomGuest;
-                roomChecked = true;
-                break;
-            case "Study":
-                checkCheckBox(cBRoomStudy);
-                accusedRoom = cBRoomStudy;
-                roomChecked = true;
-                break;
-            case "Library":
-                checkCheckBox(cBRoomLibrary);
-                accusedRoom = cBRoomLibrary;
-                roomChecked = true;
-                break;
+        if(!roomChecked) {
+            switch (checkBox) {
+                case "Entrance":
+                    roomChecked = true;
+                    checkCheckBox(cBRoomEntrance);
+                    accusedRoom = cBRoomEntrance;
+                    break;
+                case "Bathroom":
+                    roomChecked = true;
+                    checkCheckBox(cBRoomBathroom);
+                    accusedRoom = cBRoomBathroom;
+                    break;
+                case "Dining":
+                    roomChecked = true;
+                    checkCheckBox(cBRoomDining);
+                    accusedRoom = cBRoomDining;
+                    break;
+                case "Kitchen":
+                    roomChecked = true;
+                    checkCheckBox(cBRoomKitchen);
+                    accusedRoom = cBRoomKitchen;
+                    break;
+                case "Bedroom":
+                    roomChecked = true;
+                    checkCheckBox(cBRoomBedroom);
+                    accusedRoom = cBRoomBedroom;
+                    break;
+                case "Musicroom":
+                    roomChecked = true;
+                    checkCheckBox(cBRoomMusicroom);
+                    accusedRoom = cBRoomMusicroom;
+                    break;
+                case "Guestroom":
+                    roomChecked = true;
+                    checkCheckBox(cBRoomGuest);
+                    accusedRoom = cBRoomGuest;
+                    break;
+                case "Study":
+                    roomChecked = true;
+                    checkCheckBox(cBRoomStudy);
+                    accusedRoom = cBRoomStudy;
+                    break;
+                case "Library":
+                    roomChecked = true;
+                    checkCheckBox(cBRoomLibrary);
+                    accusedRoom = cBRoomLibrary;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -420,14 +451,12 @@ public class AccusationScreen implements Screen {
 
     public boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon, CheckBox cBAccusedPerson,
                                          CheckBox cBAccusedRoom){
-        if(cbAccusedWeapon.toString() == murderer.getMurdererWeaponString()){
-            if(cBAccusedPerson.toString() == murderer.getMurdererSuspectString()){
-                return cBAccusedRoom.toString() == murderer.getMurdererRoomString();
-            }else{
-                return false;
+        if(cbAccusedWeapon.toString().equals(connectionService.getWeapon())){
+            if(cBAccusedPerson.toString().equals(connectionService.getSuspect())){
+                return cBAccusedRoom.toString().equals(connectionService.getRoom());
             }
-        }else return false;
+        }
+
+        return false;
     }
-
-
 }

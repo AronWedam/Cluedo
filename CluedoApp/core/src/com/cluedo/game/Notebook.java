@@ -62,7 +62,6 @@ public class Notebook {
         if(notebook == null){
             notebook = new Notebook(player);
         }
-
         return notebook;
     }
 
@@ -298,15 +297,6 @@ public class Notebook {
         return pane;
     }
 
-    public TextButton getBtnAccusation(){
-        return btnAccusation;
-    }
-
-    public TextButton getBtnDice(){
-        return btnDice;
-    }
-
-    public TextButton getBtnFinishMove() {return btnFinishMove;}
 
     public Table getTable(){
         return table;
