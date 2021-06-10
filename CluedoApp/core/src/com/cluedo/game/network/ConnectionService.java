@@ -17,7 +17,7 @@ public class ConnectionService {
     private OkHttpClient client;
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-    private static final String Url = "https://se2ss21cluedo.herokuapp.com/";
+    private static final String Url = "http://10.0.0.4:3000/";
     //"Free" Error Code. Signals that something in the Method for calling the server failed
     private final int ServerErrorCode = 512;
     private String GameId;
@@ -25,6 +25,10 @@ public class ConnectionService {
     private List<NetworkPlayer> players;
     private static ConnectionService instance;
     private NetworkPlayer currentPlayer;
+    //The finishing combination
+    private String Weapon;
+    private String Room;
+    private String Suspect;
 
     private ConnectionService() {
         client = new OkHttpClient();
@@ -54,11 +58,23 @@ public class ConnectionService {
         this.currentPlayer = currentPlayer;
     }
 
+    public String getWeapon() {
+        return Weapon;
+    }
+
+    public String getRoom() {
+        return Room;
+    }
+
+    public String getSuspect() {
+        return Suspect;
+    }
+
     /*
-            Method to register for a game with a username.
-            Takes in the username.
-            Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
-        */
+                Method to register for a game with a username.
+                Takes in the username.
+                Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
+            */
     public int RegisterForGame(String username)
     {
         try {
@@ -98,6 +114,7 @@ public class ConnectionService {
                 JSONObject jsonObject = new JSONObject(responseBody);
                 GameId = jsonObject.getString("gameId");
                 GetPlayersOfJsonObject(responseBody);
+                GetFinishCombinationOfJsonObject(responseBody);
             }
 
             return response.code();
@@ -185,5 +202,13 @@ public class ConnectionService {
         }
 
         players = tempPlayers;
+    }
+
+    private void GetFinishCombinationOfJsonObject(String responseBody) {
+        JSONObject jsonObject = new JSONObject(responseBody);
+        JSONObject finishCombination = jsonObject.getJSONObject("finishCombination");
+        Weapon = finishCombination.getString("weapon");
+        Room = finishCombination.getString("room");
+        Suspect = finishCombination.getString("suspect");
     }
 }

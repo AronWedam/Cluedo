@@ -24,9 +24,21 @@ let suspects = [
   'ProfessorPlum',
 ];
 
-let rooms = [];
+let rooms = [
+  'Entrance',
+  'Bedroom',
+  'Dining',
+  'Kitchen',
+  'Guestroom',
+  'Musicroom',
+  'Bathroom',
+  'Study',
+  'Library',
+];
 
 let weapons = ['Knife', 'Rope', 'Gun', 'Poison', 'Pipe', 'Candle'];
+
+let finishCombination = undefined;
 
 let spawnPositions = [
   {
@@ -58,7 +70,6 @@ let spawnPositions = [
 //Array of all current Games running
 let currentGame = undefined;
 let stopwatchRunning = false;
-let positionCounter = 0;
 let playerImagesCounter = 0;
 let firstPlayer = true;
 
@@ -87,12 +98,14 @@ router.post('/register', function (req, res) {
     stopwatchRunning = true;
   }
 
-  playerImagesCounter++;
-  positionCounter++;
   console.log('Register');
   console.log(players);
   res.status(200).send({ playerId: playerId });
 });
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
 //Route for the players to check if the game
 router.get('/checkGameState', function (req, res) {
@@ -101,7 +114,22 @@ router.get('/checkGameState', function (req, res) {
     players.length <= 6 &&
     stopwatch.read() / 1000 >= 10
   ) {
-    currentGame = { gameId: uuidv4(), players: players };
+    randomWeapon = weapons[getRandomInt(weapons.length - 1)];
+    randomRoom = rooms[getRandomInt(rooms.length - 1)];
+    randomSuspect = suspects[getRandomInt(suspects.length - 1)];
+    if (!finishCombination)
+      finishCombination = {
+        weapon: randomWeapon,
+        room: randomRoom,
+        suspect: randomSuspect,
+      };
+    if (!currentGame)
+      currentGame = {
+        gameId: uuidv4(),
+        players: players,
+        finishCombination: finishCombination,
+      };
+
     console.log(currentGame);
     res.status(200).json(currentGame);
   } else {
@@ -161,7 +189,6 @@ router.post('/accuse', function (req, res) {});
 router.get('/reset', function (req, res) {
   players = [];
   currentGame = undefined;
-  positionCounter = 0;
   playerImagesCounter = 0;
   firstPlayer = true;
   stopwatch.stop();
