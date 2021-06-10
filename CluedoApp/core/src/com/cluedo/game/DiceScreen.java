@@ -1,72 +1,68 @@
 package com.cluedo.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cluedo.game.network.ConnectionService;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-//import sun.applet.Main;
-
-//made with help of tutorial https://www.codeandweb.com/texturepacker/tutorials/libgdx-physics
-// and https://gamefromscratch.com/libgdx-tutorial-3b-simple-animation/
-
-public class DiceScreen implements Screen, InputProcessor {
-
-    private Sprite dice1;
-    private Sprite dice2;
-    private Viewport viewport;
-    private Stage stage;
-    private BitmapFont font;
-    private Skin skin;
-    int numberDice=2;
-    int sideDice=6;
-    Random random=new Random();
-    int sum=0;
-    int diceOneValue, diceTwoValue;
-    private MainScreen mainScreen;
-    private GameClass gameClass;
-    private ConnectionService connectionService;
+public class DiceScreen implements Screen {
     private SpriteBatch batch;
+    protected Stage stage;
 
+    private Viewport viewport;
     private OrthographicCamera camera;
     private TextureAtlas atlas;
-    private TextureAtlas textureAtlas;
-    private ExtendViewport viewport1;
-    private Animation animation;
-    private float elapsedTime = 0;
-    Dice dice;
-
+    protected Skin skin;
+    private MainScreen mainScreen;
+    private Cluedo cludeo;
+    private ConnectionService connectionService;
+    private Texture dice1;
+    private Texture dice2;
+    private Texture dice3;
+    private Texture dice4;
+    private Texture dice5;
+    private Texture dice6;
+    private List<Texture> diceList;
     private int dice1Value;
     private int dice2Value;
+    private Texture currentDice1;
+    private Texture currentDice2;
+    private boolean didAlreadyRoll;
+    private Toast.ToastFactory toastFactory;
+    private BitmapFont font;
+    private Toast toast;
+    private GameClass game;
 
-    //to store sprites
-    final HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
-
-
-
-    public DiceScreen(GameClass game, MainScreen mainScreen){
+    public DiceScreen(GameClass game, MainScreen mainScreen, Cluedo cluedo){
         this.mainScreen = mainScreen;
-        gameClass = game;
+        this.cludeo = cluedo;
+        this.game = game;
         connectionService = ConnectionService.GetInstance();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
+        font = new BitmapFont();
+        toastFactory = new Toast.ToastFactory.Builder()
+                .font(font)
+                .build();
+        diceList = new ArrayList<>();
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
@@ -78,14 +74,50 @@ public class DiceScreen implements Screen, InputProcessor {
         camera.update();
 
         stage = new Stage(viewport, batch);
-        textureAtlas=new TextureAtlas("sprites.txt");
+        didAlreadyRoll = false;
 
-        addSprites();
+        dice1 = new Texture(Gdx.files.internal("dice/dice1.png"));
+        dice2 = new Texture(Gdx.files.internal("dice/dice2.png"));
+        dice3 = new Texture(Gdx.files.internal("dice/dice3.png"));
+        dice4 = new Texture(Gdx.files.internal("dice/dice4.png"));
+        dice5 = new Texture(Gdx.files.internal("dice/dice5.png"));
+        dice6 = new Texture(Gdx.files.internal("dice/dice6.png"));
+        diceList.add(dice1);
+        diceList.add(dice2);
+        diceList.add(dice3);
+        diceList.add(dice4);
+        diceList.add(dice5);
+        diceList.add(dice6);
     }
 
     @Override
     public void show() {
+        //Stage controls the input
         Gdx.input.setInputProcessor(stage);
+
+        //Create Table
+        Table mainTable = new Table(skin);
+        mainTable.setFillParent(true);
+        mainTable.align(Align.top);
+
+        //Create Buttons
+        TextButton mainBtn = new TextButton("Back to Game", skin);
+
+        //If clicked go back to MainMenu
+        mainBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mainScreen.setScreen(cludeo);
+            }
+        });
+
+        //Add Text and Buttons to the table
+        mainTable.add("Tap the screen to roll the dice!").align(Align.center);
+        mainTable.row().colspan(2);
+        mainTable.add(mainBtn).size(100, 50).align(Align.left);
+
+        //Add table to stage
+        stage.addActor(mainTable);
     }
 
     @Override
@@ -93,88 +125,34 @@ public class DiceScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-        batch.begin();
-
-        drawSprite("dice1", 40, 450);
-        drawSprite("dice6", 304, 450);
-        gameClass.font.draw(gameClass.batch, "Tap to roll", 230, 450);
-
-        batch.end();
-
-
-
-        if (Gdx.input.isTouched()) {
-            diceAnimation();
-            dice1Value = dice.randomDiceValue();
-            dice2Value = dice.randomDiceValue();
-
-            switch (dice1Value) {
-                case 1:
-                    drawSprite("dice1.png", 40, 450);
-                case 2:
-                    drawSprite("dice2.png", 40, 450);
-                case 3:
-                    drawSprite("dice3.png", 40, 450);
-                case 4:
-                    drawSprite("dice4.png", 40, 450);
-                case 5:
-                    drawSprite("dice5.png", 40, 450);
-                case 6:
-                    drawSprite("dice6.png", 40, 450);
-
-            }
-            switch (dice2Value) {
-                case 1:
-                    drawSprite("dice1.png", 304, 450);
-                case 2:
-                    drawSprite("dice2.png", 304, 450);
-                case 3:
-                    drawSprite("dice3.png", 304, 450);
-                case 4:
-                    drawSprite("dice4.png", 304, 450);
-                case 5:
-                    drawSprite("dice5.png", 304, 450);
-                case 6:
-                    drawSprite("dice6.png", 304, 450);
-            }
-        }
-
         stage.act();
         stage.draw();
-    }
-    //https://www.codeandweb.com/texturepacker/tutorials/libgdx-physics
-    //method to make drawing spites easier
-    private void drawSprite(String name, float x, float y){
-        Sprite sprite=sprites.get(name);
-        sprite.setPosition(x,y);
-        sprite.draw(batch);
-    }
-    //method to add sprites to HashMap
-    private void addSprites(){
-        Array<TextureAtlas.AtlasRegion> regions= textureAtlas.getRegions();
 
-        for (TextureAtlas.AtlasRegion region : regions){
-            Sprite sprite= textureAtlas.createSprite(region.name);
+        if (toast != null) {
+            toast.render(Gdx.graphics.getDeltaTime());
+        }
 
-            sprites.put(region.name, sprite);
+        if (currentDice1 != null && currentDice2 != null) {
+            game.batch.begin();
+            game.batch.draw(currentDice1, 30, 400);
+            game.batch.draw(currentDice2, 320, 400);
+            game.batch.end();
+        }
+
+        if (Gdx.input.justTouched() && !didAlreadyRoll) {
+            Random rand = new Random();
+            dice1Value = rand.nextInt(6);
+            dice2Value = rand.nextInt(6);
+            dice1Value++;
+            dice2Value++;
+            int diceValue = dice1Value + dice2Value;
+            currentDice1 = diceList.get(dice1Value-1);
+            currentDice2 = diceList.get(dice2Value-1);
+            toast = toastFactory.create("You rolled the value: " + diceValue, Toast.Length.LONG);
+            cludeo.setMoves(diceValue);
+            didAlreadyRoll = true;
         }
     }
-    public void diceAnimation(){
-        textureAtlas=new TextureAtlas(Gdx.files.internal("dice/diceSprite.png"));
-
-        //need to pass amount of time per frame, using all of the regions available (dice sides 1-6)
-        animation=new Animation(1/15f, textureAtlas.getRegions());
-
-        batch.begin();
-        //drawing the current frame from the animation to the screen
-        //true tells to loop the animation
-        elapsedTime += Gdx.graphics.getDeltaTime();
-        batch.draw((Texture) animation.getKeyFrame(elapsedTime, true),40,450);
-        batch.draw((Texture) animation.getKeyFrame(elapsedTime, true),304,450);
-        batch.end();
-    }
-
 
     @Override
     public void resize(int width, int height) {
@@ -185,70 +163,23 @@ public class DiceScreen implements Screen, InputProcessor {
 
     @Override
     public void pause() {
+
     }
 
     @Override
     public void resume() {
+
     }
 
     @Override
     public void hide() {
+
     }
 
     @Override
     public void dispose() {
         skin.dispose();
         atlas.dispose();
-        textureAtlas.dispose();
-        sprites.clear();
-    }
-
-
-    public int getDice1Value() {
-        return dice1Value;
-    }
-
-    public int getDice2Value() {
-        return dice2Value;
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
+        batch.dispose();
     }
 }
