@@ -1,6 +1,5 @@
 package com.cluedo.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -18,18 +17,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import com.cluedo.game.network.NetworkPlayer;
 
@@ -62,24 +52,18 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     private AccusationScreen accusationScreen;
     private MainScreen mainScreen;
     private RulesScreen rulesScreen;
-    private DiceScreen diceScreen;
     Stage stage;
 
     Viewport viewport = new ScreenViewport();
 
     InputMultiplexer multiplexer;
-
-    private int moves = 6;
-
-    Dice dice = new Dice(game);
+    private int moves = 0;
 
     public Cluedo(final GameClass game, MainScreen mainScreen) throws InterruptedException {
         this.game = game;
         this.mainScreen = mainScreen;
         accusationScreen = new AccusationScreen(mainScreen, game);
         rulesScreen = new RulesScreen(game, mainScreen);
-        //diceScreen = new DiceScreen(game, mainScreen);
-
         viewport.setScreenSize(1, 1);
 
         players = new ArrayList<>();
@@ -140,7 +124,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 piece.height = 32;
 
                 //create the player
-                player = new Player(new Texture(currentPlayer.getPlayerImage()), cluedoMap, (int) piece.x, (int) piece.y);
+                player = new Player(new Texture(currentPlayer.getPlayerImage()), cluedoMap, (int) piece.x, (int) piece.y, this);
                 this.currentPlayer = player;
                 connectionService.setCurrentPlayer(currentPlayer);
 
@@ -155,7 +139,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 rect.height = 32;
 
                 //create the player
-                Player otherPlayer = new Player(new Texture(currentPlayer.getPlayerImage()), cluedoMap, (int) rect.x, (int) rect.y);
+                Player otherPlayer = new Player(new Texture(currentPlayer.getPlayerImage()), cluedoMap, (int) rect.x, (int) rect.y, this);
                 tempPlayers.add(otherPlayer);
                 tempRectange.add(rect);
             }
@@ -173,6 +157,11 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         });
         GetGameThread.start();
         GetGameThread.join();
+
+        if (connectionService.isGameOver()) {
+            mainScreen.setScreen(new GameOverScreen());
+        }
+
         SyncNetworkPlayersWithGamePlayers();
     }
 
@@ -183,6 +172,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
     @Override
     public void render(float delta) {
+        boolean moved = false;
         //clear the screen
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -213,11 +203,10 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         }
 
         //Single Touch enables player Movement for 1 Tile
-        if (Gdx.input.justTouched() && Gdx.input.getX(0) > Gdx.graphics.getWidth() / 3 && moves >= 0) {
+        if (Gdx.input.justTouched() && Gdx.input.getX(0) > Gdx.graphics.getWidth() / 3 && moves > 0) {
             double x = Gdx.input.getX(0) - (Gdx.graphics.getWidth() / 3);
             double y = Gdx.input.getY(0);
 
-            //TODO first if doesn't work properly
             //Check if Player figure is touched - doesn't work at all
             if (x >= player.getX() - 1 || x <= player.getX() + 1 && y >= player.getY() - 1 || y <= player.getY() + 1) {
                 //Save Coordinates of Touched Area
@@ -230,35 +219,43 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     if (touchPos.x > player.getX() || touchPos.y > player.getY()) {
                         if (touchPos.x > player.getX()) {
                             player.setPos((int) player.getX() + 32, player.getY());
-                            moves = moves - 1;
                             if (touchPos.y > player.getY()) {
                                 player.setPos((int) player.getX(), player.getY() + 32);
-                                moves = moves - 1;
+                            }
+                            if (!moved) {
+                                moves--;
+                                moved = true;
                             }
                         } else if (touchPos.y > player.getY()) {
                             player.setPos((int) player.getX(), player.getY() + 32);
-                            moves = moves - 1;
+                            if (!moved) {
+                                moves--;
+                                moved = true;
+                            }
                         }
                     }
 
                     if (touchPos.x < player.getX() || touchPos.y < player.getY()) {
                         if (touchPos.x < player.getX()) {
                             player.setPos((int) player.getX() - 32, player.getY());
-                            moves = moves - 1;
                             if (touchPos.y < player.getY()) {
                                 player.setPos((int) player.getX(), player.getY() - 32);
-                                moves = moves - 1;
+                            }
+                            if (!moved) {
+                                moves--;
                             }
                         } else if (touchPos.y < player.getY()) {
                             player.setPos((int) player.getX(), player.getY() - 32);
-                            moves = moves - 1;
+                            if (!moved) {
+                                moves--;
+                            }
                         }
                     }
                 }
-
-
+            }
         }
-        } if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth() / 3) {
+
+        if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth() / 3) {
             double y = Gdx.input.getY(0);
             int row = notebook.table.getRow((float) (Gdx.graphics.getHeight() - y));
             Gdx.app.log("Row", "Row: " + row);
@@ -283,11 +280,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     Gdx.app.log("Exception", ex.getMessage());
                 }
             }
-
-            //Gdx.app.log("Button Text", myButton.getText().toString());
-            //Gdx.app.log("Button label", myButton.getLabel().toString());
         }
-
     }
 
     private void buttonsNotebook(String clickedName){
@@ -323,12 +316,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 mainScreen.setScreen(rulesScreen);
                 break;
             case "Dice":
-                //TODO ADD DICE SCREENS AND WHATEVER IS NEEDED
-                //Uncomment this to open the DiceScreen when there are not errors
-                //mainScreen.setScreen(diceScreen);
-
-                // moves = dice.getDiceOneValue() + dice.getDiceTwoValue();
-                moves = 6;
+                mainScreen.setScreen(new DiceScreen(game, mainScreen, this));
                 break;
             default:
                 break;
@@ -595,5 +583,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     @Override
     public void pinchStop() {
 
+    }
+
+    public void setMoves(int moves) {
+        this.moves = moves;
+    }
+
+    public int getMoves() {
+        return moves;
     }
 }

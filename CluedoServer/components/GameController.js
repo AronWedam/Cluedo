@@ -72,6 +72,7 @@ let currentGame = undefined;
 let stopwatchRunning = false;
 let playerImagesCounter = 0;
 let firstPlayer = true;
+let isGameOver = false;
 
 // define the home page route
 router.get('/', function (req, res) {
@@ -128,6 +129,7 @@ router.get('/checkGameState', function (req, res) {
         gameId: uuidv4(),
         players: players,
         finishCombination: finishCombination,
+        isGameOver: isGameOver,
       };
 
     console.log(currentGame);
@@ -183,7 +185,10 @@ router.post('/finishMove', function (req, res) {
   res.status(200).send();
 });
 
-router.post('/accuse', function (req, res) {});
+router.post('/finishGame', function (req, res) {
+  currentGame.isGameOver = true;
+  res.status(200).send();
+});
 
 //Resetting the new Gamestate
 router.get('/reset', function (req, res) {
@@ -191,6 +196,7 @@ router.get('/reset', function (req, res) {
   currentGame = undefined;
   playerImagesCounter = 0;
   firstPlayer = true;
+  isGameOver = false;
   stopwatch.stop();
   res.send(200).send();
 });

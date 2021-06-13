@@ -17,7 +17,7 @@ public class ConnectionService {
     private OkHttpClient client;
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-    private static final String Url = "http://10.0.0.4:3000/";
+    private static final String Url = "https://se2ss21cluedo.herokuapp.com/";
     //"Free" Error Code. Signals that something in the Method for calling the server failed
     private final int ServerErrorCode = 512;
     private String GameId;
@@ -29,6 +29,7 @@ public class ConnectionService {
     private String Weapon;
     private String Room;
     private String Suspect;
+    private boolean isGameOver;
 
     private ConnectionService() {
         client = new OkHttpClient();
@@ -70,11 +71,15 @@ public class ConnectionService {
         return Suspect;
     }
 
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
     /*
-                Method to register for a game with a username.
-                Takes in the username.
-                Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
-            */
+                    Method to register for a game with a username.
+                    Takes in the username.
+                    Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
+                */
     public int RegisterForGame(String username)
     {
         try {
@@ -113,6 +118,7 @@ public class ConnectionService {
                 String responseBody = response.body().string();
                 JSONObject jsonObject = new JSONObject(responseBody);
                 GameId = jsonObject.getString("gameId");
+                isGameOver = jsonObject.getBoolean("isGameOver");
                 GetPlayersOfJsonObject(responseBody);
                 GetFinishCombinationOfJsonObject(responseBody);
             }
@@ -186,6 +192,22 @@ public class ConnectionService {
             return response.code();
         } catch (Exception ex) {
             Gdx.app.log("Finish Move Error", ex.getMessage());
+        }
+
+        return ServerErrorCode;
+    }
+
+    public int FinishGame() {
+        try {
+            Request request = new Request.Builder()
+                    .url(Url + "finishGame")
+                    .get()
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            return response.code();
+        } catch (Exception ex) {
+            Gdx.app.log("Get Game Error", ex.getMessage());
         }
 
         return ServerErrorCode;
