@@ -123,10 +123,7 @@ public class AccusationScreen implements Screen {
         cBMissScarlett.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!suspectChecked){
-                    suspectChecked = true;
-                    accusedSuspect = cBMissScarlett;
-                }
+                checkBoxListenerSuspect(cBMissScarlett);
             }
         });
         mainTable.row();
@@ -135,22 +132,17 @@ public class AccusationScreen implements Screen {
         cBColonelMustard.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!suspectChecked){
-                    suspectChecked = true;
-                    accusedSuspect = cBColonelMustard;
-                }
+                checkBoxListenerSuspect(cBColonelMustard);
             }
         });
         mainTable.row();
+
 
         mainTable.add(cBMrsWhite).align(Align.left);
         cBMrsWhite.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!suspectChecked){
-                    suspectChecked = true;
-                    accusedSuspect = cBMrsWhite;
-                }
+                checkBoxListenerSuspect(cBMrsWhite);
             }
         });
         mainTable.row();
@@ -159,10 +151,7 @@ public class AccusationScreen implements Screen {
         cBReverend.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!suspectChecked){
-                    suspectChecked = true;
-                    accusedSuspect = cBReverend;
-                }
+                checkBoxListenerSuspect(cBReverend);
             }
         });
         mainTable.row();
@@ -171,10 +160,7 @@ public class AccusationScreen implements Screen {
         cBMrsPeacock.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!suspectChecked){
-                    suspectChecked = true;
-                    accusedSuspect = cBMrsPeacock;
-                }
+                checkBoxListenerSuspect(cBMrsPeacock);
             }
         });
         mainTable.row();
@@ -183,10 +169,7 @@ public class AccusationScreen implements Screen {
         cBProfessorPlum.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!suspectChecked){
-                    suspectChecked = true;
-                    accusedSuspect = cBProfessorPlum;
-                }
+                checkBoxListenerSuspect(cBProfessorPlum);
             }
         });
         mainTable.row();
@@ -202,10 +185,7 @@ public class AccusationScreen implements Screen {
         cBWeaponKnife.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!weaponChecked){
-                    weaponChecked = true;
-                    accusedWeapon = cBWeaponKnife;
-                }
+                checkBoxListenerWeapon(cBWeaponKnife);
             }
         });
         mainTable.row();
@@ -214,10 +194,7 @@ public class AccusationScreen implements Screen {
         cBWeaponRope.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!weaponChecked){
-                    weaponChecked = true;
-                    accusedWeapon = cBWeaponRope;
-                }
+                checkBoxListenerWeapon(cBWeaponRope);
             }
         });
         mainTable.row();
@@ -226,10 +203,7 @@ public class AccusationScreen implements Screen {
         cBWeaponGun.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!weaponChecked){
-                    weaponChecked = true;
-                    accusedWeapon = cBWeaponGun;
-                }
+                checkBoxListenerWeapon(cBWeaponGun);
             }
         });
         mainTable.row();
@@ -238,10 +212,7 @@ public class AccusationScreen implements Screen {
         cBWeaponPoison.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!weaponChecked){
-                    weaponChecked = true;
-                    accusedWeapon = cBWeaponPoison;
-                }
+                checkBoxListenerWeapon(cBWeaponPoison);
             }
         });
         mainTable.row();
@@ -250,10 +221,7 @@ public class AccusationScreen implements Screen {
         cBWeaponPipe.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!weaponChecked){
-                    weaponChecked = true;
-                    accusedWeapon = cBWeaponPipe;
-                }
+                checkBoxListenerWeapon(cBWeaponPipe);
             }
         });
         mainTable.row();
@@ -262,10 +230,7 @@ public class AccusationScreen implements Screen {
         cBWeaponCandle.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!weaponChecked){
-                    weaponChecked = true;
-                    accusedWeapon = cBWeaponCandle;
-                }
+                checkBoxListenerWeapon(cBWeaponCandle);
             }
         });
         mainTable.row();
@@ -281,10 +246,7 @@ public class AccusationScreen implements Screen {
         cBRoomEntrance.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!roomChecked){
-                    roomChecked = true;
-                    accusedRoom = cBRoomEntrance;
-                }
+                checkBoxListenerRoom(cBRoomEntrance);
             }
         });
         mainTable.row();
@@ -293,10 +255,7 @@ public class AccusationScreen implements Screen {
         cBRoomBedroom.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!roomChecked){
-                    roomChecked = true;
-                    accusedRoom = cBRoomBedroom;
-                }
+                checkBoxListenerRoom(cBRoomBedroom);
             }
         });
         mainTable.row();
@@ -305,10 +264,7 @@ public class AccusationScreen implements Screen {
         cBRoomDining.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!roomChecked){
-                    roomChecked = true;
-                    accusedRoom = cBRoomDining;
-                }
+                checkBoxListenerRoom(cBRoomDining);
             }
         });
         mainTable.row();
@@ -317,10 +273,7 @@ public class AccusationScreen implements Screen {
         cBRoomKitchen.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!roomChecked){
-                    roomChecked = true;
-                    accusedRoom = cBRoomKitchen;
-                }
+                checkBoxListenerRoom(cBRoomKitchen);
             }
         });
         mainTable.row();
@@ -329,10 +282,7 @@ public class AccusationScreen implements Screen {
         cBRoomGuest.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!roomChecked){
-                    roomChecked = true;
-                    accusedRoom = cBRoomGuest;
-                }
+                checkBoxListenerRoom(cBRoomGuest);
             }
         });
         mainTable.row();
@@ -341,10 +291,7 @@ public class AccusationScreen implements Screen {
         cBRoomMusicroom.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!roomChecked){
-                    roomChecked = true;
-                    accusedRoom = cBRoomMusicroom;
-                }
+                checkBoxListenerRoom(cBRoomMusicroom);
             }
         });
         mainTable.row();
@@ -353,10 +300,7 @@ public class AccusationScreen implements Screen {
         cBRoomBathroom.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!roomChecked){
-                    roomChecked = true;
-                    accusedRoom = cBRoomBathroom;
-                }
+                checkBoxListenerRoom(cBRoomBathroom);
             }
         });
         mainTable.row();
@@ -365,10 +309,7 @@ public class AccusationScreen implements Screen {
         cBRoomStudy.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!roomChecked){
-                    roomChecked = true;
-                    accusedRoom = cBRoomStudy;
-                }
+                checkBoxListenerRoom(cBRoomStudy);
             }
         });
         mainTable.row();
@@ -377,10 +318,7 @@ public class AccusationScreen implements Screen {
         cBRoomLibrary.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(!roomChecked){
-                    roomChecked = true;
-                    accusedRoom = cBRoomLibrary;
-                }
+                checkBoxListenerRoom(cBRoomLibrary);
             }
         });
         mainTable.row();
@@ -408,6 +346,13 @@ public class AccusationScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 accusationButton();
+            }
+        });
+
+        makeFinalAccusationBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //accusationButton();
             }
         });
     }
@@ -475,6 +420,27 @@ public class AccusationScreen implements Screen {
                 Gdx.app.log("WRONG", "WRONG");
                 //Gdx.app.exit(); //should the person be excluded or not?
             }
+        }
+    }
+
+    private void checkBoxListenerSuspect(CheckBox checkBox){
+        if(!suspectChecked){
+            suspectChecked = true;
+            accusedSuspect = checkBox;
+        }
+    }
+
+    private void checkBoxListenerWeapon(CheckBox checkBox){
+        if(!weaponChecked){
+            weaponChecked = true;
+            accusedWeapon = cBWeaponCandle;
+        }
+    }
+
+    private void checkBoxListenerRoom(CheckBox checkBox){
+        if(!roomChecked){
+            roomChecked = true;
+            accusedRoom = cBRoomLibrary;
         }
     }
 
