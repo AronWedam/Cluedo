@@ -25,7 +25,7 @@ import javax.swing.text.TabExpander;
 
 
 public class AccusationScreen implements Screen {
-    private Cluedo cludeo;
+    private Cluedo cluedo;
     private SpriteBatch batch;
     protected Stage stage;
     private Viewport viewport;
@@ -35,10 +35,8 @@ public class AccusationScreen implements Screen {
     private MainScreen mainScreen;
     private GameClass gameClass;
     private ConnectionService connectionService;
-    private WrongAccusationWindow wrongAccusationWindow;
     Murderer murderer;
     Table mainTable;
-    Cluedo cluedo;
 
     //my accusation
     CheckBox accusedSuspect;
@@ -78,7 +76,7 @@ public class AccusationScreen implements Screen {
 
     public AccusationScreen(GameClass game,MainScreen mainScreen, Cluedo cluedo){
         this.mainScreen = mainScreen;
-        this.cludeo = cluedo;
+        this.cluedo = cluedo;
         this.gameClass = game;
         connectionService = ConnectionService.GetInstance();
 
@@ -176,6 +174,7 @@ public class AccusationScreen implements Screen {
 
 
         mainTable.add("").align(Align.left);
+        mainTable.row().align(Align.left);
         mainTable.add("What weapon did they use").align(Align.left);
         mainTable.row().align(Align.left);
         mainTable.add("").align(Align.left);
@@ -237,6 +236,7 @@ public class AccusationScreen implements Screen {
 
 
         mainTable.add("").align(Align.left);
+        mainTable.row().align(Align.left);
         mainTable.add("What room was the person killed in").align(Align.left);
         mainTable.row().align(Align.left);
         mainTable.add("").align(Align.left);
@@ -325,10 +325,12 @@ public class AccusationScreen implements Screen {
 
 
         mainTable.add("").align(Align.left);
-        mainTable.add("").align(Align.left);
-        mainTable.add(makeAccusationBtn).size(100, 50).align(Align.center);
         mainTable.row();
-        mainTable.add(cluedoBtn).size(100, 50).align(Align.left);
+        mainTable.row();
+        mainTable.add(makeAccusationBtn).size(130, 50).align(Align.left);
+        mainTable.row();
+        mainTable.add(makeFinalAccusationBtn).size(100, 50).align(Align.left);
+        mainTable.add(cluedoBtn).size(100, 50).align(Align.center);
 
         //Add table to stage
         stage.addActor(mainTable);
@@ -337,7 +339,7 @@ public class AccusationScreen implements Screen {
         cluedoBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                mainScreen.setScreen(cludeo);
+                mainScreen.setScreen(cluedo);
             }
         });
 
@@ -352,7 +354,7 @@ public class AccusationScreen implements Screen {
         makeFinalAccusationBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //accusationButton();
+                finalAccusationButton();
             }
         });
     }
@@ -403,22 +405,26 @@ public class AccusationScreen implements Screen {
                 Gdx.app.log("TRUE", "TRUE");
             }else {
                 //TODO if somebody made a wrong accusation
-                /*
-                wrongAccusationWindow = new WrongAccusationWindow();
-                wrongAccusationWindow.setSize(400, 300);
-                wrongAccusationWindow.setModal(true);
-                wrongAccusationWindow.setVisible(true);
-                wrongAccusationWindow.setMovable(true);
-                wrongAccusationWindow.setPosition(Gdx.graphics.getWidth()/2 - wrongAccusationWindow.getWidth()/2, Gdx.graphics.getHeight()/2 - wrongAccusationWindow.getHeight()/2);
-
-                stage.addActor(wrongAccusationWindow);
-
-
-                 */
-                new WrongAccusationWindow();
-                Gdx.graphics.setTitle("Your accusation was not correct");
+                mainScreen.setScreen(new WrongAccusationScreen(cluedo, mainScreen));
                 Gdx.app.log("WRONG", "WRONG");
-                //Gdx.app.exit(); //should the person be excluded or not?
+            }
+        }
+    }
+
+    private void finalAccusationButton(){
+        if(suspectChecked && weaponChecked && roomChecked){
+            if(isActuallyTheMurderer(accusedWeapon, accusedSuspect,
+                    accusedRoom)){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        connectionService.FinishGame();
+                    }
+                }).start();
+                mainScreen.setScreen(new GameOverScreen());
+                Gdx.app.log("TRUE", "TRUE");
+            }else {
+                Gdx.app.exit();
             }
         }
     }
