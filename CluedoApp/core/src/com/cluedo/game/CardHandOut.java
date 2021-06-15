@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 public class CardHandOut {
+    int currentType = -1;
+    ArrayList<Card> currArrayList;
 
     public Card randomlyPickCardOfType(int type) {
         Card picked_card = null;
@@ -14,25 +16,53 @@ public class CardHandOut {
 
         int total = 0;
         if (type == Card.TYPE_SUSPECT) {
-            total = Card.numSuspects;
+            total = Card.suspectsArrayList.size();
+            currUsedArrayList(0);
+
         }
         if (type == Card.TYPE_ROOM) {
-            total = Card.numRooms;
+            total = Card.roomsArrayList.size();
+            currUsedArrayList(1);
         }
         if (type == Card.TYPE_WEAPON) {
-            total = Card.numWeapons;
+            total = Card.weaponsArrayList.size();
+            currUsedArrayList(2);
         }
 
+
         for (int i = 0; i < total; i++) {
-            Card card = new Card(type, i);
+            Card card = currArrayList.get(i);
             picks.add(card);
+
         }
 
         Collections.shuffle(picks);
 
         picked_card = picks.get(0);
+        deleteUsedCard(picked_card.getValue());
 
         return picked_card;
+    }
+
+    private ArrayList<Card> currUsedArrayList(int i){
+        if(i == 0){
+            currArrayList = Card.suspectsArrayList;
+        }else if(i == 1){
+            currArrayList =  Card.roomsArrayList;
+        }else if(i == 2) {
+            currArrayList =  Card.weaponsArrayList;
+        }
+        return currArrayList;
+    }
+
+    private void deleteUsedCard(int i){
+        if(currentType ==  0){
+            Card.suspectsArrayList.remove(i);
+        }else if(currentType == 1){
+            Card.roomsArrayList.remove(i);
+        }else if(currentType == 2) {
+            Card.weaponsArrayList.remove(i);
+        }
     }
 
 

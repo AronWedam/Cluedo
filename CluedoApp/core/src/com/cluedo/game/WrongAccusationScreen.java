@@ -25,9 +25,7 @@ public class WrongAccusationScreen implements Screen {
     private TextureAtlas atlas;
     protected Skin skin;
     private MainScreen mainScreen;
-    //Cluedo cluedo;
 
-    Murderer murderer;
 
     public WrongAccusationScreen(Cluedo cluedo, MainScreen mainScreen){
         this.cluedo = cluedo;
@@ -57,19 +55,9 @@ public class WrongAccusationScreen implements Screen {
         mainTable.setFillParent(true);
         mainTable.align(Align.top);
 
-        //Create Buttons
-        //TextButton mainBtn = new TextButton("Back to Main", skin);
-        TextButton cluedoBtn = new TextButton("Back to Main", skin);
+        TextButton cluedoBtn = new TextButton("Back to the Game", skin);
 
 
-
-        //If clicked exit the game
-        cluedoBtn.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
 
 
         //Add Text and Buttons to the table
@@ -78,7 +66,9 @@ public class WrongAccusationScreen implements Screen {
         mainTable.add("Your accusation was wrong.").align(Align.left);
         mainTable.row().colspan(2);
 
-        mainTable.add(cluedoBtn).size(100, 50).align(Align.center);
+        mainTable.add(" ");
+        mainTable.row().colspan(2);
+        mainTable.add(cluedoBtn).size(200, 50).align(Align.center);
 
         //Add table to stage
         stage.addActor(mainTable);
