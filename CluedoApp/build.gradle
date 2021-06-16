@@ -71,5 +71,7 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         implementation 'com.squareup.okhttp3:okhttp:4.3.1'
         implementation 'org.json:json:20171018'
+        testImplementation 'junit:junit:4.13'
+        implementation 'junit:junit:4.12'
     }
 }

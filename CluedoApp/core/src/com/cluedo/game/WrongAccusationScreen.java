@@ -16,17 +16,20 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class GameOverScreen implements Screen {
+public class WrongAccusationScreen implements Screen {
+    private Cluedo cluedo;
     private SpriteBatch batch;
     protected Stage stage;
     private Viewport viewport;
     private OrthographicCamera camera;
     private TextureAtlas atlas;
     protected Skin skin;
+    private MainScreen mainScreen;
 
-    Murderer murderer;
 
-    public GameOverScreen(){
+    public WrongAccusationScreen(Cluedo cluedo, MainScreen mainScreen){
+        this.cluedo = cluedo;
+        this.mainScreen = mainScreen;
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
 
@@ -52,28 +55,28 @@ public class GameOverScreen implements Screen {
         mainTable.setFillParent(true);
         mainTable.align(Align.top);
 
-        //Create Buttons
-        //TextButton mainBtn = new TextButton("Back to Main", skin);
-        TextButton exitBtn = new TextButton("Exit Game", skin);
-
-        //If clicked exit the game
-        exitBtn.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
-
+        TextButton cluedoBtn = new TextButton("Back to the Game", skin);
 
         //Add Text and Buttons to the table
-        mainTable.add("GAME OVER").align(Align.center);
+        mainTable.add("WRONG ACCUSATION").align(Align.center);
         mainTable.row().colspan(2);
-        mainTable.add("A correct accusation was pronounced.").align(Align.left);
+        mainTable.add("Your accusation was wrong.").align(Align.left);
         mainTable.row().colspan(2);
 
+        mainTable.add(" ");
+        mainTable.row().colspan(2);
+        mainTable.add(cluedoBtn).size(200, 50).align(Align.center);
 
-        mainTable.add(exitBtn).size(100, 50).align(Align.left);
+        //Add table to stage
+        stage.addActor(mainTable);
 
+        //If clicked go back to CluedoGame
+        cluedoBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mainScreen.setScreen(cluedo);
+            }
+        });
         //Add table to stage
         stage.addActor(mainTable);
     }
@@ -93,8 +96,6 @@ public class GameOverScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
     }
-
-
     @Override
     public void pause() {
 

@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.Align;
 import com.cluedo.game.network.ConnectionService;
 
 public class Notebook {
-
     public Table table;
     private ScrollPane pane;
     final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -296,10 +295,4 @@ public class Notebook {
     public ScrollPane getPane(){
         return pane;
     }
-
-
-    public Table getTable(){
-        return table;
-    }
-
 }

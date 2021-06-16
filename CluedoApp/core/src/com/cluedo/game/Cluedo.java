@@ -49,7 +49,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     Notebook notebook;
     private Player currentPlayer;
 
-    private AccusationScreen accusationScreen;
     private MainScreen mainScreen;
     private RulesScreen rulesScreen;
     Stage stage;
@@ -62,7 +61,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     public Cluedo(final GameClass game, MainScreen mainScreen) throws InterruptedException {
         this.game = game;
         this.mainScreen = mainScreen;
-        accusationScreen = new AccusationScreen(mainScreen, game);
         rulesScreen = new RulesScreen(game, mainScreen);
         viewport.setScreenSize(1, 1);
 
@@ -96,8 +94,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         multiplexer.addProcessor(1,gestureDetector);
 
         Gdx.input.setInputProcessor(multiplexer);
-
-
 
         currentPlayer.setMyRoomCard();
         currentPlayer.setMySuspectCard();
@@ -302,15 +298,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
                 break;
             case "Accusation":
-                if(currentPlayer.checkIfPlayerIsInRoom(player.getX(),player.getY())) {
-                    notebook.btnAccusation.setDisabled(true);
-                    mainScreen.setScreen(accusationScreen);
-                    notebook.btnAccusation.setDisabled(false);
-                }
-
-                notebook.btnAccusation.setDisabled(true);
-                mainScreen.setScreen(accusationScreen);
-                notebook.btnAccusation.setDisabled(false);
+                mainScreen.setScreen(new AccusationScreen(game, mainScreen, this));
                 break;
             case "Help":
                 mainScreen.setScreen(rulesScreen);

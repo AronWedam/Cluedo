@@ -3,7 +3,6 @@ package com.cluedo.game.network;
 import com.badlogic.gdx.Gdx;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +41,6 @@ public class ConnectionService {
 
         return instance;
     }
-
-    public String GetGameId() {return GameId;}
 
     public String GetPlayerId() {return PlayerId;}
 
