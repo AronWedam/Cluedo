@@ -93,7 +93,8 @@ public class MenuScreen implements Screen{
                                     Thread.sleep(500);
                                 } while(responseCode != 200);
                             } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                Gdx.app.log("Thread-Exception", e.getMessage());
+                                Thread.currentThread().interrupt();
                             }
                         }
                     });
@@ -102,7 +103,8 @@ public class MenuScreen implements Screen{
                     mainScreen.setScreen(new Cluedo(gameClass, mainScreen));
                     startBtn.setDisabled(false);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Gdx.app.log("Thread-Exception", e.getMessage());
+                    Thread.currentThread().interrupt();
                 }
             }
         });

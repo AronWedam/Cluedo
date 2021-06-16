@@ -55,7 +55,8 @@ public class Player {
         try {
             GetGameThread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Gdx.app.log("Thread-Exception", e.getMessage());
+            Thread.currentThread().interrupt();
         }
 
         for (NetworkPlayer player : connectionService.getPlayers()) {
@@ -78,7 +79,8 @@ public class Player {
             try {
                 postPosThread.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Gdx.app.log("Thread-Exception", e.getMessage());
+                Thread.currentThread().interrupt();
             }
         }
     }
