@@ -18,7 +18,6 @@ public class CardHandOut {
         if (type == Card.TYPE_SUSPECT) {
             total = Card.suspectsArrayList.size();
             currUsedArrayList(0);
-
         }
         if (type == Card.TYPE_ROOM) {
             total = Card.roomsArrayList.size();
@@ -30,10 +29,16 @@ public class CardHandOut {
         }
 
 
-        for (int i = 0; i < total; i++) {
-            Card card = currArrayList.get(i);
-            picks.add(card);
+        //for (int i = 0; i < total; i++)
+            //Card card = currArrayList.get(i);
+            //picks.add(card);
+        //}
 
+        picks = currArrayList;
+
+        //FOR ME BUT Still Exception
+        for(int i = 0; i < total; i++){
+            System.out.println(picks.get(i));
         }
 
         Collections.shuffle(picks);
@@ -56,14 +61,14 @@ public class CardHandOut {
     }
 
     private void deleteUsedCard(int i){
+        int cardToRemove = Card.suspectsArrayList.indexOf(i);
+
         if(currentType ==  0){
-            Card.suspectsArrayList.remove(i);
+            Card.suspectsArrayList.remove(cardToRemove);
         }else if(currentType == 1){
-            Card.roomsArrayList.remove(i);
+            Card.roomsArrayList.remove(cardToRemove);
         }else if(currentType == 2) {
-            Card.weaponsArrayList.remove(i);
+            Card.weaponsArrayList.remove(cardToRemove);
         }
     }
-
-
 }
