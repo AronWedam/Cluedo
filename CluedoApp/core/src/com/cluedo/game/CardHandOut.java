@@ -6,7 +6,26 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import sun.util.resources.cldr.ar.CalendarData_ar_DZ;
+
+
 public class CardHandOut {
+
+    private CardHandOut(){
+        Card.setRoomsArrayList();
+        Card.setSuspectsArrayList();
+        Card.setWeaponsArrayList();
+    };
+
+    private static CardHandOut cardHandOut = null;
+
+    public static CardHandOut getInstance(){
+        if(cardHandOut == null){
+            cardHandOut = new CardHandOut();
+        }
+        return cardHandOut;
+    }
+
     int currentType = -1;
     ArrayList<Card> currArrayList;
 
