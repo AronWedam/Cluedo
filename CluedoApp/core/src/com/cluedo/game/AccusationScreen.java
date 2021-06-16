@@ -399,14 +399,9 @@ public class AccusationScreen implements Screen {
                         connectionService.FinishGame();
                     }
                 }).start();
-                //TODO that it displays for everybody
                 mainScreen.setScreen(new GameOverScreen());
-                //makeAccusationBtn.setDisabled(false);
-                Gdx.app.log("TRUE", "TRUE");
             }else {
-                //TODO if somebody made a wrong accusation
                 mainScreen.setScreen(new WrongAccusationScreen(cluedo, mainScreen));
-                Gdx.app.log("WRONG", "WRONG");
             }
         }
     }
@@ -422,7 +417,6 @@ public class AccusationScreen implements Screen {
                     }
                 }).start();
                 mainScreen.setScreen(new GameOverScreen());
-                Gdx.app.log("TRUE", "TRUE");
             }else {
                 Gdx.app.exit();
             }
@@ -439,14 +433,14 @@ public class AccusationScreen implements Screen {
     private void checkBoxListenerWeapon(CheckBox checkBox){
         if(!weaponChecked){
             weaponChecked = true;
-            accusedWeapon = cBWeaponCandle;
+            accusedWeapon = checkBox;
         }
     }
 
     private void checkBoxListenerRoom(CheckBox checkBox){
         if(!roomChecked){
             roomChecked = true;
-            accusedRoom = cBRoomLibrary;
+            accusedRoom = checkBox;
         }
     }
 

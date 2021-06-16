@@ -2,12 +2,6 @@ package com.cluedo.game;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
-import sun.util.resources.cldr.ar.CalendarData_ar_DZ;
-
 
 public class CardHandOut {
 
@@ -33,32 +27,17 @@ public class CardHandOut {
         Card picked_card = null;
         ArrayList<Card> picks = new ArrayList<>();
 
-        int total = 0;
         if (type == Card.TYPE_SUSPECT) {
-            total = Card.suspectsArrayList.size();
             currUsedArrayList(0);
         }
         if (type == Card.TYPE_ROOM) {
-            total = Card.roomsArrayList.size();
             currUsedArrayList(1);
         }
         if (type == Card.TYPE_WEAPON) {
-            total = Card.weaponsArrayList.size();
             currUsedArrayList(2);
         }
 
-
-        //for (int i = 0; i < total; i++)
-            //Card card = currArrayList.get(i);
-            //picks.add(card);
-        //}
-
         picks = currArrayList;
-
-        //FOR ME BUT Still Exception
-        for(int i = 0; i < total; i++){
-            System.out.println(picks.get(i));
-        }
 
         Collections.shuffle(picks);
 
@@ -81,7 +60,6 @@ public class CardHandOut {
 
     private void deleteUsedCard(int i){
         int cardToRemove = Card.suspectsArrayList.indexOf(i);
-
         if(currentType ==  0){
             Card.suspectsArrayList.remove(cardToRemove);
         }else if(currentType == 1){

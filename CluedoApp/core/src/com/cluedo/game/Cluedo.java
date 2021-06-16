@@ -95,7 +95,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         Gdx.input.setInputProcessor(multiplexer);
 
-
         currentPlayer.setMyRoomCard();
         currentPlayer.setMySuspectCard();
         currentPlayer.setMyWeaponCard();
