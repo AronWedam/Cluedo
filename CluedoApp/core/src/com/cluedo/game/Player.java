@@ -114,7 +114,6 @@ public class Player {
      */
 
     public boolean valid(int x, int y){
-
         //Make Sure it keeps inside Gameboard
         if(x < 0) return false;
         if(y < 0) return false;

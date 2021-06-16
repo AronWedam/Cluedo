@@ -57,9 +57,6 @@ public class WrongAccusationScreen implements Screen {
 
         TextButton cluedoBtn = new TextButton("Back to the Game", skin);
 
-
-
-
         //Add Text and Buttons to the table
         mainTable.add("WRONG ACCUSATION").align(Align.center);
         mainTable.row().colspan(2);

@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-
 public class GameOverScreen implements Screen {
     private SpriteBatch batch;
     protected Stage stage;
@@ -57,8 +56,6 @@ public class GameOverScreen implements Screen {
         //TextButton mainBtn = new TextButton("Back to Main", skin);
         TextButton exitBtn = new TextButton("Exit Game", skin);
 
-
-
         //If clicked exit the game
         exitBtn.addListener(new ClickListener(){
             @Override
@@ -96,7 +93,6 @@ public class GameOverScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
     }
-
 
 
     @Override

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -18,8 +17,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cluedo.game.network.ConnectionService;
-
-import java.awt.Menu;
 
 public class RulesScreen implements Screen {
     private SpriteBatch batch;
@@ -31,7 +28,6 @@ public class RulesScreen implements Screen {
     private MainScreen mainScreen;
     private GameClass gameClass;
     private ConnectionService connectionService;
-    BitmapFont font = new BitmapFont();
 
     public RulesScreen(GameClass game, MainScreen mainScreen){
         this.mainScreen = mainScreen;
@@ -80,7 +76,6 @@ public class RulesScreen implements Screen {
                 Gdx.app.exit();
             }
         });
-
 
         //Add Text and Buttons to the table
         mainTable.add("RULES").align(Align.center);

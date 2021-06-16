@@ -21,18 +21,6 @@ public class NetworkPlayer {
         return Id;
     }
 
-    public void setId(String id) {
-        Id = id;
-    }
-
-    public String getUsername() {
-        return Username;
-    }
-
-    public void setUsername(String username) {
-        Username = username;
-    }
-
     public int getX() {
         return x;
     }
@@ -53,15 +41,7 @@ public class NetworkPlayer {
         return playerImage;
     }
 
-    public void setPlayerImage(String playerImage) {
-        this.playerImage = playerImage;
-    }
-
     public Boolean getMaywalk() {
         return maywalk;
-    }
-
-    public void setMaywalk(Boolean maywalk) {
-        this.maywalk = maywalk;
     }
 }

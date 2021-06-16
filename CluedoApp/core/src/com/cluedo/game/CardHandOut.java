@@ -24,8 +24,8 @@ public class CardHandOut {
     ArrayList<Card> currArrayList;
 
     public Card randomlyPickCardOfType(int type) {
-        Card picked_card = null;
-        ArrayList<Card> picks = new ArrayList<>();
+        Card picked_card;
+        ArrayList<Card> picks;
 
         if (type == Card.TYPE_SUSPECT) {
             currUsedArrayList(0);

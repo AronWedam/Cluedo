@@ -1,10 +1,8 @@
 package com.cluedo.game;
 
-
 import java.util.ArrayList;
 
 public class Card {
-
     private int type;
     private int value;
 
@@ -76,10 +74,6 @@ public class Card {
     public Card(int type, int value) {
         this.type = type;
         this.value = value;
-    }
-
-    public int getType() {
-        return type;
     }
 
     public int getValue() {
