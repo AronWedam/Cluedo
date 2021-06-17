@@ -49,23 +49,22 @@ public class CardHandOut {
 
     private ArrayList<Card> currUsedArrayList(int i){
         if(i == 0){
-            currArrayList = Card.suspectsArrayList;
+            currArrayList = Card.getSuspectsArrayList();
         }else if(i == 1){
-            currArrayList =  Card.roomsArrayList;
+            currArrayList =  Card.getRoomsArrayList();
         }else if(i == 2) {
-            currArrayList =  Card.weaponsArrayList;
+            currArrayList =  Card.getWeaponsArrayList();
         }
         return currArrayList;
     }
 
     private void deleteUsedCard(int i){
-        int cardToRemove = Card.suspectsArrayList.indexOf(i);
         if(currentType ==  0){
-            Card.suspectsArrayList.remove(cardToRemove);
+            Card.getSuspectsArrayList().remove(i);
         }else if(currentType == 1){
-            Card.roomsArrayList.remove(cardToRemove);
+            Card.getRoomsArrayList().remove(i);
         }else if(currentType == 2) {
-            Card.weaponsArrayList.remove(cardToRemove);
+            Card.getWeaponsArrayList().remove(i);
         }
     }
 }
