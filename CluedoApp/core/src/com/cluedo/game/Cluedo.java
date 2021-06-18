@@ -58,7 +58,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     InputMultiplexer multiplexer;
     private int moves = 0;
 
-    public Cluedo(final GameClass game, MainScreen mainScreen) throws InterruptedException {
+    public Cluedo(final GameClass game, MainScreen mainScreen) {
         this.game = game;
         this.mainScreen = mainScreen;
         rulesScreen = new RulesScreen(game, mainScreen);
@@ -144,15 +144,21 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         pieces = tempRectange;
     }
 
-    private void getPlayers() throws InterruptedException {
-        Thread GetGameThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.GetGame();
-            }
-        });
-        GetGameThread.start();
-        GetGameThread.join();
+    private void getPlayers() {
+        try {
+            Thread GetGameThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    connectionService.GetGame();
+                }
+            });
+            GetGameThread.start();
+            GetGameThread.join();
+        } catch (InterruptedException e) {
+            Gdx.app.log("Thread-Exception", e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+
 
         if (connectionService.isGameOver()) {
             mainScreen.setScreen(new GameOverScreen());
@@ -184,11 +190,7 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         game.batch.setProjectionMatrix(camera.combined);
 
         if (!Gdx.input.justTouched()) {
-            try {
-                getPlayers();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            getPlayers();
         }
 
         //Draw the players
@@ -293,7 +295,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     try {
                         finishMoveThread.join();
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Gdx.app.log("Thread-Exception", e.getMessage());
+                        Thread.currentThread().interrupt();
                     }
                 }
                 break;
