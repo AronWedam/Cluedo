@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -18,25 +20,38 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cluedo.game.network.ConnectionService;
 
-//Source: https://stackoverflow.com/questions/32451921/how-to-create-libgdx-main-menu-screen
-// How to set up the classes and screens: https://mfg.fhstp.ac.at/development/erste-schritte-mit-libgdx-android/
 public class MenuScreen implements Screen{
     private SpriteBatch batch;
     protected Stage stage;
     private Viewport viewport;
     private OrthographicCamera camera;
-    private TextureAtlas atlas;
-    protected Skin skin;
+    private TextureAtlas atlas = new TextureAtlas("uiskin.atlas");
+    protected Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
     private MainScreen mainScreen;
     private GameClass gameClass;
     private ConnectionService connectionService;
+
+    //Create Buttons
+    final Label lblTitle = new Label("Please enter a username to start the game!", skin);
+    final TextButton startBtn = new TextButton("Start Game", skin);
+    final TextButton rulesBtn= new TextButton("Rules", skin);
+    final TextButton exitBtn = new TextButton("Exit Game", skin);
+    final TextField textFieldUsername = new TextField("", skin);
+    final Label lblLoading = new Label("Waiting for other Players...", skin);
+    private BitmapFont font;
+    private Toast.ToastFactory toastFactory;
+    private Toast toast;
 
     public MenuScreen(MainScreen mainScreen, GameClass game){
         gameClass = game;
         this.mainScreen = mainScreen;
         connectionService = ConnectionService.GetInstance();
-        atlas = new TextureAtlas("uiskin.atlas");
-        skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
+        font = new BitmapFont();
+        font.getData().setScale(2,2);
+
+        toastFactory = new Toast.ToastFactory.Builder()
+                .font(font)
+                .build();
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
@@ -56,56 +71,61 @@ public class MenuScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
 
         //Create Table
-        Table mainTable = new Table(skin);
+        final Table mainTable = new Table(skin);
         mainTable.setFillParent(true);
         mainTable.align(Align.center);
-
-        //Create Buttons
-        final TextButton startBtn = new TextButton("Start Game", skin);
-        TextButton rulesBtn= new TextButton("Rules", skin);
-        TextButton exitBtn = new TextButton("Exit Game", skin);
-        final TextField textFieldUsername = new TextField("", skin);
         textFieldUsername.setSize(250, 50);
 
         //Add listeners to buttons
         startBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                try {
-                    startBtn.setDisabled(true);
-                    Thread RegisterThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            connectionService.RegisterForGame(textFieldUsername.getText());
-                        }
-                    });
-                    RegisterThread.start();
-                    RegisterThread.join();
+                if (textFieldUsername.getText().length() > 0 ) {
+                    swapView(false);
+                    mainTable.row().colspan(2);
+                    mainTable.add(lblLoading).size(300, 50);
 
-                    Thread CheckRegisterThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                int responseCode;
+                    try {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                connectionService.RegisterForGame(textFieldUsername.getText());
 
-                                do {
-                                    responseCode = connectionService.CheckRegistration();
-                                    Thread.sleep(500);
-                                } while(responseCode != 200);
-                            } catch (InterruptedException e) {
-                                Gdx.app.log("Thread-Exception", e.getMessage());
-                                Thread.currentThread().interrupt();
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            int responseCode;
+
+                                            do {
+                                                responseCode = connectionService.CheckRegistration();
+                                                Thread.sleep(500);
+                                            } while(responseCode != 200);
+
+                                            Gdx.app.postRunnable(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    mainScreen.setScreen(new Cluedo(gameClass, mainScreen));
+                                                }
+                                            });
+                                        } catch (InterruptedException ex) {
+                                            swapView(true);
+                                            Gdx.app.log("Thread-Exception", ex.getMessage());
+                                            Thread.currentThread().interrupt();
+                                        }
+                                    }
+                                }).start();
                             }
-                        }
-                    });
-                    CheckRegisterThread.start();
-                    CheckRegisterThread.join();
-                    mainScreen.setScreen(new Cluedo(gameClass, mainScreen));
-                    startBtn.setDisabled(false);
-                } catch (InterruptedException e) {
-                    Gdx.app.log("Thread-Exception", e.getMessage());
-                    Thread.currentThread().interrupt();
+                        }).start();
+                    } catch (Exception ex) {
+                        swapView(true);
+                        Gdx.app.log("Thread-Exception", ex.getMessage());
+                        Thread.currentThread().interrupt();
+                    }
+                } else {
+                    toast = toastFactory.create("Please enter a username", Toast.Length.LONG);
                 }
+
             }
         });
         //If clicked exit the game
@@ -125,7 +145,7 @@ public class MenuScreen implements Screen{
         });
 
         //Add Buttons to the table
-        mainTable.add("Please enter a username to start the game!").align(Align.center);
+        mainTable.add(lblTitle).align(Align.center);
         mainTable.row().colspan(2);
         mainTable.add(textFieldUsername).size(300, 50);
         mainTable.add(startBtn).size(100, 50);
@@ -137,6 +157,14 @@ public class MenuScreen implements Screen{
         stage.addActor(mainTable);
     }
 
+    public void swapView(boolean visibility) {
+        lblTitle.setVisible(visibility);
+        startBtn.setVisible(visibility);
+        exitBtn.setVisible(visibility);
+        rulesBtn.setVisible(visibility);
+        textFieldUsername.setVisible(visibility);
+    }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
@@ -144,6 +172,10 @@ public class MenuScreen implements Screen{
 
         stage.act();
         stage.draw();
+
+        if (toast != null) {
+            toast.render(Gdx.graphics.getDeltaTime());
+        }
     }
 
     @Override

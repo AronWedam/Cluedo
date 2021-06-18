@@ -59,6 +59,7 @@ public class DiceScreen implements Screen {
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
         font = new BitmapFont();
+        font.getData().setScale(2, 2);
         toastFactory = new Toast.ToastFactory.Builder()
                 .font(font)
                 .build();

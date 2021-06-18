@@ -188,17 +188,22 @@ router.post('/finishMove', function (req, res) {
 router.post('/finishGame', function (req, res) {
   currentGame.isGameOver = true;
   res.status(200).send();
+  resetEverything();
 });
 
 //Resetting the new Gamestate
 router.get('/reset', function (req, res) {
+  resetEverything();
+  res.send(200).send();
+});
+
+function resetEverything() {
   players = [];
   currentGame = undefined;
   playerImagesCounter = 0;
   firstPlayer = true;
   isGameOver = false;
   stopwatch.stop();
-  res.send(200).send();
-});
+}
 
 module.exports = router;

@@ -19,7 +19,6 @@ public class ConnectionService {
     private static final String Url = "https://se2ss21cluedo.herokuapp.com/";
     //"Free" Error Code. Signals that something in the Method for calling the server failed
     private final int ServerErrorCode = 512;
-    private String GameId;
     private String PlayerId;
     private List<NetworkPlayer> players;
     private static ConnectionService instance;
@@ -73,10 +72,10 @@ public class ConnectionService {
     }
 
     /*
-                    Method to register for a game with a username.
-                    Takes in the username.
-                    Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
-                */
+        Method to register for a game with a username.
+        Takes in the username.
+        Returns the HTTP-Code. If the code 512 is returned then there was an error when calling the server.
+    */
     public int RegisterForGame(String username)
     {
         try {
@@ -114,7 +113,6 @@ public class ConnectionService {
             if (response.code() == 200) {
                 String responseBody = response.body().string();
                 JSONObject jsonObject = new JSONObject(responseBody);
-                GameId = jsonObject.getString("gameId");
                 isGameOver = jsonObject.getBoolean("isGameOver");
                 GetPlayersOfJsonObject(responseBody);
                 GetFinishCombinationOfJsonObject(responseBody);
