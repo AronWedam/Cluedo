@@ -10,6 +10,7 @@ public class TestCard {
     Card testCard2 = new Card(2,2);
     Card testCard3 = new Card(1, 0);
     Card testCard5 = new Card(1,1);
+    Card testCard6 = new Card(0,0);
 
     @Test
     public void testGetValueRight(){
@@ -33,5 +34,17 @@ public class TestCard {
     public void testEqualsFalse(){
         Assert.assertFalse(testCard0.equals(testCard1));
         Assert.assertFalse(testCard2.equals(testCard5));
+    }
+
+    @Test
+    public void testGetTypeRight(){
+        Assert.assertEquals(1, testCard0.getType());
+        Assert.assertEquals(2, testCard2.getType());
+    }
+
+    @Test
+    public void testGetTypeWrong(){
+        Assert.assertNotEquals(1, testCard2.getType());
+        Assert.assertNotEquals(2, testCard6.getType());
     }
 }

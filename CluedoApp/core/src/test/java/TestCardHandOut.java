@@ -68,7 +68,7 @@ public class TestCardHandOut {
         int sizeBeforeReducing = 6;
         cardHandOut.randomlyPickCardOfType(0);
         Assert.assertNotEquals(sizeBeforeReducing,
-                cardHandOut.currArrayList.size());
+                cardHandOut.currArrayList.size()); //SHOULD BE 5
 
     }
 
