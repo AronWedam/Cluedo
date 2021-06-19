@@ -5,7 +5,10 @@ import java.util.Collections;
 
 public class CardHandOut {
 
-    private CardHandOut(){
+    int currentType = -1;
+    public ArrayList<Card> currArrayList;
+
+    public CardHandOut(){
         Card.setRoomsArrayList();
         Card.setSuspectsArrayList();
         Card.setWeaponsArrayList();
@@ -20,8 +23,6 @@ public class CardHandOut {
         return cardHandOut;
     }
 
-    int currentType = -1;
-    ArrayList<Card> currArrayList;
 
     public Card randomlyPickCardOfType(int type) {
         Card picked_card;
@@ -30,10 +31,10 @@ public class CardHandOut {
         if (type == Card.TYPE_SUSPECT) {
             currUsedArrayList(0);
         }
-        if (type == Card.TYPE_ROOM) {
+        if (type == Card.TYPE_WEAPON) {
             currUsedArrayList(1);
         }
-        if (type == Card.TYPE_WEAPON) {
+        if (type == Card.TYPE_ROOM) {
             currUsedArrayList(2);
         }
 
@@ -42,29 +43,29 @@ public class CardHandOut {
         Collections.shuffle(picks);
 
         picked_card = picks.get(0);
-        deleteUsedCard(picked_card.getValue());
+        deleteUsedCard(picked_card.getType());
 
         return picked_card;
     }
 
     private ArrayList<Card> currUsedArrayList(int i){
         if(i == 0){
-            currArrayList = Card.getSuspectsArrayList();
-        }else if(i == 1){
-            currArrayList =  Card.getRoomsArrayList();
-        }else if(i == 2) {
-            currArrayList =  Card.getWeaponsArrayList();
+            currArrayList = Card.suspectsArrayList;
+        }else if(i == 1) {
+            currArrayList =  Card.weaponsArrayList;
+        }else if(i == 2){
+            currArrayList =  Card.roomsArrayList;
         }
         return currArrayList;
     }
 
     private void deleteUsedCard(int i){
         if(currentType ==  0){
-            Card.getSuspectsArrayList().remove(i);
-        }else if(currentType == 1){
-            Card.getRoomsArrayList().remove(i);
-        }else if(currentType == 2) {
-            Card.getWeaponsArrayList().remove(i);
+            Card.suspectsArrayList.remove(i);
+        }else if(currentType == 1) {
+            Card.weaponsArrayList.remove(i);
+        }else if(currentType == 2){
+            Card.roomsArrayList.remove(i);
         }
     }
 }

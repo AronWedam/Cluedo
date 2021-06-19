@@ -10,9 +10,9 @@ public class Card {
     public static final int TYPE_WEAPON = 1;
     public static final int TYPE_ROOM = 2;
 
-    private static ArrayList<Card> roomsArrayList = new ArrayList<>();
-    private static ArrayList<Card> weaponsArrayList = new ArrayList<>();
-    private static ArrayList<Card> suspectsArrayList = new ArrayList<>();
+    public static ArrayList<Card> roomsArrayList = new ArrayList<>();
+    public static ArrayList<Card> weaponsArrayList = new ArrayList<>();
+    public static ArrayList<Card> suspectsArrayList = new ArrayList<>();
 
     private static final Card suspect0 = new Card(0, 0);
     private static final Card suspect1 = new Card(0, 1);
@@ -88,6 +88,8 @@ public class Card {
     public int getValue() {
         return value;
     }
+
+    public int getType(){return type;}
 
     public boolean equals(Object obj) {
         if (obj instanceof Card) {
