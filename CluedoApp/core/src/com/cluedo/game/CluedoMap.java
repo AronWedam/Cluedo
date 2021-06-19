@@ -3,7 +3,6 @@ package com.cluedo.game;
 import com.badlogic.gdx.math.Vector2;
 
 public class CluedoMap {
-
     public Vector2[][] mapconstants = new Vector2[29][29];
 
     public Vector2[] invalidtiles = new Vector2[200];

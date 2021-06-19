@@ -123,6 +123,10 @@ public class Toast {
         return true;
     }
 
+    public void SetPosY(float posY) {
+        positionY = posY;
+    }
+
     /**
      * Factory for creating toasts
      */
@@ -276,5 +280,4 @@ public class Toast {
             }
         }
     }
-
 }

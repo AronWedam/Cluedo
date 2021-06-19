@@ -8,7 +8,7 @@ import com.cluedo.game.network.ConnectionService;
 import com.cluedo.game.network.NetworkPlayer;
 
 public class Player {
-    private static CardHandOut cardHandOut = new CardHandOut();
+    private static CardHandOut cardHandOut = CardHandOut.getInstance();
     SpriteBatch batch;
     Texture texture;
     private int x,y;
@@ -55,7 +55,8 @@ public class Player {
         try {
             GetGameThread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Gdx.app.log("Thread-Exception", e.getMessage());
+            Thread.currentThread().interrupt();
         }
 
         for (NetworkPlayer player : connectionService.getPlayers()) {
@@ -78,7 +79,8 @@ public class Player {
             try {
                 postPosThread.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Gdx.app.log("Thread-Exception", e.getMessage());
+                Thread.currentThread().interrupt();
             }
         }
     }
@@ -114,7 +116,6 @@ public class Player {
      */
 
     public boolean valid(int x, int y){
-
         //Make Sure it keeps inside Gameboard
         if(x < 0) return false;
         if(y < 0) return false;

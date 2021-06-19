@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -30,41 +31,40 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
     private GameClass game;
     private com.cluedo.game.network.ConnectionService connectionService;
     public Player player;
-    Rectangle piece;
-
+    private Rectangle piece;
     private List<Player> players;
     private List<Rectangle> pieces;
-
-    GestureDetector gestureDetector;
-
+    private GestureDetector gestureDetector;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
-
     private TiledMap map;
     public CluedoMap cluedoMap = new CluedoMap();
-
-    float currentZoom;
-
+    private float currentZoom;
     private SpriteBatch Notebookbatch;
-    Notebook notebook;
+    private Notebook notebook;
     private Player currentPlayer;
-
-    private AccusationScreen accusationScreen;
     private MainScreen mainScreen;
     private RulesScreen rulesScreen;
-    Stage stage;
-
-    Viewport viewport = new ScreenViewport();
-
-    InputMultiplexer multiplexer;
+    private Stage stage;
+    private Viewport viewport = new ScreenViewport();
+    private InputMultiplexer multiplexer;
     private int moves = 0;
+    private BitmapFont font;
+    private Toast.ToastFactory toastFactory;
+    private Toast toast;
+    private boolean setCardsFlag = false;
 
-    public Cluedo(final GameClass game, MainScreen mainScreen) throws InterruptedException {
+    public Cluedo(final GameClass game, MainScreen mainScreen) {
         this.game = game;
         this.mainScreen = mainScreen;
-        accusationScreen = new AccusationScreen(mainScreen, game);
         rulesScreen = new RulesScreen(game, mainScreen);
-        viewport.setScreenSize(1, 1);
+
+        font = new BitmapFont();
+        font.getData().setScale(2,2);
+
+        toastFactory = new Toast.ToastFactory.Builder()
+                .font(font)
+                .build();
 
         players = new ArrayList<>();
         pieces = new ArrayList<>();
@@ -86,25 +86,12 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
 
         getPlayers();
 
-
         //set up stage and Multiplexer to handle Inputs
         stage = new Stage(viewport);
-
         multiplexer = new InputMultiplexer();
-
         multiplexer.addProcessor(0,stage);
         multiplexer.addProcessor(1,gestureDetector);
-
         Gdx.input.setInputProcessor(multiplexer);
-
-
-
-        currentPlayer.setMyRoomCard();
-        currentPlayer.setMySuspectCard();
-        currentPlayer.setMyWeaponCard();
-
-
-        notebook = Notebook.getInstance(currentPlayer);
 
         Gdx.app.log("Room", connectionService.getRoom());
         Gdx.app.log("Weapon", connectionService.getWeapon());
@@ -148,21 +135,33 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         pieces = tempRectange;
     }
 
-    private void getPlayers() throws InterruptedException {
-        Thread GetGameThread = new Thread(new Runnable() {
+    private void getPlayers() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 connectionService.GetGame();
+
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (connectionService.isGameOver()) {
+                            mainScreen.setScreen(new GameOverScreen());
+                        }
+
+                        SyncNetworkPlayersWithGamePlayers();
+
+                        if (!setCardsFlag) {
+                            currentPlayer.setMyRoomCard();
+                            currentPlayer.setMySuspectCard();
+                            currentPlayer.setMyWeaponCard();
+
+                            notebook = Notebook.getInstance(currentPlayer);
+                            setCardsFlag = true;
+                        }
+                    }
+                });
             }
-        });
-        GetGameThread.start();
-        GetGameThread.join();
-
-        if (connectionService.isGameOver()) {
-            mainScreen.setScreen(new GameOverScreen());
-        }
-
-        SyncNetworkPlayersWithGamePlayers();
+        }).start();
     }
 
     @Override
@@ -182,17 +181,19 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
         renderer.render();
         camera.update();
 
-        mapViewport();
-        mapNotebook();
+        if (toast != null) {
+            toast.render(Gdx.graphics.getDeltaTime());
+        }
+
+        if (setCardsFlag) {
+            mapViewport();
+            mapNotebook();
+        }
 
         game.batch.setProjectionMatrix(camera.combined);
 
         if (!Gdx.input.justTouched()) {
-            try {
-                getPlayers();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            getPlayers();
         }
 
         //Draw the players
@@ -253,6 +254,8 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     }
                 }
             }
+        } else if (Gdx.input.justTouched() && Gdx.input.getX(0) > Gdx.graphics.getWidth() / 3 && moves == 0) {
+            toast = toastFactory.create("You need to roll the dice first", Toast.Length.LONG);
         }
 
         if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth() / 3) {
@@ -297,20 +300,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     try {
                         finishMoveThread.join();
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Gdx.app.log("Thread-Exception", e.getMessage());
+                        Thread.currentThread().interrupt();
                     }
                 }
                 break;
             case "Accusation":
-                if(currentPlayer.checkIfPlayerIsInRoom(player.getX(),player.getY())) {
-                    notebook.btnAccusation.setDisabled(true);
-                    mainScreen.setScreen(accusationScreen);
-                    notebook.btnAccusation.setDisabled(false);
-                }
-
-                notebook.btnAccusation.setDisabled(true);
-                mainScreen.setScreen(accusationScreen);
-                notebook.btnAccusation.setDisabled(false);
+                mainScreen.setScreen(new AccusationScreen(game, mainScreen, this));
                 break;
             case "Help":
                 mainScreen.setScreen(rulesScreen);

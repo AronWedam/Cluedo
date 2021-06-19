@@ -18,26 +18,4 @@ public class Murderer {
         murdererSuspectCard = player.getMySuspectCard();
         murdererRoomCard = player.getMyRoomCard();
     }
-
-    public Card getMurdererWeaponCard() {
-        return murdererWeaponCard;
-    }
-
-    public String getMurdererWeaponString(){
-        return murdererWeaponCard.toString();
-    }
-
-    public Card getMurdererSuspectCard() {
-        return murdererSuspectCard;
-    }
-
-    public String getMurdererSuspectString(){
-        return murdererSuspectCard.toString();
-    }
-
-    public String getMurdererRoomString(){return murdererRoomCard.toString();}
-
-    public Card getMurdererRoomCard() {
-        return murdererRoomCard;
-    }
 }
