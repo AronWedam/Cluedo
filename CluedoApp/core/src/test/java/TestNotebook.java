@@ -1,4 +1,3 @@
-import com.cluedo.game.Cluedo;
 import com.cluedo.game.CluedoMap;
 import com.cluedo.game.Notebook;
 import com.cluedo.game.Player;
@@ -6,9 +5,8 @@ import com.cluedo.game.Player;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-
+@RunWith(GdxTestRunner.class)
 public class TestNotebook {
 
     Player testplayer = new Player(0,0, new CluedoMap());
@@ -16,7 +14,7 @@ public class TestNotebook {
 
     @Test
     public void testValueRoomCard() {
-        notebook.getInstance(testplayer);
+        notebook = Notebook.getInstance(testplayer);
         notebook.yourRoomCards();
 
         testplayer.setMyRoomCard();

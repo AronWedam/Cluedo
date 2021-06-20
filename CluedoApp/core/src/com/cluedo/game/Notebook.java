@@ -14,7 +14,7 @@ import com.cluedo.game.network.ConnectionService;
 public class Notebook {
     public Table table;
     private ScrollPane pane;
-    final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+    final Skin skin = new Skin(Gdx.files.internal(System.getProperty("user.dir") + "\\..\\android\\assets\\uiskin.json"));
     private Player player;
 
     public int valueRoomCard;

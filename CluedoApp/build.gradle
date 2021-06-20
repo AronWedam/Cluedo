@@ -73,5 +73,8 @@ project(":core") {
         implementation 'org.json:json:20171018'
         testImplementation 'junit:junit:4.13'
         implementation 'junit:junit:4.12'
+        testImplementation group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
+        compile group: 'com.badlogicgames.gdx', name: 'gdx-backend-headless', version: '1.2.0'
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
 }

@@ -110,4 +110,8 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
     executionData.from = files("${buildDir}/jacoco/testDebugUnitTest.exec")
 }
 
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+}
+
 eclipse.project.name = appName + "-android"
