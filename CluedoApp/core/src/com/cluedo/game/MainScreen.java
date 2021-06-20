@@ -2,7 +2,7 @@ package com.cluedo.game;
 
 import com.badlogic.gdx.Game;
 
-class MainScreen extends Game {
+public class MainScreen extends Game {
 
     @Override
     public void create() {
