@@ -202,13 +202,29 @@ public class ConnectionService {
             Response response = client.newCall(request).execute();
             return response.code();
         } catch (Exception ex) {
-            Gdx.app.log("Get Game Error", ex.getMessage());
+            Gdx.app.log("Finish Game Error", ex.getMessage());
         }
 
         return ServerErrorCode;
     }
 
-    private void GetPlayersOfJsonObject(String responseBody) throws IOException {
+    public int ResetGame() {
+        try {
+            Request request = new Request.Builder()
+                    .url(Url + "reset")
+                    .get()
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            return response.code();
+        } catch (Exception ex) {
+            Gdx.app.log("Reset Game Error", ex.getMessage());
+        }
+
+        return ServerErrorCode;
+    }
+
+    private void GetPlayersOfJsonObject(String responseBody) {
         List<NetworkPlayer> tempPlayers = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(responseBody);
         JSONArray playerArray = jsonObject.getJSONArray("players");
