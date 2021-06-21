@@ -43,7 +43,7 @@ public class CardHandOut {
         Collections.shuffle(picks);
 
         picked_card = picks.get(0);
-        deleteUsedCard(picked_card.getType());
+        deleteUsedCard(picked_card.getValue());
 
         return picked_card;
     }

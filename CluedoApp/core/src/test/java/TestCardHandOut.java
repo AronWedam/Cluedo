@@ -7,11 +7,6 @@ import org.junit.Test;
 public class TestCardHandOut {
 
     private static CardHandOut cardHandOut = new CardHandOut();
-    Card testCard0 = new Card(1, 0);
-    Card testCard1 = new Card(1,1);
-    Card testCard2 = new Card(2,2);
-    Card testCard3 = new Card(1, 0);
-    Card testCard5 = new Card(1,1);
 
 
     @Test
@@ -68,7 +63,7 @@ public class TestCardHandOut {
         int sizeBeforeReducing = 6;
         cardHandOut.randomlyPickCardOfType(0);
         Assert.assertNotEquals(sizeBeforeReducing,
-                cardHandOut.currArrayList.size()); //SHOULD BE 5
+                cardHandOut.currArrayList.size()); //SHOULD BE 5 WHYYYYYYYYY
 
     }
 
