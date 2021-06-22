@@ -50,6 +50,8 @@ public class DiceScreen implements Screen {
     private BitmapFont font;
     private Toast toast;
     private GameClass game;
+    //9.8 -> value for Y axis in accelerometer when hold upright in front of face
+    private float highestY=9.8f;
 
     public DiceScreen(GameClass game, MainScreen mainScreen, Cluedo cluedo){
         this.mainScreen = mainScreen;
@@ -125,6 +127,7 @@ public class DiceScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        float accelY=Gdx.input.getAccelerometerY();
 
         stage.act();
         stage.draw();
@@ -140,7 +143,7 @@ public class DiceScreen implements Screen {
             game.batch.end();
         }
 
-        if (Gdx.input.justTouched() && !didAlreadyRoll) {
+        if (Gdx.input.justTouched() && !didAlreadyRoll || accelY>highestY && accelY!=0.0f ) {
             Random rand = new Random();
             dice1Value = rand.nextInt(6);
             dice2Value = rand.nextInt(6);
