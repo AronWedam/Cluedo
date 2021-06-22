@@ -14,7 +14,7 @@ import com.cluedo.game.network.ConnectionService;
 public class Notebook {
     public Table table;
     private ScrollPane pane;
-    final Skin skin = new Skin(Gdx.files.internal(System.getProperty("user.dir") + "\\..\\android\\assets\\uiskin.json"));
+    final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
     private Player player;
 
     public int valueRoomCard;
@@ -56,6 +56,9 @@ public class Notebook {
     public final CheckBox cBWeaponPipe     =   new CheckBox("Pipe", skin);
     public final CheckBox cBWeaponCandle   =   new CheckBox("Candle", skin);
 
+    public final String remainingMovesText = "Remaining Moves: ";
+    public final Label remainingMoves        =   new Label(remainingMovesText, skin);
+
     /**************************Non UI-Variables*************************************/
     private ConnectionService connectionService;
 
@@ -76,8 +79,8 @@ public class Notebook {
         this.pane = new ScrollPane(this.table, skin);
 
         //for the font size of the checkBoxes
-        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.7);
-        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.7);
+        float CB_SCALING_X = (float) (getPane().getScaleX() / 0.5);
+        float CB_SCALING_Y = (float) (getPane().getScaleY() / 0.5);
 
         this.table.add(notebookText);
         notebookText.setFontScale((float) (getPane().getScaleX() / 0.2),
@@ -211,6 +214,11 @@ public class Notebook {
         btnAccusation.getLabel().setFontScale((float) (getPane().getScaleX() / 0.6),
                 (float) (getPane().getScaleY() / 0.45));
         btnAccusation.center();
+        this.table.row();
+
+        this.table.add(remainingMoves);
+        remainingMoves.setFontScale((float) (getPane().getScaleX() / 0.5),
+                (float) (getPane().getScaleY() / 0.5));
         this.table.row();
 
         pane.setActor(this.table);

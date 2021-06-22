@@ -48,7 +48,6 @@ public class Player {
 
     //Set Player position
     public void setPos(int x, int y){
-       //Gdx.app.log("Here", "here");
         Boolean maywalk = false;
 
         Thread GetGameThread = new Thread(new Runnable() {

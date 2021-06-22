@@ -254,8 +254,6 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     }
                 }
             }
-        } else if (Gdx.input.justTouched() && Gdx.input.getX(0) > Gdx.graphics.getWidth() / 3 && moves == 0) {
-            toast = toastFactory.create("You need to roll the dice first", Toast.Length.LONG);
         }
 
         if (Gdx.input.justTouched() && Gdx.input.getX(0) < Gdx.graphics.getWidth() / 3) {
@@ -283,6 +281,10 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                     Gdx.app.log("Exception", ex.getMessage());
                 }
             }
+        }
+
+        if (notebook != null) {
+            notebook.remainingMoves.setText(notebook.remainingMovesText + "" + moves);
         }
     }
 
@@ -314,7 +316,13 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 mainScreen.setScreen(rulesScreen);
                 break;
             case "Dice":
-                mainScreen.setScreen(new DiceScreen(game, mainScreen, this));
+                for (NetworkPlayer player : connectionService.getPlayers()) {
+                    if (player.getId().equals(connectionService.GetPlayerId())) {
+                        if (player.getMaywalk()) {
+                            mainScreen.setScreen(new DiceScreen(game, mainScreen, this));
+                        }
+                    }
+                }
                 break;
             default:
                 break;

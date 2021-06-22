@@ -99,6 +99,7 @@ router.post('/register', function (req, res) {
     stopwatchRunning = true;
   }
 
+  playerImagesCounter++;
   console.log('Register');
   console.log(players);
   res.status(200).send({ playerId: playerId });
