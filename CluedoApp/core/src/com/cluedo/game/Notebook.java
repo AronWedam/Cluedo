@@ -14,8 +14,12 @@ import com.cluedo.game.network.ConnectionService;
 public class Notebook {
     public Table table;
     private ScrollPane pane;
-    final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+    final Skin skin = new Skin(Gdx.files.internal(System.getProperty("user.dir") + "\\..\\android\\assets\\uiskin.json"));
     private Player player;
+
+    public int valueRoomCard;
+    public int valueWeaponCard;
+    public int valueSuspectCard;
 
     public boolean isChecked = false;
 
@@ -214,62 +218,62 @@ public class Notebook {
 
 
     public void yourRoomCards(){
-        int value = player.getMyRoomCard().getValue();
+        valueRoomCard = player.getMyRoomCard().getValue();
 
-        if(value == 1){
+        if(valueRoomCard == 1){
             cardInHand(cBRoomEntrance);
-        }else if(value == 2){
+        }else if(valueRoomCard == 2){
             cardInHand(cBRoomBedroom);
-        }else if(value == 3){
+        }else if(valueRoomCard == 3){
             cardInHand(cBRoomDining);
-        }else if(value == 4){
+        }else if(valueRoomCard == 4){
             cardInHand(cBRoomKitchen);
-        }else if(value == 5){
+        }else if(valueRoomCard == 5){
             cardInHand(cBRoomGuest);
-        }else if(value == 6){
+        }else if(valueRoomCard == 6){
             cardInHand(cBRoomMusicroom);
-        }else if(value == 7){
+        }else if(valueRoomCard == 7){
             cardInHand(cBRoomBathroom);
-        }else if(value == 8){
+        }else if(valueRoomCard == 8){
             cardInHand(cBRoomStudy);
-        }else if(value == 9){
+        }else if(valueRoomCard == 9){
             cardInHand(cBRoomLibrary);
         }
     }
 
     public void yourSuspectCard(){
-        int value = player.getMySuspectCard().getValue();
+        valueSuspectCard = player.getMySuspectCard().getValue();
 
-        if(value == 1){
+        if(valueSuspectCard == 1){
             cardInHand(cBMissScarlett);
-        }else if(value == 2){
+        }else if(valueSuspectCard == 2){
             cardInHand(cBColonelMustard);
-        }else if(value == 3){ ;
+        }else if(valueSuspectCard == 3){ ;
             cardInHand(cBMrsWhite);
-        }else if(value == 4){
+        }else if(valueSuspectCard == 4){
             cardInHand(cBReverend);
-        }else if(value == 5){
+        }else if(valueSuspectCard == 5){
             cardInHand(cBMrsPeacock);
-        }else if(value == 6){
+        }else if(valueSuspectCard == 6){
             cardInHand(cBProfessorPlum);
         }
     }
 
 
     public void yourWeaponCard(){
-        int value = player.getMyWeaponCard().getValue();
+        valueWeaponCard = player.getMyWeaponCard().getValue();
 
-        if(value == 1){
+        if(valueWeaponCard == 1){
             cardInHand(cBWeaponKnife);
-        }else if(value == 2){
+        }else if(valueWeaponCard == 2){
             cardInHand(cBWeaponRope);
-        }else if(value == 3){
+        }else if(valueWeaponCard == 3){
             cardInHand(cBWeaponGun);
-        }else if(value == 4){
+        }else if(valueWeaponCard == 4){
             cardInHand(cBWeaponPoison);
-        }else if(value == 5){
+        }else if(valueWeaponCard == 5){
             cardInHand(cBWeaponPipe);
-        }else if(value == 6){
+        }else if(valueWeaponCard == 6){
             cardInHand(cBWeaponCandle);
         }
     }

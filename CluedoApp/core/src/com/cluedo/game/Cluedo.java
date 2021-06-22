@@ -306,7 +306,9 @@ public class Cluedo implements Screen, GestureDetector.GestureListener{
                 }
                 break;
             case "Accusation":
-                mainScreen.setScreen(new AccusationScreen(game, mainScreen, this));
+                if(currentPlayer.checkIfPlayerIsInRoom(currentPlayer.getX(), currentPlayer.getY())) {
+                    mainScreen.setScreen(new AccusationScreen(game, mainScreen, this));
+                }
                 break;
             case "Help":
                 mainScreen.setScreen(rulesScreen);

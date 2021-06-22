@@ -113,4 +113,8 @@ public class GameOverScreen implements Screen {
     public void dispose() {
 
     }
+
+    public Stage getStage(){
+        return stage;
+    }
 }

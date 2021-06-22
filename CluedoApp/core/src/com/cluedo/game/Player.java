@@ -30,6 +30,13 @@ public class Player {
         connectionService = ConnectionService.GetInstance();
     }
 
+    public Player(int x, int y, CluedoMap cluedoMap){
+        this.x = x;
+        this.y = y;
+        this.cluedoMap = cluedoMap;
+        connectionService = ConnectionService.GetInstance();
+    }
+
     // Display Player
     public void render(OrthographicCamera camera, SpriteBatch batch, float x, float y, float width, float height){
         batch.setProjectionMatrix(camera.combined);
@@ -41,7 +48,7 @@ public class Player {
 
     //Set Player position
     public void setPos(int x, int y){
-        Gdx.app.log("Here", "here");
+       //Gdx.app.log("Here", "here");
         Boolean maywalk = false;
 
         Thread GetGameThread = new Thread(new Runnable() {
