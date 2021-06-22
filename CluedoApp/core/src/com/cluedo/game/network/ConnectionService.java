@@ -161,7 +161,10 @@ public class ConnectionService {
 
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
-                GetPlayersOfJsonObject(response.body().string());
+                String responseBody = response.body().string();
+                JSONObject jsonObject = new JSONObject(responseBody);
+                isGameOver = jsonObject.getBoolean("isGameOver");
+                GetPlayersOfJsonObject(responseBody);
             }
 
             return response.code();
@@ -195,20 +198,36 @@ public class ConnectionService {
     public int FinishGame() {
         try {
             Request request = new Request.Builder()
-                    .url(Url + "finishGame")
+                    .url(Url + "games/finishGame")
                     .get()
                     .build();
 
             Response response = client.newCall(request).execute();
             return response.code();
         } catch (Exception ex) {
-            Gdx.app.log("Get Game Error", ex.getMessage());
+            Gdx.app.log("Finish Game Error", ex.getMessage());
         }
 
         return ServerErrorCode;
     }
 
-    private void GetPlayersOfJsonObject(String responseBody) throws IOException {
+    public int ResetGame() {
+        try {
+            Request request = new Request.Builder()
+                    .url(Url + "games/reset")
+                    .get()
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            return response.code();
+        } catch (Exception ex) {
+            Gdx.app.log("Reset Game Error", ex.getMessage());
+        }
+
+        return ServerErrorCode;
+    }
+
+    private void GetPlayersOfJsonObject(String responseBody) {
         List<NetworkPlayer> tempPlayers = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(responseBody);
         JSONArray playerArray = jsonObject.getJSONArray("players");

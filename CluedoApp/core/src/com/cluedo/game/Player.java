@@ -9,7 +9,6 @@ import com.cluedo.game.network.NetworkPlayer;
 
 public class Player {
     private static CardHandOut cardHandOut = CardHandOut.getInstance();
-    SpriteBatch batch;
     Texture texture;
     private int x,y;
     private CluedoMap cluedoMap;
@@ -31,6 +30,13 @@ public class Player {
         connectionService = ConnectionService.GetInstance();
     }
 
+    public Player(int x, int y, CluedoMap cluedoMap){
+        this.x = x;
+        this.y = y;
+        this.cluedoMap = cluedoMap;
+        connectionService = ConnectionService.GetInstance();
+    }
+
     // Display Player
     public void render(OrthographicCamera camera, SpriteBatch batch, float x, float y, float width, float height){
         batch.setProjectionMatrix(camera.combined);
@@ -42,7 +48,7 @@ public class Player {
 
     //Set Player position
     public void setPos(int x, int y){
-        Gdx.app.log("Here", "here");
+       //Gdx.app.log("Here", "here");
         Boolean maywalk = false;
 
         Thread GetGameThread = new Thread(new Runnable() {
@@ -119,10 +125,6 @@ public class Player {
         //Make Sure it keeps inside Gameboard
         if(x < 0) return false;
         if(y < 0) return false;
-
-        //If someone is touching on the notebook it returns false
-        //int j = Gdx.graphics.getWidth() / 3;
-        //if(y <= 0+j) return false;
 
         if(x > 32*28) return false;
         if(y > 32*28) return false;

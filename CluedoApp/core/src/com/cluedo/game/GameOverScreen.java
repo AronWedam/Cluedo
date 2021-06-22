@@ -24,7 +24,6 @@ public class GameOverScreen implements Screen {
     private TextureAtlas atlas;
     protected Skin skin;
 
-    Murderer murderer;
 
     public GameOverScreen(){
         atlas = new TextureAtlas("uiskin.atlas");
@@ -113,5 +112,9 @@ public class GameOverScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public Stage getStage(){
+        return stage;
     }
 }

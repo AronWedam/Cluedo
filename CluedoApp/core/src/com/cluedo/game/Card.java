@@ -10,6 +10,10 @@ public class Card {
     public static final int TYPE_WEAPON = 1;
     public static final int TYPE_ROOM = 2;
 
+    public static ArrayList<Card> roomsArrayList = new ArrayList<>();
+    public static ArrayList<Card> weaponsArrayList = new ArrayList<>();
+    public static ArrayList<Card> suspectsArrayList = new ArrayList<>();
+
     private static final Card suspect0 = new Card(0, 0);
     private static final Card suspect1 = new Card(0, 1);
     private static final Card suspect2 = new Card(0, 2);
@@ -34,8 +38,10 @@ public class Card {
     private static final Card room7 = new Card(2, 7);
     private static final Card room8 = new Card(2, 8);
 
-
-    public static ArrayList<Card> suspectsArrayList = new ArrayList<Card>();
+    public Card(int type, int value) {
+        this.type = type;
+        this.value = value;
+    }
 
     public static void setSuspectsArrayList() {
         suspectsArrayList.add(suspect0);
@@ -46,8 +52,6 @@ public class Card {
         suspectsArrayList.add(suspect5);
     }
 
-    public static ArrayList<Card> weaponsArrayList = new ArrayList<>();
-
     public static void setWeaponsArrayList(){
         weaponsArrayList.add(weapon0);
         weaponsArrayList.add(weapon1);
@@ -56,8 +60,6 @@ public class Card {
         weaponsArrayList.add(weapon4);
         weaponsArrayList.add(weapon5);
     }
-
-    public static ArrayList<Card> roomsArrayList = new ArrayList<>();
 
     public static void setRoomsArrayList() {
         roomsArrayList.add(room0);
@@ -71,18 +73,23 @@ public class Card {
         roomsArrayList.add(room8);
     }
 
-    public Card(int type, int value) {
-        this.type = type;
-        this.value = value;
+    public static ArrayList<Card> getSuspectsArrayList() {
+        return suspectsArrayList;
+    }
+
+    public static ArrayList<Card> getWeaponsArrayList() {
+        return weaponsArrayList;
+    }
+
+    public static ArrayList<Card> getRoomsArrayList() {
+        return roomsArrayList;
     }
 
     public int getValue() {
         return value;
     }
 
-    public int hashCode() {
-        return type + value;
-    }
+    public int getType(){return type;}
 
     public boolean equals(Object obj) {
         if (obj instanceof Card) {

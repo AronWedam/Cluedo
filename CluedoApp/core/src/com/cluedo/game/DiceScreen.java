@@ -113,9 +113,9 @@ public class DiceScreen implements Screen {
         });
 
         //Add Text and Buttons to the table
-        mainTable.add("Tap the screen to roll the dice!").align(Align.center);
-        mainTable.row().colspan(2);
         mainTable.add(mainBtn).size(100, 50).align(Align.left);
+        mainTable.row().colspan(2);
+        mainTable.add(""+'\n'+'\n'+'\n'+'\n'+"Tap the screen to roll the dice!").align(Align.center);
 
         //Add table to stage
         stage.addActor(mainTable);
@@ -135,8 +135,8 @@ public class DiceScreen implements Screen {
 
         if (currentDice1 != null && currentDice2 != null) {
             game.batch.begin();
-            game.batch.draw(currentDice1, 30, 400);
-            game.batch.draw(currentDice2, 320, 400);
+            game.batch.draw(currentDice1, 260, 700);
+            game.batch.draw(currentDice2, 550, 700);
             game.batch.end();
         }
 
