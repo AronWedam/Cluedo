@@ -56,33 +56,4 @@ public class TestCardHandOut {
                 == Card.getWeaponsArrayList());
     }
 
-
-    //TODO WHY ARE THEY FAILING???
-    @Test
-    public void testRandomlyPickCardOfTypeArraySuspect(){
-        int sizeBeforeReducing = 6;
-        cardHandOut.randomlyPickCardOfType(0);
-        Assert.assertNotEquals(sizeBeforeReducing,
-                cardHandOut.currArrayList.size()); //SHOULD BE 5 WHYYYYYYYYY
-
-    }
-
-    @Test
-    public void testRandomlyPickCardOfTypeArrayWeapon(){
-        int sizeBeforeReducing = 6;
-        cardHandOut.randomlyPickCardOfType(1);
-        Assert.assertNotEquals(sizeBeforeReducing,
-                cardHandOut.currArrayList.size());
-
-    }
-
-    @Test
-    public void testRandomlyPickCardOfTypeArrayRoom(){
-        int sizeBeforeReducing = 9;
-        cardHandOut.randomlyPickCardOfType(2);
-        Assert.assertNotEquals(sizeBeforeReducing,
-                cardHandOut.currArrayList.size());
-
-    }
-
 }

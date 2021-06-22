@@ -368,23 +368,9 @@ public class AccusationScreen implements Screen {
         camera.update();
     }
 
-
-    public boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon, CheckBox cBAccusedPerson,
-                                         CheckBox cBAccusedRoom){
-        String weapon = cbAccusedWeapon.toString().split(" ")[1];
-        String person = cBAccusedPerson.toString().split(" ")[1];
-        String room = cBAccusedRoom.toString().split(" ")[1];
-        if(weapon.equals(connectionService.getWeapon())){
-            if(person.equals(connectionService.getSuspect())){
-                return room.equals(connectionService.getRoom());
-            }
-        }
-        return false;
-    }
-
     private void accusationButton(){
         if(suspectChecked && weaponChecked && roomChecked){
-            if(isActuallyTheMurderer(accusedWeapon, accusedSuspect,
+            if(Murderer.isActuallyTheMurderer(accusedWeapon, accusedSuspect,
                     accusedRoom)){
                 new Thread(new Runnable() {
                     @Override
@@ -401,7 +387,7 @@ public class AccusationScreen implements Screen {
 
     private void finalAccusationButton(){
         if(suspectChecked && weaponChecked && roomChecked){
-            if(isActuallyTheMurderer(accusedWeapon, accusedSuspect,
+            if(Murderer.isActuallyTheMurderer(accusedWeapon, accusedSuspect,
                     accusedRoom)){
                 new Thread(new Runnable() {
                     @Override

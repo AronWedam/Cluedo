@@ -9,7 +9,6 @@ import com.cluedo.game.network.NetworkPlayer;
 
 public class Player {
     private static CardHandOut cardHandOut = CardHandOut.getInstance();
-    SpriteBatch batch;
     Texture texture;
     private int x,y;
     private CluedoMap cluedoMap;
@@ -119,10 +118,6 @@ public class Player {
         //Make Sure it keeps inside Gameboard
         if(x < 0) return false;
         if(y < 0) return false;
-
-        //If someone is touching on the notebook it returns false
-        //int j = Gdx.graphics.getWidth() / 3;
-        //if(y <= 0+j) return false;
 
         if(x > 32*28) return false;
         if(y > 32*28) return false;
