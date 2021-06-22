@@ -53,6 +53,7 @@ public class DiceScreen implements Screen {
     //9.8 -> value for Y axis in accelerometer when hold upright in front of face
     private float highestY=9.8f;
 
+
     public DiceScreen(GameClass game, MainScreen mainScreen, Cluedo cluedo){
         this.mainScreen = mainScreen;
         this.cludeo = cluedo;
@@ -127,7 +128,12 @@ public class DiceScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //to check if device is being moved up or down
         float accelY=Gdx.input.getAccelerometerY();
+
+        //to check if device is being moved left or right
+        float accelX=Gdx.input.getAccelerometerX();
 
         stage.act();
         stage.draw();
@@ -142,8 +148,8 @@ public class DiceScreen implements Screen {
             game.batch.draw(currentDice2, 550, 700);
             game.batch.end();
         }
-
-        if (Gdx.input.justTouched() && !didAlreadyRoll || accelY>highestY && accelY!=0.0f ) {
+        //check if touched or device moved with help of accelerometer, up and down and left and right (starting with straight in front of face)
+        if (Gdx.input.justTouched() && !didAlreadyRoll || accelY>highestY && accelY!=0.0f || accelX!=highestY ) {
             Random rand = new Random();
             dice1Value = rand.nextInt(6);
             dice2Value = rand.nextInt(6);
