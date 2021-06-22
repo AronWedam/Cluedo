@@ -1,21 +1,30 @@
 package com.cluedo.game;
 
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.cluedo.game.network.ConnectionService;
+
 public class Murderer {
-    public Player player;
 
+    public static ConnectionService connectionService;
 
-    private final Card murdererWeaponCard;
-    private final Card murdererSuspectCard;
-    private final Card murdererRoomCard;
+    public static boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon,
+                                                CheckBox cBAccusedSuspect,
+                                         CheckBox cBAccusedRoom){
+        String weapon = cbAccusedWeapon.toString().split(" ")[1];
+        String person = cBAccusedSuspect.toString().split(" ")[1];
+        String room = cBAccusedRoom.toString().split(" ")[1];
 
-    public Murderer() {
-
-        player.setMyWeaponCard();
-        player.setMySuspectCard();
-        player.setMyRoomCard();
-
-        murdererWeaponCard = player.getMyWeaponCard();
-        murdererSuspectCard = player.getMySuspectCard();
-        murdererRoomCard = player.getMyRoomCard();
+        return checkIfCorrectMurderer(weapon, person, room);
     }
+
+    public static boolean checkIfCorrectMurderer(String weapon, String suspect, String room){
+        if(weapon.equals(connectionService.getWeapon())){
+            if(suspect.equals(connectionService.getSuspect())){
+                return room.equals(connectionService.getRoom());
+            }
+        }
+        return false;
+    }
+
+
 }
