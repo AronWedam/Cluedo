@@ -118,7 +118,7 @@ public class DiceScreen implements Screen {
         //Add Text and Buttons to the table
         mainTable.add(mainBtn).size(100, 50).align(Align.left);
         mainTable.row().colspan(2);
-        mainTable.add(""+'\n'+'\n'+'\n'+'\n'+"Tap the screen to roll the dice!").align(Align.center);
+        mainTable.add(""+'\n'+'\n'+'\n'+'\n'+"Tap the screen or shake your device to roll the dice!").align(Align.center);
 
         //Add table to stage
         stage.addActor(mainTable);
