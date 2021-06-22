@@ -185,8 +185,10 @@ router.post('/finishMove', function (req, res) {
   res.status(200).send();
 });
 
-router.post('/finishGame', function (req, res) {
+router.get('/finishGame', function (req, res) {
+  console.log(currentGame);
   currentGame.isGameOver = true;
+  console.log(currentGame);
   res.status(200).send();
   resetEverything();
 });
@@ -203,6 +205,7 @@ function resetEverything() {
   playerImagesCounter = 0;
   firstPlayer = true;
   isGameOver = false;
+  finishCombination = undefined;
   stopwatch.stop();
 }
 

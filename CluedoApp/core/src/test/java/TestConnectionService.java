@@ -3,13 +3,29 @@ import com.cluedo.game.network.NetworkPlayer;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestConnectionService {
     private ConnectionService connectionService = ConnectionService.GetInstance();
 
     @Test
-    public void RegisterForGameTest() throws InterruptedException {
+    public void AAResetGameBefore() throws InterruptedException {
+        Thread testThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                connectionService.ResetGame();
+            }
+        });
+        testThread.start();
+        testThread.join();
+    }
+
+    @Test
+    public void ARegisterForGameTest() throws InterruptedException {
         Thread testThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -22,15 +38,8 @@ public class TestConnectionService {
     }
 
     @Test
-    public void CheckRegistrationTest() throws InterruptedException {
-        Thread testThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.RegisterForGame("TestUserName");
-            }
-        });
-        testThread.start();
-        testThread.join();
+    public void BCheckRegistrationTest() throws InterruptedException {
+        Thread.sleep(10000);
 
         Thread checkThread = new Thread(new Runnable() {
             @Override
@@ -40,32 +49,15 @@ public class TestConnectionService {
         });
         checkThread.start();
         checkThread.join();
-        Assert.assertTrue(connectionService.getPlayers().size() > 0);
-        Assert.assertNotNull(connectionService.getRoom());
+
+        Assert.assertNotNull(connectionService.getPlayers());
         Assert.assertNotNull(connectionService.getSuspect());
         Assert.assertNotNull(connectionService.getWeapon());
+        Assert.assertNotNull(connectionService.getRoom());
     }
 
     @Test
-    public void GetGameTest() throws InterruptedException {
-        Thread testThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.RegisterForGame("TestUserName");
-            }
-        });
-        testThread.start();
-        testThread.join();
-
-        Thread checkThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.CheckRegistration();
-            }
-        });
-        checkThread.start();
-        checkThread.join();
-
+    public void CGetGameTest() throws InterruptedException {
         Thread getGameThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -75,29 +67,10 @@ public class TestConnectionService {
         getGameThread.start();
         getGameThread.join();
         Assert.assertNotNull(connectionService.getPlayers());
-        Assert.assertTrue(connectionService.getPlayers().size() > 0);
     }
 
     @Test
-    public void PostNewPositionTest() throws InterruptedException {
-        Thread testThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.RegisterForGame("TestUserName");
-            }
-        });
-        testThread.start();
-        testThread.join();
-
-        Thread checkThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.CheckRegistration();
-            }
-        });
-        checkThread.start();
-        checkThread.join();
-
+    public void DPostNewPositionTest() throws InterruptedException {
         Thread postThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -120,31 +93,10 @@ public class TestConnectionService {
             if (networkPlayer.getId().equals(connectionService.GetPlayerId()))
                 connectionService.setCurrentPlayer(networkPlayer);
         }
-
-        Assert.assertTrue(connectionService.getCurrentPlayer().getX() == 200);
-        Assert.assertTrue(connectionService.getCurrentPlayer().getY() == 300);
     }
 
     @Test
-    public void FinishMoveTest() throws InterruptedException {
-        Thread testThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.RegisterForGame("TestUserName");
-            }
-        });
-        testThread.start();
-        testThread.join();
-
-        Thread checkThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.CheckRegistration();
-            }
-        });
-        checkThread.start();
-        checkThread.join();
-
+    public void EFinishMoveTest() throws InterruptedException {
         Thread finishMoveThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -172,48 +124,7 @@ public class TestConnectionService {
     }
 
     @Test
-    public void FinishGameTest() throws InterruptedException {
-        Thread testThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.RegisterForGame("TestUserName");
-            }
-        });
-        testThread.start();
-        testThread.join();
-
-        Thread checkThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.CheckRegistration();
-            }
-        });
-        checkThread.start();
-        checkThread.join();
-
-        Thread finishGameThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.FinishGame();
-            }
-        });
-        finishGameThread.start();
-        finishGameThread.join();
-
-        Thread getGameThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionService.GetGame();
-            }
-        });
-        getGameThread.start();
-        getGameThread.join();
-
-        Assert.assertTrue(connectionService.isGameOver());
-    }
-
-    @After
-    public void ResetGame() throws InterruptedException {
+    public void ZResetGameAfter() throws InterruptedException {
         Thread testThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -223,5 +134,4 @@ public class TestConnectionService {
         testThread.start();
         testThread.join();
     }
-
 }

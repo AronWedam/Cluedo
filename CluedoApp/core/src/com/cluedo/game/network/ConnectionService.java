@@ -161,7 +161,10 @@ public class ConnectionService {
 
             Response response = client.newCall(request).execute();
             if (response.code() == 200) {
-                GetPlayersOfJsonObject(response.body().string());
+                String responseBody = response.body().string();
+                JSONObject jsonObject = new JSONObject(responseBody);
+                isGameOver = jsonObject.getBoolean("isGameOver");
+                GetPlayersOfJsonObject(responseBody);
             }
 
             return response.code();
@@ -195,7 +198,7 @@ public class ConnectionService {
     public int FinishGame() {
         try {
             Request request = new Request.Builder()
-                    .url(Url + "finishGame")
+                    .url(Url + "games/finishGame")
                     .get()
                     .build();
 
@@ -211,7 +214,7 @@ public class ConnectionService {
     public int ResetGame() {
         try {
             Request request = new Request.Builder()
-                    .url(Url + "reset")
+                    .url(Url + "games/reset")
                     .get()
                     .build();
 
