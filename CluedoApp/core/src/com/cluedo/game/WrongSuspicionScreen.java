@@ -71,13 +71,13 @@ public class WrongSuspicionScreen implements Screen {
         mainTable.add("You guessed the following things correctly:").align(Align.left);
         mainTable.row().colspan(2);
 
-        mainTable.add("Weapon: " + (weapon.equals(connectionService.getWeapon()))).align(Align.left);
+        mainTable.add("Weapon (" + weapon + "): " + (weapon.equals(connectionService.getWeapon()))).align(Align.left);
         mainTable.row().colspan(2);
 
-        mainTable.add("Suspect: " + (suspect.equals(connectionService.getSuspect()))).align(Align.left);
+        mainTable.add("Suspect (" + suspect + "): " + (suspect.equals(connectionService.getSuspect()))).align(Align.left);
         mainTable.row().colspan(2);
 
-        mainTable.add("Room: " + (room.equals(connectionService.getRoom()))).align(Align.left);
+        mainTable.add("Room: (" + room + "): " + (room.equals(connectionService.getRoom()))).align(Align.left);
         mainTable.row().colspan(2);
 
         mainTable.add(" ");
