@@ -10,6 +10,8 @@ public class Murderer {
     public static boolean isActuallyTheMurderer(CheckBox cbAccusedWeapon,
                                                 CheckBox cBAccusedSuspect,
                                          CheckBox cBAccusedRoom){
+        connectionService = ConnectionService.GetInstance();
+
         String weapon = cbAccusedWeapon.toString().split(" ")[1];
         String person = cBAccusedSuspect.toString().split(" ")[1];
         String room = cBAccusedRoom.toString().split(" ")[1];
@@ -18,6 +20,8 @@ public class Murderer {
     }
 
     public static boolean checkIfCorrectMurderer(String weapon, String suspect, String room){
+        connectionService = ConnectionService.GetInstance();
+
         if(weapon.equals(connectionService.getWeapon())){
             if(suspect.equals(connectionService.getSuspect())){
                 return room.equals(connectionService.getRoom());
