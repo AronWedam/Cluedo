@@ -316,7 +316,6 @@ public class AccusationScreen implements Screen {
         });
         mainTable.row();
 
-
         mainTable.add("").align(Align.left);
         mainTable.row();
         mainTable.row();
@@ -380,7 +379,12 @@ public class AccusationScreen implements Screen {
                 }).start();
                 mainScreen.setScreen(new GameOverScreen());
             }else {
-                mainScreen.setScreen(new WrongAccusationScreen(cluedo, mainScreen));
+                String weapon = accusedWeapon.toString().split(" ")[1];
+                String person = accusedSuspect.toString().split(" ")[1];
+                String room = accusedRoom.toString().split(" ")[1];
+
+                mainScreen.setScreen(new WrongSuspicionScreen(cluedo, mainScreen, weapon, person,
+                        room));
             }
         }
     }
@@ -397,7 +401,7 @@ public class AccusationScreen implements Screen {
                 }).start();
                 mainScreen.setScreen(new GameOverScreen());
             }else {
-                Gdx.app.exit();
+                mainScreen.setScreen(new WrongAccusationScreen(cluedo, mainScreen));
             }
         }
     }

@@ -187,11 +187,8 @@ router.post('/finishMove', function (req, res) {
 });
 
 router.get('/finishGame', function (req, res) {
-  console.log(currentGame);
   currentGame.isGameOver = true;
-  console.log(currentGame);
   res.status(200).send();
-  resetEverything();
 });
 
 //Resetting the new Gamestate
